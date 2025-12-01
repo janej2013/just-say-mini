@@ -1,0 +1,159 @@
+/* arrival-airport.wxss */
+page {
+  height: 100vh;
+  background-color: #E0F7FA;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.district-map {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(#B2EBF2 10%, transparent 10%),
+    radial-gradient(#B2EBF2 10%, transparent 10%);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
+
+.location-zone {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.zone-label {
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #006064;
+  background: rgba(255,255,255,0.8);
+  padding: 8px 20px;
+  border-radius: 16px;
+}
+
+.building-airport {
+  position: relative;
+  width: 200px;
+  height: 120px;
+  background: #ECEFF1;
+  border-radius: 20px;
+  box-shadow: 0 10px 0 #CFD8DC;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.building-airport .roof {
+  position: absolute;
+  top: -20px;
+  width: 180px;
+  height: 40px;
+  background: #90A4AE;
+  border-radius: 20px 20px 0 0;
+}
+.building-airport .gate {
+  font-weight: bold;
+  color: #546E7A;
+  background: #CFD8DC;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.building-airport .wing {
+  position: absolute;
+  top: 40px;
+  width: 60px;
+  height: 20px;
+  background: #B0BEC5;
+  z-index: -1;
+}
+.building-airport .left { left: -40px; border-radius: 10px 0 0 10px; }
+.building-airport .right { right: -40px; border-radius: 0 10px 10px 0; }
+
+.npc-penguin {
+  position: absolute;
+  bottom: 80px;
+  right: -20px;
+  width: 40px;
+  height: 50px;
+  background: #212121;
+  border-radius: 50% 50% 40% 40%;
+}
+.npc-penguin::after {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  width: 20px;
+  height: 25px;
+  background: white;
+  border-radius: 50%;
+}
+
+.level-container {
+  margin-top: 30px;
+  width: 100%;
+  background: white;
+  border-radius: 16px;
+  padding: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.level-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #F5F5F5;
+}
+.level-item:last-child {
+  border-bottom: none;
+}
+
+.status-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+  font-size: 16px;
+}
+
+.level-item.completed .status-icon {
+  background: #4CAF50;
+  color: white;
+}
+.level-item.current .status-icon {
+  background: #FF9800;
+  color: white;
+  box-shadow: 0 0 8px #FF9800;
+}
+.level-item.locked .status-icon {
+  background: #E0E0E0;
+  color: #9E9E9E;
+}
+.level-item.locked text {
+  color: #9E9E9E;
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}

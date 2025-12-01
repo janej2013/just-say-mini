@@ -1,6 +1,12 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/map/map",
+    "pages/map2/map2",
+    "pages/arrival-district/arrival-district",
+    "pages/arrival-airport/arrival-airport",
+    "pages/arrival-taxi/arrival-taxi",
+    "pages/arrival-hotel/arrival-hotel",
     "pages/logs/logs"
   ],
   "window": {

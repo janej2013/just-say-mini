@@ -1,0 +1,30 @@
+<view class="container">
+  <view class="district-map">
+    <!-- 2. Taxi & Ride-Sharing -->
+    <view class="location-zone taxi-zone">
+      <view class="taxi-stand">
+        <view class="sign">TAXI</view>
+        <view class="taxi-car">
+          <view class="top-light"></view>
+        </view>
+      </view>
+      <view class="npc-bear"></view>
+      <view class="zone-label">Taxi Zone</view>
+
+      <view class="level-container">
+        <view class="level-item locked">
+          <view class="status-icon">🔒</view>
+          <text>Basic Taxi Conversation</text>
+        </view>
+        <view class="level-item locked">
+          <view class="status-icon">🔒</view>
+          <text>Trip Adjustments</text>
+        </view>
+        <view class="level-item locked">
+          <view class="status-icon">🔒</view>
+          <text>Problem Solving</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

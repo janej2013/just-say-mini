@@ -1,0 +1,96 @@
+<view class="container">
+  <!-- Scrollable World (200vh) -->
+  <scroll-view scroll-y scroll-x class="world-scroll" enable-flex scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+    <view class="world-map">
+      
+      <!-- Path Layer (SVG or CSS) -->
+      <view class="path-layer">
+        <!-- Solid path connecting the continents -->
+        <svg class="path-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 200" preserveAspectRatio="none">
+           <!-- Path connecting: Transport(50,82) -> Housing(30,71) -> School(75,60) -> Food(30,49) -> Market(50,38) -> Coffee(75,26) -> Park(30,15) -> Office(50,3) -->
+           <!-- Y coordinates are percentages of 200, so multiply by 2. -->
+           <!-- Transport: 82% -> 164. Housing: 71% -> 142. School: 60% -> 120. Food: 49% -> 98. Market: 38% -> 76. Coffee: 26% -> 52. Park: 15% -> 30. Office: 3% -> 6. -->
+           <path d="M50 164 Q50 155 30 142 Q20 130 75 120 Q90 110 30 98 Q20 85 50 76 Q80 65 75 52 Q70 40 30 30 Q20 20 50 6" 
+                 fill="none" stroke="#546E7A" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+        </svg>
+      </view>
+
+      <!-- 8. Office Continent (Top) -->
+      <view class="continent continent-office">
+        <view class="decor-building-tall b1"></view>
+        <view class="decor-building-tall b2"></view>
+        <view class="zone-label">Office</view>
+      </view>
+
+      <!-- 7. Park Continent (Top-Left) -->
+      <view class="continent continent-park">
+        <view class="decor-tree t1"></view>
+        <view class="decor-tree t2"></view>
+        <view class="zone-label">Park</view>
+      </view>
+
+      <!-- 6. Coffee Continent (Right) -->
+      <view class="continent continent-coffee">
+        <view class="decor-cup c1"></view>
+        <view class="zone-label">Coffee</view>
+      </view>
+
+      <!-- 5. Market Continent (Center) -->
+      <view class="continent continent-market">
+        <view class="decor-stall s1"></view>
+        <view class="decor-stall s2"></view>
+        <view class="zone-label">Market</view>
+      </view>
+
+      <!-- 4. Food Continent (Left) -->
+      <view class="continent continent-food">
+        <view class="decor-burger"></view>
+        <view class="zone-label">Food</view>
+      </view>
+
+      <!-- 3. School Continent (Right) -->
+      <view class="continent continent-school">
+        <view class="decor-book"></view>
+        <view class="zone-label">School</view>
+      </view>
+
+      <!-- 2. Housing Continent (Bottom-Left) -->
+      <view class="continent continent-housing">
+        <view class="decor-house h1"></view>
+        <view class="decor-house h2"></view>
+        <view class="zone-label">Housing</view>
+      </view>
+
+      <!-- 1. Transport Continent (Bottom-Center) -->
+      <view class="continent continent-transport" id="transport-hub">
+        <view class="decor-bus"></view>
+        <view class="decor-plane"></view>
+        <view class="zone-label">Transport</view>
+      </view>
+
+      <!-- Levels -->
+      <block wx:for="{{levels}}" wx:key="id">
+        <view 
+          class="level-node {{item.type}} {{item.status}}"
+          style="left: {{item.x}}%; top: {{item.y}}%;"
+          bindtap="onLevelTap"
+          data-level="{{item}}"
+        >
+          <view class="node-icon">
+            <text wx:if="{{item.type === 'office'}}">🏢</text>
+            <text wx:if="{{item.type === 'park'}}">🌳</text>
+            <text wx:if="{{item.type === 'coffee'}}">☕</text>
+            <text wx:if="{{item.type === 'market'}}">🛒</text>
+            <text wx:if="{{item.type === 'food'}}">🍔</text>
+            <text wx:if="{{item.type === 'school'}}">🏫</text>
+            <text wx:if="{{item.type === 'housing'}}">🏠</text>
+            <text wx:if="{{item.type === 'transport'}}">🚌</text>
+          </view>
+          <view class="node-label">{{item.title}}</view>
+          <view wx:if="{{item.status === 'locked'}}" class="lock-overlay">🔒</view>
+        </view>
+      </block>
+
+    </view>
+  </scroll-view>
+</view>

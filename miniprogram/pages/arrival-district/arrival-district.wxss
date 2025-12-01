@@ -1,0 +1,377 @@
+/* arrival-district.wxss */
+page {
+  height: 100vh;
+  background-color: #E0F7FA; /* Soft pastel blue background */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.map-scroll {
+  width: 100%;
+  height: 100%;
+}
+
+.district-map {
+  position: relative;
+  width: 100%;
+  height: 150vh; /* Long scroll */
+  background-image: 
+    radial-gradient(#B2EBF2 10%, transparent 10%),
+    radial-gradient(#B2EBF2 10%, transparent 10%);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+  padding-bottom: 100px;
+}
+
+/* --- UI Layer --- */
+.ui-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  z-index: 100;
+  pointer-events: none; /* Allow clicks through */
+}
+
+.zoom-controls {
+  position: absolute;
+  top: 100px;
+  right: 20px;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.zoom-btn {
+  width: 40px;
+  height: 40px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: #00BCD4;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.story-mode-btn {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  background: #FF7043;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(255, 112, 67, 0.4);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-5px); }
+}
+
+/* --- Path --- */
+.path-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* --- Locations --- */
+.location-zone {
+  position: absolute;
+  width: 80%;
+  left: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.zone-label {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #006064;
+  background: rgba(255,255,255,0.8);
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+/* 1. Airport (Top) */
+.airport-zone {
+  top: 5%;
+}
+
+.building-airport {
+  position: relative;
+  width: 200px;
+  height: 120px;
+  background: #ECEFF1;
+  border-radius: 20px;
+  box-shadow: 0 10px 0 #CFD8DC;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.building-airport .roof {
+  position: absolute;
+  top: -20px;
+  width: 180px;
+  height: 40px;
+  background: #90A4AE;
+  border-radius: 20px 20px 0 0;
+}
+.building-airport .gate {
+  font-weight: bold;
+  color: #546E7A;
+  background: #CFD8DC;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.building-airport .wing {
+  position: absolute;
+  top: 40px;
+  width: 60px;
+  height: 20px;
+  background: #B0BEC5;
+  z-index: -1;
+}
+.building-airport .left { left: -40px; border-radius: 10px 0 0 10px; }
+.building-airport .right { right: -40px; border-radius: 0 10px 10px 0; }
+
+.npc-penguin {
+  position: absolute;
+  bottom: 80px;
+  right: -20px;
+  width: 40px;
+  height: 50px;
+  background: #212121;
+  border-radius: 50% 50% 40% 40%;
+}
+.npc-penguin::after {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  width: 20px;
+  height: 25px;
+  background: white;
+  border-radius: 50%;
+}
+
+/* 2. Taxi (Middle) */
+.taxi-zone {
+  top: 40%;
+}
+
+.taxi-stand {
+  position: relative;
+  width: 180px;
+  height: 100px;
+}
+.taxi-stand .sign {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  background: #FFEB3B;
+  color: black;
+  font-weight: bold;
+  padding: 4px 8px;
+  border: 2px solid black;
+  transform: rotate(-5deg);
+}
+.taxi-car {
+  position: absolute;
+  bottom: 0;
+  width: 120px;
+  height: 60px;
+  background: #FFC107;
+  border-radius: 10px 10px 5px 5px;
+  box-shadow: 0 5px 0 #FFA000;
+}
+.taxi-car::before {
+  content: 'TAXI';
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  font-size: 10px;
+  font-weight: bold;
+}
+.taxi-car .top-light {
+  position: absolute;
+  top: -10px;
+  left: 40px;
+  width: 40px;
+  height: 10px;
+  background: #212121;
+  border-radius: 5px 5px 0 0;
+}
+
+.npc-bear {
+  position: absolute;
+  bottom: 20px;
+  right: 0;
+  width: 50px;
+  height: 60px;
+  background: #795548;
+  border-radius: 20px;
+}
+
+/* 3. Hotel (Bottom) */
+.hotel-zone {
+  top: 75%;
+}
+
+.building-hotel {
+  position: relative;
+  width: 160px;
+  height: 140px;
+  background: #FFCCBC;
+  border-radius: 10px;
+  box-shadow: 0 10px 0 #FFAB91;
+}
+.building-hotel .canopy {
+  position: absolute;
+  bottom: 40px;
+  left: -10px;
+  width: 180px;
+  height: 20px;
+  background: repeating-linear-gradient(90deg, #D84315, #D84315 10px, white 10px, white 20px);
+  border-radius: 5px;
+}
+.building-hotel .door {
+  position: absolute;
+  bottom: 0;
+  left: 60px;
+  width: 40px;
+  height: 40px;
+  background: #3E2723;
+  border-radius: 5px 5px 0 0;
+}
+
+.npc-cat {
+  position: absolute;
+  bottom: 10px;
+  left: -30px;
+  width: 40px;
+  height: 40px;
+  background: #FFA726;
+  border-radius: 50% 50% 0 0;
+}
+.npc-cat::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  background: #FFA726;
+  clip-path: polygon(0 100%, 50% 0, 100% 100%);
+}
+.npc-cat::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  background: #FFA726;
+  clip-path: polygon(0 100%, 50% 0, 100% 100%);
+}
+
+/* --- Levels --- */
+.level-container {
+  margin-top: 15px;
+  width: 100%;
+  background: white;
+  border-radius: 16px;
+  padding: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.level-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #F5F5F5;
+}
+.level-item:last-child {
+  border-bottom: none;
+}
+
+.status-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.level-item.completed .status-icon {
+  background: #4CAF50;
+  color: white;
+}
+.level-item.current .status-icon {
+  background: #FF9800;
+  color: white;
+  box-shadow: 0 0 8px #FF9800;
+}
+.level-item.locked .status-icon {
+  background: #E0E0E0;
+  color: #9E9E9E;
+}
+.level-item.locked text {
+  color: #9E9E9E;
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* --- Avatar --- */
+.avatar-marker {
+  position: absolute;
+  top: 18%; /* Near Airport */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+.avatar-body {
+  width: 40px;
+  height: 40px;
+  background: #AB47BC;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.avatar-shadow {
+  position: absolute;
+  bottom: -5px;
+  left: 5px;
+  width: 30px;
+  height: 6px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 50%;
+}

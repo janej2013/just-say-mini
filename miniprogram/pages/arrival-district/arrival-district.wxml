@@ -1,0 +1,113 @@
+<view class="container">
+  <!-- Floating UI -->
+  <view class="ui-layer">
+    <view class="zoom-controls">
+      <view class="zoom-btn">+</view>
+      <view class="zoom-btn">-</view>
+    </view>
+    <view class="story-mode-btn">📖 Story Mode</view>
+  </view>
+
+  <scroll-view scroll-y class="map-scroll">
+    <view class="district-map">
+      
+      <!-- Path Layer -->
+      <view class="path-layer">
+        <svg class="path-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 1000" preserveAspectRatio="none">
+          <path d="M180 100 Q180 250 100 350 T180 550 T260 750" 
+                fill="none" stroke="#FFF" stroke-width="8" stroke-dasharray="15,10" stroke-linecap="round" opacity="0.6"/>
+        </svg>
+      </view>
+
+      <!-- 1. Airport Terminal (Top) -->
+      <view class="location-zone airport-zone">
+        <view class="building-airport">
+          <view class="roof"></view>
+          <view class="body">
+            <view class="gate">GATE 1</view>
+            <view class="windows"></view>
+          </view>
+          <view class="wing left"></view>
+          <view class="wing right"></view>
+        </view>
+        <view class="npc-penguin"></view>
+        <view class="zone-label">Airport Terminal</view>
+        
+        <view class="level-container">
+          <view class="level-item completed">
+            <view class="status-icon">✓</view>
+            <text>Basic Survival Talk</text>
+          </view>
+          <view class="level-item current">
+            <view class="status-icon pulse">●</view>
+            <text>Common Problems</text>
+          </view>
+          <view class="level-item locked">
+            <view class="status-icon">🔒</view>
+            <text>Unexpected Situations</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 2. Taxi & Ride-Sharing (Middle) -->
+      <view class="location-zone taxi-zone">
+        <view class="taxi-stand">
+          <view class="sign">TAXI</view>
+          <view class="taxi-car">
+            <view class="top-light"></view>
+          </view>
+        </view>
+        <view class="npc-bear"></view>
+        <view class="zone-label">Taxi Zone</view>
+
+        <view class="level-container">
+          <view class="level-item locked">
+            <view class="status-icon">🔒</view>
+            <text>Basic Taxi Conversation</text>
+          </view>
+          <view class="level-item locked">
+            <view class="status-icon">🔒</view>
+            <text>Trip Adjustments</text>
+          </view>
+          <view class="level-item locked">
+            <view class="status-icon">🔒</view>
+            <text>Problem Solving</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 3. Hotel Lobby (Bottom) -->
+      <view class="location-zone hotel-zone">
+        <view class="building-hotel">
+          <view class="canopy"></view>
+          <view class="door"></view>
+          <view class="luggage-cart"></view>
+        </view>
+        <view class="npc-cat"></view>
+        <view class="zone-label">Grand Hotel</view>
+
+        <view class="level-container">
+          <view class="level-item locked">
+            <view class="status-icon">🔒</view>
+            <text>Check-in Basics</text>
+          </view>
+          <view class="level-item locked">
+            <view class="status-icon">🔒</view>
+            <text>Room Issues</text>
+          </view>
+          <view class="level-item locked">
+            <view class="status-icon">🔒</view>
+            <text>Complaints</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- Avatar -->
+      <view class="avatar-marker">
+        <view class="avatar-body"></view>
+        <view class="avatar-shadow"></view>
+      </view>
+
+    </view>
+  </scroll-view>
+</view>

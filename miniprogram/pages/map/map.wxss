@@ -1,0 +1,280 @@
+/* map.wxss */
+page {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  background-color: #a2d9e7; /* Sea Color */
+}
+
+.world-scroll {
+  width: 100%;
+  height: 100%;
+}
+
+.world-map {
+  position: relative;
+  width: 100%;
+  height: 200vh; /* Reduced from 300vh */
+  background-image: radial-gradient(#b3e5fc 20%, transparent 20%),
+                    radial-gradient(#b3e5fc 20%, transparent 20%);
+  background-color: #a2d9e7;
+  background-position: 0 0, 50rpx 50rpx;
+  background-size: 100rpx 100rpx; /* Dot pattern for sea */
+}
+
+.path-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.path-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Continents --- */
+.continent {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  /* Drop shadow for depth */
+  filter: drop-shadow(0 10rpx 5rpx rgba(0,0,0,0.1));
+}
+
+.zone-label {
+  position: absolute;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #37474f;
+  text-transform: capitalize;
+  z-index: 2;
+  bottom: 15%;
+  text-shadow: 0 2rpx 0 rgba(255,255,255,0.5);
+}
+
+/* 8. Office (Top: ~5%) */
+.continent-office {
+  top: 3%;
+  left: 10%;
+  width: 80%;
+  height: 15%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%239CCC65' stroke='white' stroke-width='8' d='M45,-65C58,-55,68,-42,75,-28C82,-14,86,2,82,16C78,30,66,42,53,53C40,64,26,74,10,76C-6,78,-20,72,-33,63C-46,54,-58,42,-65,28C-72,14,-74,-2,-68,-16C-62,-30,-48,-42,-35,-52C-22,-62,-8,-70,8,-72C24,-74,32,-75,45,-65Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+}
+.decor-building-tall {
+  position: absolute;
+  bottom: 35%;
+  width: 40rpx;
+  height: 80rpx;
+  background-color: #3949AB;
+  border-radius: 4rpx;
+  box-shadow: 2rpx 2rpx 0 rgba(0,0,0,0.2);
+}
+.b1 { left: 35%; height: 90rpx; }
+.b2 { right: 35%; }
+
+/* 7. Park (Top-Left: ~16%) */
+.continent-park {
+  top: 15%;
+  left: 2%;
+  width: 65%;
+  height: 15%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%239CCC65' stroke='white' stroke-width='8' d='M38,-58C49,-48,58,-36,63,-23C68,-10,69,4,65,17C61,30,52,42,40,51C28,60,13,66,-2,69C-17,72,-31,72,-43,64C-55,56,-65,40,-69,24C-73,8,-71,-8,-63,-21C-55,-34,-41,-44,-28,-53C-15,-62,-3,-70,11,-72C25,-74,32,-68,38,-58Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+}
+.decor-tree {
+  position: absolute;
+  width: 30rpx;
+  height: 50rpx;
+  background-color: #2E7D32;
+  border-radius: 50% 50% 10% 10%;
+}
+.t1 { left: 30%; top: 30%; }
+.t2 { left: 60%; top: 40%; }
+
+/* 6. Coffee (Right: ~27%) */
+.continent-coffee {
+  top: 26%;
+  right: 2%;
+  width: 65%;
+  height: 15%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%239CCC65' stroke='white' stroke-width='8' d='M42,-62C54,-52,63,-39,68,-25C73,-11,74,4,69,18C64,32,53,45,40,54C27,63,12,68,-3,72C-18,76,-33,79,-45,71C-57,63,-66,44,-70,26C-74,8,-73,-9,-65,-23C-57,-37,-42,-48,-28,-57C-14,-66,0,-73,15,-75C30,-77,30,-72,42,-62Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+}
+.decor-cup {
+  position: absolute;
+  right: 35%;
+  top: 35%;
+  width: 40rpx;
+  height: 30rpx;
+  background-color: #5D4037;
+  border-radius: 0 0 20rpx 20rpx;
+}
+
+/* 5. Market (Center: ~38%) */
+.continent-market {
+  top: 38%;
+  left: 15%;
+  width: 70%;
+  height: 12%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%239CCC65' stroke='white' stroke-width='8' d='M39,-56C50,-47,58,-35,63,-22C68,-9,70,5,66,18C62,31,52,43,40,52C28,61,14,67,-1,69C-16,71,-30,69,-42,61C-54,53,-64,39,-68,24C-72,9,-70,-7,-62,-20C-54,-33,-40,-43,-27,-52C-14,-61,0,-69,14,-71C28,-73,28,-65,39,-56Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+}
+.decor-stall {
+  position: absolute;
+  bottom: 35%;
+  width: 50rpx;
+  height: 40rpx;
+  background-color: #F57C00;
+  border-top: 6rpx solid #E64A19;
+}
+.s1 { left: 25%; }
+.s2 { right: 25%; }
+
+/* 4. Food (Left: ~49%) */
+.continent-food {
+  top: 49%;
+  left: 5%;
+  width: 60%;
+  height: 15%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%239CCC65' stroke='white' stroke-width='8' d='M45,-65C58,-55,68,-42,75,-28C82,-14,86,2,82,16C78,30,66,42,53,53C40,64,26,74,10,76C-6,78,-20,72,-33,63C-46,54,-58,42,-65,28C-72,14,-74,-2,-68,-16C-62,-30,-48,-42,-35,-52C-22,-62,-8,-70,8,-72C24,-74,32,-75,45,-65Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+}
+.decor-burger {
+  position: absolute;
+  left: 35%;
+  width: 40rpx;
+  height: 30rpx;
+  background-color: #C62828;
+  border-radius: 10rpx;
+}
+
+/* 3. School (Right: ~60%) */
+.continent-school {
+  top: 60%;
+  right: 5%;
+  width: 60%;
+  height: 15%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%239CCC65' stroke='white' stroke-width='8' d='M38,-58C49,-48,58,-36,63,-23C68,-10,69,4,65,17C61,30,52,42,40,51C28,60,13,66,-2,69C-17,72,-31,72,-43,64C-55,56,-65,40,-69,24C-73,8,-71,-8,-63,-21C-55,-34,-41,-44,-28,-53C-15,-62,-3,-70,11,-72C25,-74,32,-68,38,-58Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+}
+.decor-book {
+  position: absolute;
+  right: 35%;
+  width: 30rpx;
+  height: 40rpx;
+  background-color: #7B1FA2;
+}
+
+/* 2. Housing (Left-ish: ~71%) */
+.continent-housing {
+  top: 71%;
+  left: 5%;
+  width: 65%;
+  height: 15%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23B0BEC5' stroke='white' stroke-width='8' d='M42,-62C54,-52,63,-39,68,-25C73,-11,74,4,69,18C64,32,53,45,40,54C27,63,12,68,-3,72C-18,76,-33,79,-45,71C-57,63,-66,44,-70,26C-74,8,-73,-9,-65,-23C-57,-37,-42,-48,-28,-57C-14,-66,0,-73,15,-75C30,-77,30,-72,42,-62Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+}
+.decor-house {
+  position: absolute;
+  bottom: 35%;
+  width: 40rpx;
+  height: 40rpx;
+  background-color: #455A64;
+  clip-path: polygon(0% 100%, 0% 40%, 50% 0%, 100% 40%, 100% 100%);
+}
+.h1 { left: 25%; }
+.h2 { right: 25%; }
+
+/* 1. Transport (Bottom-Center: ~82%) */
+.continent-transport {
+  top: 82%;
+  left: 10%;
+  width: 80%;
+  height: 10%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23B0BEC5' stroke='white' stroke-width='8' d='M39,-56C50,-47,58,-35,63,-22C68,-9,70,5,66,18C62,31,52,43,40,52C28,61,14,67,-1,69C-16,71,-30,69,-42,61C-54,53,-64,39,-68,24C-72,9,-70,-7,-62,-20C-54,-33,-40,-43,-27,-52C-14,-61,0,-69,14,-71C28,-73,28,-65,39,-56Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+}
+.decor-bus {
+  position: absolute;
+  bottom: 25%;
+  left: 25%;
+  width: 50rpx;
+  height: 30rpx;
+  background-color: #FFB74D;
+  border-radius: 4rpx;
+}
+.decor-plane {
+  position: absolute;
+  top: 15%;
+  right: 15%;
+  width: 40rpx;
+  height: 40rpx;
+  background-color: #546E7A;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+/* --- Levels --- */
+.level-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
+.node-icon {
+  width: 100rpx;
+  height: 100rpx;
+  background-color: white;
+  border-radius: 30rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50rpx;
+  box-shadow: 0 8rpx 16rpx rgba(0,0,0,0.1);
+  border: 4rpx solid white;
+  transition: transform 0.2s;
+}
+
+.level-node:active .node-icon {
+  transform: scale(0.95);
+}
+
+/* Color coding for nodes */
+.level-node.office .node-icon { border-color: #2196f3; background-color: #e3f2fd; }
+.level-node.park .node-icon { border-color: #4caf50; background-color: #e8f5e9; }
+.level-node.coffee .node-icon { border-color: #795548; background-color: #efebe9; }
+.level-node.market .node-icon { border-color: #ff9800; background-color: #fff3e0; }
+.level-node.food .node-icon { border-color: #f44336; background-color: #ffebee; }
+.level-node.school .node-icon { border-color: #9c27b0; background-color: #f3e5f5; }
+.level-node.housing .node-icon { border-color: #607d8b; background-color: #eceff1; }
+.level-node.transport .node-icon,
+.level-node.transport-airport .node-icon,
+.level-node.transport-taxi .node-icon,
+.level-node.transport-hotel .node-icon { border-color: #455a64; background-color: #cfd8dc; }
+
+.node-label {
+  margin-top: 10rpx;
+  background-color: rgba(255,255,255,0.9);
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #37474f;
+  box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.1);
+  white-space: nowrap;
+}
+
+.lock-overlay {
+  position: absolute;
+  top: -10rpx;
+  right: -10rpx;
+  font-size: 30rpx;
+}

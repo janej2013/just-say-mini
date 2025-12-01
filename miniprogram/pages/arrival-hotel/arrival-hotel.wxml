@@ -1,0 +1,29 @@
+<view class="container">
+  <view class="district-map">
+    <!-- 3. Hotel Lobby -->
+    <view class="location-zone hotel-zone">
+      <view class="building-hotel">
+        <view class="canopy"></view>
+        <view class="door"></view>
+        <view class="luggage-cart"></view>
+      </view>
+      <view class="npc-cat"></view>
+      <view class="zone-label">Grand Hotel</view>
+
+      <view class="level-container">
+        <view class="level-item locked">
+          <view class="status-icon">🔒</view>
+          <text>Check-in Basics</text>
+        </view>
+        <view class="level-item locked">
+          <view class="status-icon">🔒</view>
+          <text>Room Issues</text>
+        </view>
+        <view class="level-item locked">
+          <view class="status-icon">🔒</view>
+          <text>Complaints</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

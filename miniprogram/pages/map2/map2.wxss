@@ -1,0 +1,258 @@
+/* map2.wxss */
+page {
+  height: 100vh;
+  background-color: #D0E8EF;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.map-scroll {
+  width: 100%;
+  height: 100%;
+}
+
+.map-content {
+  position: relative;
+  width: 100%;
+  height: 180vh; /* Long scroll */
+  background-image: radial-gradient(rgba(255,255,255,0.3) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.path-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.path-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.close-btn {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  z-index: 100;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* --- Islands --- */
+.island {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  filter: drop-shadow(0 4px 0 rgba(0,0,0,0.1));
+}
+
+/* Green Island Shape */
+.island-restaurant, .island-company, .island-school {
+  /* Generic green shape fallback or specific */
+}
+
+/* 1. Restaurant (Top Right) */
+.island-restaurant {
+  top: 5%;
+  right: -10%;
+  width: 80%;
+  height: 25%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%239CCC65' stroke='white' stroke-width='6' d='M50,-60C70,-50,85,-30,88,-10C91,10,82,30,65,45C48,60,24,70,0,72C-24,74,-48,68,-65,52C-82,36,-92,10,-85,-15C-78,-40,-54,-64,-30,-70C-6,-76,30,-70,50,-60Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+}
+
+/* 2. Company (Center Left) */
+.island-company {
+  top: 35%;
+  left: -10%;
+  width: 70%;
+  height: 25%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%239CCC65' stroke='white' stroke-width='6' d='M40,-50C60,-40,75,-20,78,0C81,20,72,40,55,55C38,70,14,80,-10,78C-34,76,-58,62,-70,42C-82,22,-82,-4,-70,-25C-58,-46,-34,-62,-10,-65C14,-68,20,-60,40,-50Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+}
+
+/* 3. School (Bottom Right) */
+.island-school {
+  top: 65%;
+  right: -5%;
+  width: 70%;
+  height: 25%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%239CCC65' stroke='white' stroke-width='6' d='M45,-55C65,-45,80,-25,82,-5C84,15,75,35,58,50C41,65,17,75,-5,73C-27,71,-49,57,-62,37C-75,17,-75,-9,-62,-30C-49,-51,-25,-67,-1,-70C23,-73,25,-65,45,-55Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+}
+
+/* 4. Locked (Bottom Left) */
+.island-locked {
+  top: 85%;
+  left: -10%;
+  width: 60%;
+  height: 20%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23B0BEC5' stroke='white' stroke-width='6' d='M40,-50C60,-40,75,-20,78,0C81,20,72,40,55,55C38,70,14,80,-10,78C-34,76,-58,62,-70,42C-82,22,-82,-4,-70,-25C-58,-46,-34,-62,-10,-65C14,-68,20,-60,40,-50Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+}
+
+/* 5. Partial (Top Left) */
+.island-partial {
+  top: 5%;
+  left: -20%;
+  width: 50%;
+  height: 20%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23A1887F' stroke='white' stroke-width='6' d='M50,0C50,30,30,50,0,50C-30,50,-50,30,-50,0C-50,-30,-30,-50,0,-50C30,-50,50,-30,50,0Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+}
+
+/* 6. Tiny Island (Center) */
+.island-tiny {
+  top: 25%;
+  left: 45%;
+  width: 15%;
+  height: 8%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%239CCC65' stroke='white' stroke-width='6' d='M20,-20C30,-10,30,10,20,20C10,30,-10,30,-20,20C-30,10,-30,-10,-20,-20C-10,-30,10,-30,20,-20Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+}
+
+/* --- Decor --- */
+.tree {
+  position: absolute;
+  width: 20px;
+  height: 30px;
+  background-color: #388E3C;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  z-index: 2;
+}
+.t1 { top: 30%; left: 20%; }
+.t2 { top: 40%; right: 10%; }
+.t3 { top: 20%; left: 20%; }
+.t4 { top: 30%; right: 30%; }
+
+/* Restaurant Building */
+.building-restaurant {
+  position: absolute;
+  top: 25%;
+  left: 30%;
+  width: 100px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.building-restaurant .roof {
+  width: 110%;
+  height: 20px;
+  background: #546E7A;
+  clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+}
+.building-restaurant .body {
+  width: 90%;
+  height: 60px;
+  background: #8D6E63;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+.building-restaurant .sign {
+  background: #3F51B5;
+  color: white;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  gap: 5px;
+}
+.building-restaurant .counter {
+  color: #3E2723;
+  font-weight: bold;
+  font-size: 20px;
+  letter-spacing: 5px;
+}
+
+/* Company Building */
+.building-company {
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  display: flex;
+  align-items: flex-end;
+}
+.skyscraper {
+  background: #1A237E;
+  border: 1px solid #3949AB;
+}
+.s1 { width: 30px; height: 60px; background: linear-gradient(90deg, #1A237E 50%, #3949AB 50%); border-radius: 10px 0 0 0; }
+.s2 { width: 40px; height: 50px; background: linear-gradient(90deg, #304FFE 50%, #536DFE 50%); }
+
+/* School Building */
+.building-school {
+  position: absolute;
+  top: 40%;
+  left: 30%;
+  width: 80px;
+  height: 50px;
+  background: #9FA8DA;
+  display: flex;
+  align-items: flex-end;
+}
+.building-school .wing {
+  width: 50%;
+  height: 100%;
+  border: 1px solid #7986CB;
+}
+.building-school .left { background: white; width: 40%; }
+.building-school .right { background: #9FA8DA; width: 60%; height: 80%; }
+
+/* Labels */
+.label-marker {
+  position: absolute;
+  bottom: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pin {
+  width: 20px;
+  height: 30px;
+  background: #F44336;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  margin-bottom: 5px;
+}
+.pin::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  margin-bottom: 5px;
+}
+.label-marker text {
+  font-weight: bold;
+  font-size: 14px;
+  color: black;
+}
+
+.lock-icon {
+  font-size: 40px;
+  opacity: 0.5;
+}

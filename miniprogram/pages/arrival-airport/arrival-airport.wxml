@@ -1,0 +1,33 @@
+<view class="container">
+  <view class="district-map">
+    <!-- 1. Airport Terminal -->
+    <view class="location-zone airport-zone">
+      <view class="building-airport">
+        <view class="roof"></view>
+        <view class="body">
+          <view class="gate">GATE 1</view>
+          <view class="windows"></view>
+        </view>
+        <view class="wing left"></view>
+        <view class="wing right"></view>
+      </view>
+      <view class="npc-penguin"></view>
+      <view class="zone-label">Airport Terminal</view>
+      
+      <view class="level-container">
+        <view class="level-item completed">
+          <view class="status-icon">✓</view>
+          <text>Basic Survival Talk</text>
+        </view>
+        <view class="level-item current">
+          <view class="status-icon pulse">●</view>
+          <text>Common Problems</text>
+        </view>
+        <view class="level-item locked">
+          <view class="status-icon">🔒</view>
+          <text>Unexpected Situations</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

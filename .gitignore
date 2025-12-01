@@ -1,0 +1,13 @@
+# User requested ignores
+tmp/
+
+# Node modules
+node_modules/
+
+# WeChat Mini Program
+miniprogram_npm/
+project.private.config.json
+
+# OS generated files
+.DS_Store
+Thumbs.db

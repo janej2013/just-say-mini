@@ -22,6 +22,8 @@
     </view>
     <view class="usermotto">
       <text class="user-motto">{{motto}}</text>
+      <button class="map-btn" bindtap="goToMap" type="primary" style="margin-top: 20px;">Go to Map</button>
+      <button class="map-btn" bindtap="goToMap2" type="default" style="margin-top: 10px;">Go to Map 2</button>
     </view>
   </view>
 </scroll-view>

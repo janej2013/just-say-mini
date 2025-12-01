@@ -50,5 +50,15 @@ Component({
         }
       })
     },
+    goToMap() {
+      wx.navigateTo({
+        url: '../map/map',
+      })
+    },
+    goToMap2() {
+      wx.navigateTo({
+        url: '../map2/map2',
+      })
+    },
   },
 })

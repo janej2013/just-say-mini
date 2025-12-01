@@ -1,0 +1,75 @@
+<view class="container">
+  <scroll-view scroll-y class="map-scroll">
+    <view class="map-content">
+      
+      <!-- Path Layer -->
+      <view class="path-layer">
+        <svg class="path-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 812" preserveAspectRatio="none">
+          <!-- Path connecting the islands -->
+          <path d="M-20 180 Q80 180 120 250 T200 350 T280 450 T200 550 T120 650 T280 750" 
+                fill="none" stroke="#5C6BC0" stroke-width="4" stroke-linecap="round" />
+        </svg>
+      </view>
+
+      <!-- Close Button -->
+      <view class="close-btn">×</view>
+
+      <!-- 1. Restaurant (Top Right) -->
+      <view class="island island-restaurant">
+        <view class="building-restaurant">
+          <view class="roof"></view>
+          <view class="body">
+            <view class="sign">
+              <text>🍺</text><text>🍴</text><text>☕</text>
+            </view>
+            <view class="counter">TT</view>
+          </view>
+        </view>
+        <view class="tree t1"></view>
+        <view class="tree t2"></view>
+        <view class="label-marker">
+          <view class="pin red"></view>
+          <text>Restaurant</text>
+        </view>
+      </view>
+
+      <!-- 2. Company (Center Left) -->
+      <view class="island island-company">
+        <view class="building-company">
+          <view class="skyscraper s1"></view>
+          <view class="skyscraper s2"></view>
+        </view>
+        <view class="tree t3"></view>
+        <view class="label-marker">
+          <view class="dot"></view>
+          <text>Company</text>
+        </view>
+      </view>
+
+      <!-- 3. School (Bottom Right) -->
+      <view class="island island-school">
+        <view class="building-school">
+          <view class="wing left"></view>
+          <view class="wing right"></view>
+        </view>
+        <view class="tree t4"></view>
+        <view class="label-marker">
+          <view class="dot"></view>
+          <text>School</text>
+        </view>
+      </view>
+
+      <!-- 4. Locked Area (Bottom Left) -->
+      <view class="island island-locked">
+        <view class="lock-icon">🔒</view>
+      </view>
+
+      <!-- 5. Partial Area (Top Left) -->
+      <view class="island island-partial"></view>
+
+      <!-- 6. Tiny Island (Center) -->
+      <view class="island island-tiny"></view>
+
+    </view>
+  </scroll-view>
+</view>
