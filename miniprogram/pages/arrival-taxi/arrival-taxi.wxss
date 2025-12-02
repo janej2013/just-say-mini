@@ -11,6 +11,7 @@ page {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .district-map {
@@ -108,39 +109,102 @@ page {
 }
 
 .level-item {
+  margin-bottom: 8px;
+}
+
+.level-item:last-child {
+  margin-bottom: 0;
+}
+
+.level-header {
   display: flex;
   align-items: center;
   padding: 12px 0;
   border-bottom: 1px solid #F5F5F5;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s;
 }
-.level-item:last-child {
+
+.level-header:last-child {
   border-bottom: none;
+}
+
+.level-header.selected {
+  background-color: #FFF3E0;
+  box-shadow: 0 0 8px rgba(255, 152, 0, 0.3);
+}
+
+.level-header.selected .status-icon {
+  background: #FF5722 !important;
+  color: white !important;
 }
 
 .status-icon {
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  background: #E0E0E0;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 15px;
   font-size: 16px;
+  color: #9E9E9E;
+  transition: all 0.3s;
+  cursor: pointer;
 }
 
-.level-item.completed .status-icon {
-  background: #4CAF50;
+.level-header text {
+  flex: 1;
+  cursor: pointer;
+}
+
+/* --- Task List --- */
+.task-list {
+  padding: 5px 0 10px 45px; /* 左侧对齐到文本 */
+  transition: all 0.3s ease;
+}
+
+.task-item {
+  display: flex;
+  align-items: flex-start;
+  margin: 5px 0;
+  padding: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.task-bullet {
+  margin-right: 8px;
+  color: #FF5722;
+  font-weight: bold;
+}
+
+/* Start Button */
+.start-button {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #FF9800, #FF5722);
   color: white;
+  padding: 15px 40px;
+  border-radius: 25px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(255, 87, 34, 0.4);
+  animation: float 3s ease-in-out infinite;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.level-item.current .status-icon {
-  background: #FF9800;
-  color: white;
-  box-shadow: 0 0 8px #FF9800;
+
+.start-button text {
+  font-size: 16px;
 }
-.level-item.locked .status-icon {
-  background: #E0E0E0;
-  color: #9E9E9E;
-}
-.level-item.locked text {
-  color: #9E9E9E;
+
+@keyframes float {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-5px); }
 }

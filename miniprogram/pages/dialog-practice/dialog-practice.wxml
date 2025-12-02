@@ -1,0 +1,71 @@
+<!--pages/dialog-practice/dialog-practice.wxml-->
+<view class="container">
+  <!-- 任务标题栏 -->
+  <view class="task-header">
+    <text class="task-title">{{taskTitle}}</text>
+    <button class="close-btn" bindtap="onClose">✕</button>
+  </view>
+
+  <!-- 进度条 -->
+  <view class="progress-container">
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{progress}}%;"></view>
+    </view>
+  </view>
+
+  <!-- 对话内容区域 -->
+  <view class="chat-container">
+    <!-- 语音播放组件 -->
+    <view class="audio-player">
+      <view class="audio-controls">
+        <view class="audio-icon" bindtap="onPlayAudio">
+          <text wx:if="{{!audioPlaying}}">▶</text>
+          <text wx:else>❚❚</text>
+        </view>
+        <view class="audio-wave">
+          <view class="wave-bar" wx:for="{{[1,2,3,4,5,6,7,8,9,10]}}" wx:key="index"></view>
+        </view>
+      </view>
+      <text class="role-label" bindtap="toggleNpcTextDisplay">A</text>
+    </view>
+    
+    
+
+    
+
+    <!-- 对话气泡 -->
+    <view class="chat-bubbles">
+      <block wx:for="{{dialogList}}" wx:key="id">
+        <view wx:if="{{item.type == 'npc' && showNpcText}}" class="chat-bubble {{item.type}}-bubble {{item.type == 'npc' && audioPlaying ? 'speaking' : ''}} {{item.type == 'npc' && showNpcText ? 'expanded' : ''}}">
+          <text>{{item.content}}</text>
+        </view>
+        <!-- 用户回答（仅在录音后显示） -->
+        <view wx:if="{{showUserResponse && item.type == 'user'}}" class="chat-bubble {{item.type}}-bubble">
+          <text>{{item.content}}</text>
+        </view>
+        <!-- 反馈标签（仅在用户回答后显示） -->
+        <view wx:if="{{showUserResponse && item.feedback}}" class="feedback-badge">
+          <text class="feedback-text">{{item.feedback}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar">
+    <view class="input-area">
+      <!-- 关键词提示（显示在麦克风上方） -->
+      <view wx:if="{{keywordsHint.length > 0}}" class="keywords-hint-container">
+        <view class="keyword-item" wx:for="{{keywordsHint}}" wx:key="index">
+          <text class="keyword-text">{{item}}</text>
+        </view>
+      </view>
+      <button class="microphone-btn {{isRecording ? 'recording' : ''}}" bindtap="onRecord">
+        <text wx:if="{{!isRecording}}">🎤</text>
+        <text wx:else>●</text>
+      </button>
+    </view>
+  </view>
+</view>

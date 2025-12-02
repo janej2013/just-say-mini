@@ -1,0 +1,185 @@
+{
+  "locationId": "airport_hotel_lobby",
+  "levels": [
+    {
+      "levelId": "hotel_l1",
+      "title": "Soft Landing Stay",
+      "tasks": [
+        {
+          "taskId": "hotel_l1_t1",
+          "npc": {
+            "animal": "Deer",
+            "role": "Hotel Receptionist"
+          },
+          "botQuestions": {
+            "simple": "Do you want to check in?",
+            "natural": "Hi! Are you here to check in?",
+            "native": "Hey there! Checking in today?"
+          },
+          "userAnswers": {
+            "simple": "Yes, I want to check in.",
+            "natural": "Yes, I’d like to check in, please.",
+            "native": "Yep, checking in!"
+          },
+          "keywordsHint": ["check-in", "room", "reservation", "hotel"]
+        },
+        {
+          "taskId": "hotel_l1_t2",
+          "npc": {
+            "animal": "Turtle",
+            "role": "Front Desk Staff"
+          },
+          "botQuestions": {
+            "simple": "Do you have a reservation?",
+            "natural": "Do you already have a reservation with us?",
+            "native": "Got a booking already?"
+          },
+          "userAnswers": {
+            "simple": "Yes, I have a reservation.",
+            "natural": "Yes, I booked a room under my name.",
+            "native": "Yep, got a room booked."
+          },
+          "keywordsHint": ["reservation", "book", "name", "room"]
+        },
+        {
+          "taskId": "hotel_l1_t3",
+          "npc": {
+            "animal": "Beaver",
+            "role": "Hotel Concierge"
+          },
+          "botQuestions": {
+            "simple": "Do you need help with your luggage?",
+            "natural": "Would you like some help with your luggage?",
+            "native": "Need a hand with those bags?"
+          },
+          "userAnswers": {
+            "simple": "Yes, please help with my luggage.",
+            "natural": "Yes, I'd appreciate some help with my bags.",
+            "native": "Yeah, could you help me with my bags?"
+          },
+          "keywordsHint": ["luggage", "help", "bags", "carry"]
+        }
+      ]
+    },
+    {
+      "levelId": "hotel_l2",
+      "title": "Room Troubles",
+      "tasks": [
+        {
+          "taskId": "hotel_l2_t1",
+          "npc": {
+            "animal": "Swan",
+            "role": "Hotel Receptionist"
+          },
+          "botQuestions": {
+            "simple": "Is your room too cold?",
+            "natural": "Is the temperature in your room okay, or too cold?",
+            "native": "Room freezing? Need the temp fixed?"
+          },
+          "userAnswers": {
+            "simple": "My room is too cold.",
+            "natural": "The room feels too cold. Could you help adjust it?",
+            "native": "Yeah, the room’s freezing. Can we fix that?"
+          },
+          "keywordsHint": ["cold", "temperature", "room", "adjust"]
+        },
+        {
+          "taskId": "hotel_l2_t2",
+          "npc": {
+            "animal": "Flamingo",
+            "role": "Hotel Housekeeper"
+          },
+          "botQuestions": {
+            "simple": "Do you need new towels?",
+            "natural": "Do you need clean towels or housekeeping?",
+            "native": "Need fresh towels or room service?"
+          },
+          "userAnswers": {
+            "simple": "I need new towels.",
+            "natural": "Could I get some fresh towels, please?",
+            "native": "Yeah, can I get some fresh towels?"
+          },
+          "keywordsHint": ["towels", "housekeeping", "clean", "room"]
+        },
+        {
+          "taskId": "hotel_l2_t3",
+          "npc": {
+            "animal": "Owl",
+            "role": "Hotel Front Desk Manager"
+          },
+          "botQuestions": {
+            "simple": "Is your room noisy?",
+            "natural": "Is the noise level in your room bothering you?",
+            "native": "Too loud in your room? Want help with that?"
+          },
+          "userAnswers": {
+            "simple": "My room is noisy.",
+            "natural": "There’s noise in my room. Could you check it?",
+            "native": "Yeah, my room’s super noisy. Can you help?"
+          },
+          "keywordsHint": ["noisy", "quiet", "problem", "room"]
+        }
+      ]
+    },
+    {
+      "levelId": "hotel_l3",
+      "title": "Manager, Please",
+      "tasks": [
+        {
+          "taskId": "hotel_l3_t1",
+          "npc": {
+            "animal": "Lion",
+            "role": "Hotel Manager"
+          },
+          "botQuestions": {
+            "simple": "Do you want to change your room?",
+            "natural": "Do you want to request a room change?",
+            "native": "Want to switch rooms?"
+          },
+          "userAnswers": {
+            "simple": "I want to change my room.",
+            "natural": "I’d like to request a room change, please.",
+            "native": "Yeah, I need to switch rooms."
+          },
+          "keywordsHint": ["room", "change", "switch", "request"]
+        },
+        {
+          "taskId": "hotel_l3_t2",
+          "npc": {
+            "animal": "Hippo",
+            "role": "Hotel Guest Relations Officer"
+          },
+          "botQuestions": {
+            "simple": "Do you want to report a serious problem?",
+            "natural": "Is there a serious issue you'd like to report?",
+            "native": "Got a big issue? Want to report it?"
+          },
+          "userAnswers": {
+            "simple": "I want to report a problem.",
+            "natural": "There’s a serious issue I need to report.",
+            "native": "Yeah, I’ve got a major issue to report."
+          },
+          "keywordsHint": ["problem", "report", "issue", "serious"]
+        },
+        {
+          "taskId": "hotel_l3_t3",
+          "npc": {
+            "animal": "Peacock",
+            "role": "Hotel Billing Staff"
+          },
+          "botQuestions": {
+            "simple": "Do you want to check your bill?",
+            "natural": "Would you like to check or discuss your bill?",
+            "native": "Want to go over your bill?"
+          },
+          "userAnswers": {
+            "simple": "I want to check my bill.",
+            "natural": "I’d like to review my bill, please.",
+            "native": "Yeah, can we go over my bill?"
+          },
+          "keywordsHint": ["bill", "check", "charge", "review"]
+        }
+      ]
+    }
+  ]
+}

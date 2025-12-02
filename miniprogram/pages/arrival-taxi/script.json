@@ -1,0 +1,185 @@
+{
+  "locationId": "airport_taxi_zone",
+  "levels": [
+    {
+      "levelId": "taxi_l1",
+      "title": "First Ride Start",
+      "tasks": [
+        {
+          "taskId": "taxi_l1_t1",
+          "npc": {
+            "animal": "Bear",
+            "role": "Taxi Driver"
+          },
+          "botQuestions": {
+            "simple": "Where do you want to go?",
+            "natural": "Hi there! Where are you headed today?",
+            "native": "Hey! Where you off to?"
+          },
+          "userAnswers": {
+            "simple": "I want to go to my hotel.",
+            "natural": "I'd like to go to my hotel, please.",
+            "native": "Yeah, heading to my hotel."
+          },
+          "keywordsHint": ["go", "hotel", "destination", "where"]
+        },
+        {
+          "taskId": "taxi_l1_t2",
+          "npc": {
+            "animal": "Moose",
+            "role": "Taxi Stand Assistant"
+          },
+          "botQuestions": {
+            "simple": "Do you want a taxi or ride-share?",
+            "natural": "Are you looking for a taxi or a ride-share pickup?",
+            "native": "Taxi or ride-share? What are you grabbing?"
+          },
+          "userAnswers": {
+            "simple": "I want a taxi.",
+            "natural": "I’m looking for a taxi, thanks.",
+            "native": "Taxi for me, thanks."
+          },
+          "keywordsHint": ["taxi", "ride-share", "choose", "pickup"]
+        },
+        {
+          "taskId": "taxi_l1_t3",
+          "npc": {
+            "animal": "Penguin",
+            "role": "Taxi Queue Manager"
+          },
+          "botQuestions": {
+            "simple": "Is this your first time here?",
+            "natural": "First time in Animal City? Need help with the taxi line?",
+            "native": "First time here? Need a quick rundown of the taxi line?"
+          },
+          "userAnswers": {
+            "simple": "Yes, it is my first time.",
+            "natural": "Yeah, it's my first time here. Thanks for the help!",
+            "native": "Yep, first time around. Appreciate it!"
+          },
+          "keywordsHint": ["first", "time", "help", "line"]
+        }
+      ]
+    },
+    {
+      "levelId": "taxi_l2",
+      "title": "Ride Adjustments",
+      "tasks": [
+        {
+          "taskId": "taxi_l2_t1",
+          "npc": {
+            "animal": "Raccoon",
+            "role": "Ride-share Driver"
+          },
+          "botQuestions": {
+            "simple": "Do you want to change your destination?",
+            "natural": "Do you need to update your drop-off location?",
+            "native": "Need to switch up where you're headed?"
+          },
+          "userAnswers": {
+            "simple": "I want to change the destination.",
+            "natural": "I need to change my drop-off spot, please.",
+            "native": "Yeah, I gotta change where I'm going."
+          },
+          "keywordsHint": ["change", "destination", "update", "drop-off"]
+        },
+        {
+          "taskId": "taxi_l2_t2",
+          "npc": {
+            "animal": "Goat",
+            "role": "Taxi Driver"
+          },
+          "botQuestions": {
+            "simple": "Do you want the air conditioner on?",
+            "natural": "Would you like me to turn on the AC or adjust the temperature?",
+            "native": "Need the AC up, down, or totally off?"
+          },
+          "userAnswers": {
+            "simple": "Yes, please turn on the AC.",
+            "natural": "Could you turn on the AC? It's a bit warm.",
+            "native": "Yeah, could you kick the AC on?"
+          },
+          "keywordsHint": ["AC", "temperature", "warm", "cool"]
+        },
+        {
+          "taskId": "taxi_l2_t3",
+          "npc": {
+            "animal": "Otter",
+            "role": "Ride-share Driver"
+          },
+          "botQuestions": {
+            "simple": "Do you need a phone charger?",
+            "natural": "Do you want to charge your phone? I have different cables.",
+            "native": "Need a quick phone charge? I got cables."
+          },
+          "userAnswers": {
+            "simple": "Yes, I need a charger.",
+            "natural": "Yeah, could I charge my phone for a bit?",
+            "native": "Yep, my phone’s dying. Can I plug in?"
+          },
+          "keywordsHint": ["charger", "phone", "battery", "cable"]
+        }
+      ]
+    },
+    {
+      "levelId": "taxi_l3",
+      "title": "Unexpected Ride",
+      "tasks": [
+        {
+          "taskId": "taxi_l3_t1",
+          "npc": {
+            "animal": "Buffalo",
+            "role": "Taxi Driver"
+          },
+          "botQuestions": {
+            "simple": "Do you want to report a wrong route?",
+            "natural": "Did you notice the route looks different? Want me to correct it?",
+            "native": "Route looks off? Want me to fix it?"
+          },
+          "userAnswers": {
+            "simple": "The route is wrong.",
+            "natural": "I think we’re taking the wrong route. Could you correct it?",
+            "native": "Hey, I think this route’s off. Can we fix it?"
+          },
+          "keywordsHint": ["route", "wrong", "correct", "direction"]
+        },
+        {
+          "taskId": "taxi_l3_t2",
+          "npc": {
+            "animal": "Parrot",
+            "role": "Taxi Customer Support Agent"
+          },
+          "botQuestions": {
+            "simple": "Do you want to report a price issue?",
+            "natural": "Is there a problem with the fare? Do you want to report it?",
+            "native": "Fare looks weird? Want to file a report?"
+          },
+          "userAnswers": {
+            "simple": "The price is wrong.",
+            "natural": "I think the fare is incorrect. I want to report it.",
+            "native": "Yeah, the fare looks off. I wanna report it."
+          },
+          "keywordsHint": ["price", "fare", "report", "wrong"]
+        },
+        {
+          "taskId": "taxi_l3_t3",
+          "npc": {
+            "animal": "Hedgehog",
+            "role": "Ride-share Driver"
+          },
+          "botQuestions": {
+            "simple": "Do you want to report bad driving?",
+            "natural": "Is the driving making you uncomfortable? Want to report it?",
+            "native": "Driver too wild? You wanna report this?"
+          },
+          "userAnswers": {
+            "simple": "The driving is unsafe.",
+            "natural": "I feel uncomfortable. The driving seems unsafe.",
+            "native": "Yeah, this driving feels sketchy. I need to report it."
+          },
+          "keywordsHint": ["unsafe", "driving", "report", "problem"]
+        }
+      ]
+    }
+  ]
+}

@@ -8,22 +8,33 @@
         <view class="luggage-cart"></view>
       </view>
       <view class="npc-cat"></view>
-      <view class="zone-label">Grand Hotel</view>
+      <view class="zone-label">动物酒店大堂</view>
 
       <view class="level-container">
-        <view class="level-item locked">
-          <view class="status-icon">🔒</view>
-          <text>Check-in Basics</text>
-        </view>
-        <view class="level-item locked">
-          <view class="status-icon">🔒</view>
-          <text>Room Issues</text>
-        </view>
-        <view class="level-item locked">
-          <view class="status-icon">🔒</view>
-          <text>Complaints</text>
+        <view wx:for="{{levels}}" wx:key="index" class="level-item">
+          <view class="level-header {{selectedLevelIndex == index ? 'selected' : ''}}">
+            <view class="status-icon" bindtap="toggleLevelExpansion" data-level-index="{{index}}">
+              <text>{{expandedLevels[index] ? '−' : '+'}}</text>
+            </view>
+            <text bindtap="selectLevel" data-level-index="{{index}}">{{item.title.zh}}</text>
+          </view>
+          
+          <!-- 任务列表 -->
+          <view class="task-list" wx:if="{{expandedLevels[index]}}">
+            <view class="task-item" 
+                  wx:for="{{item.tasks}}" 
+                  wx:key="taskId">
+              <view class="task-bullet">•</view>
+              <text>{{item.zh}}</text>
+            </view>
+          </view>
         </view>
       </view>
+    </view>
+    
+    <!-- Now Start Button -->
+    <view class="start-button" bindtap="startAdventure">
+      <text>现在开始吧！</text>
     </view>
   </view>
 </view>

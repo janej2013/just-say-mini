@@ -1,22 +1,4 @@
-Page({
-    data: {
-        levels: [],
-        expandedLevels: {}, // 用于存储展开状态
-        selectedLevelIndex: 0 // 默认选中第一个level
-    },
-    
-    onLoad() {
-        wx.setNavigationBarTitle({ 
-            title: '出租车与网约车区' 
-        });
-        
-        // 加载 level 和 task 数据
-        this.loadLevelTaskData();
-    },
-    
-    loadLevelTaskData() {
-        // 从数据文件加载信息
-        const levelTaskData = {
+{
   "locationId": "taxi_zone",
   "name": {
     "en": "Taxi & Ride-Sharing Zone",
@@ -109,41 +91,3 @@ Page({
     }
   ]
 }
-;
-        
-        this.setData({
-            levels: levelTaskData.levels
-        });
-    },
-    
-    toggleLevelExpansion(e) {
-        const { levelIndex } = e.currentTarget.dataset;
-        const currentExpanded = this.data.expandedLevels[levelIndex] || false;
-        
-        // 更新展开状态
-        const newExpandedLevels = {
-            ...this.data.expandedLevels,
-            [levelIndex]: !currentExpanded
-        };
-        
-        this.setData({
-            expandedLevels: newExpandedLevels
-        });
-    },
-    
-    selectLevel(e) {
-        const { levelIndex } = e.currentTarget.dataset;
-        this.setData({
-            selectedLevelIndex: levelIndex
-        });
-    },
-    
-    startAdventure() {
-        // 这里可以添加开始冒险的逻辑
-        wx.showToast({
-            title: '冒险开始！',
-            icon: 'none',
-            duration: 2000
-        });
-    }
-});

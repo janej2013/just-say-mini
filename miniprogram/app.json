@@ -7,7 +7,8 @@
     "pages/arrival-airport/arrival-airport",
     "pages/arrival-taxi/arrival-taxi",
     "pages/arrival-hotel/arrival-hotel",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/dialog-practice/dialog-practice"
   ],
   "window": {
     "navigationBarTextStyle": "black",

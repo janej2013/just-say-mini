@@ -12,22 +12,33 @@
         <view class="wing right"></view>
       </view>
       <view class="npc-penguin"></view>
-      <view class="zone-label">Airport Terminal</view>
+      <view class="zone-label">动物机场</view>
       
       <view class="level-container">
-        <view class="level-item completed">
-          <view class="status-icon">✓</view>
-          <text>Basic Survival Talk</text>
-        </view>
-        <view class="level-item current">
-          <view class="status-icon pulse">●</view>
-          <text>Common Problems</text>
-        </view>
-        <view class="level-item locked">
-          <view class="status-icon">🔒</view>
-          <text>Unexpected Situations</text>
+        <view wx:for="{{levels}}" wx:key="index" class="level-item">
+          <view class="level-header {{selectedLevelIndex == index ? 'selected' : ''}}">
+            <view class="status-icon" bindtap="toggleLevelExpansion" data-level-index="{{index}}">
+              <text>{{expandedLevels[index] ? '−' : '+'}}</text>
+            </view>
+            <text bindtap="selectLevel" data-level-index="{{index}}">{{item.title.zh}}</text>
+          </view>
+          
+          <!-- 任务列表 -->
+          <view class="task-list" wx:if="{{expandedLevels[index]}}">
+            <view class="task-item" 
+                  wx:for="{{item.tasks}}" 
+                  wx:key="taskId">
+              <view class="task-bullet">•</view>
+              <text>{{item.zh}}</text>
+            </view>
+          </view>
         </view>
       </view>
+    </view>
+    
+    <!-- Now Start Button -->
+    <view class="start-button" bindtap="startAdventure">
+      <text>现在开始吧！</text>
     </view>
   </view>
 </view>

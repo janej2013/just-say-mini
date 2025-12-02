@@ -1,0 +1,185 @@
+{
+  "locationId": "airport_terminal",
+  "levels": [
+    {
+      "levelId": "airport_l1",
+      "title": "Fresh Paw Arrival",
+      "tasks": [
+        {
+          "taskId": "airport_l1_t1",
+          "npc": {
+            "animal": "Panda",
+            "role": "Airport Information Desk Staff"
+          },
+          "botQuestions": {
+            "simple": "Hello! Do you need help finding the baggage claim?",
+            "natural": "Hi there! Are you looking for the baggage claim area?",
+            "native": "Hey, just landed? Need to know where to grab your bags?"
+          },
+          "userAnswers": {
+            "simple": "Yes, where is the baggage claim?",
+            "natural": "Yeah, could you tell me where the baggage claim is?",
+            "native": "Yep! Where can I pick up my luggage?"
+          },
+          "keywordsHint": ["baggage", "claim", "luggage", "where", "find"]
+        },
+        {
+          "taskId": "airport_l1_t2",
+          "npc": {
+            "animal": "Owl",
+            "role": "Airport Guide Volunteer"
+          },
+          "botQuestions": {
+            "simple": "Do you need help finding the exit or taxi area?",
+            "natural": "Are you trying to get to the exit or taxi pickup?",
+            "native": "Looking for the exit or where to catch a taxi?"
+          },
+          "userAnswers": {
+            "simple": "Yes, where is the taxi area?",
+            "natural": "Could you tell me how to get to the taxi pickup?",
+            "native": "Yeah, where do I go to grab a taxi?"
+          },
+          "keywordsHint": ["exit", "taxi", "pickup", "where", "go"]
+        },
+        {
+          "taskId": "airport_l1_t3",
+          "npc": {
+            "animal": "Koala",
+            "role": "Airport Attendant"
+          },
+          "botQuestions": {
+            "simple": "Do you need a luggage cart?",
+            "natural": "Are you looking for a luggage cart?",
+            "native": "Need a cart to haul your stuff?"
+          },
+          "userAnswers": {
+            "simple": "Where can I find a luggage cart?",
+            "natural": "Could you tell me where I can get a luggage cart?",
+            "native": "Yeah, where do I grab a cart?"
+          },
+          "keywordsHint": ["luggage", "cart", "where", "find", "get"]
+        }
+      ]
+    },
+    {
+      "levelId": "airport_l2",
+      "title": "Lost but Curious",
+      "tasks": [
+        {
+          "taskId": "airport_l2_t1",
+          "npc": {
+            "animal": "Elephant",
+            "role": "Airport Shop Staff"
+          },
+          "botQuestions": {
+            "simple": "Are you looking for a SIM card?",
+            "natural": "Do you need to buy a SIM card?",
+            "native": "Need a SIM card for your phone?"
+          },
+          "userAnswers": {
+            "simple": "Where can I buy a SIM card?",
+            "natural": "Could you tell me where to get a SIM card?",
+            "native": "Yeah, where can I pick up a SIM card?"
+          },
+          "keywordsHint": ["SIM card", "buy", "where", "shop"]
+        },
+        {
+          "taskId": "airport_l2_t2",
+          "npc": {
+            "animal": "Giraffe",
+            "role": "Airport Facility Guide"
+          },
+          "botQuestions": {
+            "simple": "Do you need help finding the restroom or water?",
+            "natural": "Looking for the restroom, water fountain, or Wi-Fi?",
+            "native": "Bathroom, water, Wi-Fi — which one are you hunting for?"
+          },
+          "userAnswers": {
+            "simple": "Where is the restroom?",
+            "natural": "Could you tell me where the restroom or water fountain is?",
+            "native": "Yeah, where’s the bathroom around here?"
+          },
+          "keywordsHint": ["restroom", "water", "Wi-Fi", "where", "find"]
+        },
+        {
+          "taskId": "airport_l2_t3",
+          "npc": {
+            "animal": "Beaver",
+            "role": "Airport Bus Ticket Staff"
+          },
+          "botQuestions": {
+            "simple": "Do you want to know the bus route?",
+            "natural": "Do you want information about airport bus routes or prices?",
+            "native": "Need the lowdown on airport bus routes or fares?"
+          },
+          "userAnswers": {
+            "simple": "What is the bus route?",
+            "natural": "Could you tell me the airport bus routes and prices?",
+            "native": "Yeah, what routes do the airport buses take and how much?"
+          },
+          "keywordsHint": ["bus", "route", "price", "airport", "information"]
+        }
+      ]
+    },
+    {
+      "levelId": "airport_l3",
+      "title": "Airport Adventure",
+      "tasks": [
+        {
+          "taskId": "airport_l3_t1",
+          "npc": {
+            "animal": "Hippo",
+            "role": "Baggage Service Desk Officer"
+          },
+          "botQuestions": {
+            "simple": "Do you want to report delayed baggage?",
+            "natural": "Is your luggage delayed? Do you want to report it?",
+            "native": "Bag didn’t show up? Want to file a report?"
+          },
+          "userAnswers": {
+            "simple": "My baggage is delayed.",
+            "natural": "My luggage hasn’t arrived. I’d like to report it.",
+            "native": "My bag didn’t come out. I need to file a claim."
+          },
+          "keywordsHint": ["delayed", "baggage", "report", "missing"]
+        },
+        {
+          "taskId": "airport_l3_t2",
+          "npc": {
+            "animal": "Parrot",
+            "role": "Airport Security Officer"
+          },
+          "botQuestions": {
+            "simple": "Do you need to explain your travel purpose?",
+            "natural": "Do you need to explain why you're traveling here?",
+            "native": "Need to tell us what brings you here today?"
+          },
+          "userAnswers": {
+            "simple": "I am here for travel.",
+            "natural": "I’m here for tourism and will stay for a week.",
+            "native": "I’m just here on a short trip, about a week."
+          },
+          "keywordsHint": ["purpose", "travel", "reason", "explain"]
+        },
+        {
+          "taskId": "airport_l3_t3",
+          "npc": {
+            "animal": "Squirrel",
+            "role": "Lost & Found Staff"
+          },
+          "botQuestions": {
+            "simple": "Do you want to report damaged luggage?",
+            "natural": "Did your luggage get damaged? Do you want to report it?",
+            "native": "Bag got banged up? Want to file a damage report?"
+          },
+          "userAnswers": {
+            "simple": "My luggage is damaged.",
+            "natural": "My suitcase is damaged. I'd like to report it.",
+            "native": "Yeah, my bag’s cracked. I need to report the damage."
+          },
+          "keywordsHint": ["damaged", "luggage", "report", "broken"]
+        }
+      ]
+    }
+  ]
+}
