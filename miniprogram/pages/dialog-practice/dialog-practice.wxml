@@ -62,7 +62,7 @@
           <text class="keyword-text">{{item}}</text>
         </view>
       </view>
-      <button class="microphone-btn {{isRecording ? 'recording' : ''}}" bindtap="onRecord">
+      <button class="microphone-btn {{isRecording ? 'recording' : ''}}" bindtouchstart="onRecordStart" bindtouchend="onRecordEnd" bindtouchcancel="onRecordEnd">
         <text wx:if="{{!isRecording}}">🎤</text>
         <text wx:else>●</text>
       </button>

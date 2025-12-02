@@ -1,4 +1,9 @@
 // pages/dialog-practice/dialog-practice.ts
+// 引入腾讯云语音识别SDK
+const QCloudASR = require('../../lib/asr.min.js');
+// 引入环境变量配置
+const envConfig = require('../../config/env.js');
+
 Page({
   data: {
     // 页面数据
@@ -22,13 +27,18 @@ Page({
   // 音频上下文
   audioContext: null,
   innerAudioContext: null,
-  recorderManager: null,  // 录音管理器
+  recognizer: null,  // 语音识别实例
+  tempCredentials: null,  // 临时安全凭证
+  currentRecordingId: null,  // 当前录音会话 ID
 
   /**
    * 页面加载
    */
   onLoad(options) {
     console.log('对话练习页面加载', options);
+    
+    // 初始化语音识别
+    this.initSpeechRecognition();
     // 从参数中获取script.json路径和任务信息
     if (options.scriptPath && options.levelId && options.taskId) {
       // 由于微信小程序限制，我们需要通过其他方式加载数据
@@ -57,8 +67,8 @@ Page({
   processScriptDataFromParam(taskData, levelId, taskId) {
     console.log('处理传入的任务数据:', taskData);
     console.log('NPC数据:', taskData.npc);
-    console.log('机器人问题 (simple):', taskData.botQuestions?.simple);
-    console.log('用户回答 (simple):', taskData.userAnswers?.simple);
+    console.log('机器人问题 (simple):', taskData.botQuestions && taskData.botQuestions.simple);
+    console.log('用户回答 (simple):', taskData.userAnswers && taskData.userAnswers.simple);
     console.log('关键词提示:', taskData.keywordsHint);
     this.initDialogData(taskData);
   },
@@ -105,10 +115,10 @@ Page({
     console.log('初始化对话数据:', task);
     
     // 提取数据
-    const botQuestion = task.botQuestions?.simple || task.botQuestions?.natural || 'Hello!';
-    const userAnswer = task.userAnswers?.simple || task.userAnswers?.natural || 'Hi there!';
+    const botQuestion = (task.botQuestions && task.botQuestions.simple) || (task.botQuestions && task.botQuestions.natural) || 'Hello!';
+    const userAnswer = (task.userAnswers && task.userAnswers.simple) || (task.userAnswers && task.userAnswers.natural) || 'Hi there!';
     const keywordsHint = task.keywordsHint || [];
-    const npcAnimal = task.npc?.animal || 'A';
+    const npcAnimal = (task.npc && task.npc.animal) || 'A';
     
     // 创建对话列表 - 只包含当前任务的对话
     const dialogList = [
@@ -323,20 +333,34 @@ Page({
   },
 
   /**
-   * 开始录音
+   * 按下开始录音
    */
-  onRecord() {
+  onRecordStart() {
+    console.log('========== 按下麦克风按钮 ==========');
+    console.log('当前 isRecording 状态:', this.data.isRecording);
+    
+    // 如果已经在录音中，忽略
+    if (this.data.isRecording) {
+      console.log('已在录音中，忽略');
+      return;
+    }
+    
     // 检查录音权限
     wx.getSetting({
       success: (res) => {
+        console.log('录音权限检查:', res.authSetting['scope.record']);
+        
         if (!res.authSetting['scope.record']) {
+          console.log('需要请求录音权限');
           // 请求录音权限
           wx.authorize({
             scope: 'scope.record',
             success: () => {
-              this.toggleRecording();
+              console.log('录音权限授权成功');
+              this.startRecording();
             },
             fail: () => {
+              console.log('录音权限授权失败');
               wx.showModal({
                 title: '提示',
                 content: '需要录音权限才能进行对话练习',
@@ -347,7 +371,7 @@ Page({
                     wx.openSetting({
                       success: (settingRes) => {
                         if (settingRes.authSetting['scope.record']) {
-                          this.toggleRecording();
+                          // 权限授予后不自动开始，需要用户再次按下
                         }
                       }
                     });
@@ -357,94 +381,250 @@ Page({
             }
           });
         } else {
-          this.toggleRecording();
+          console.log('已有录音权限，开始录音');
+          this.startRecording();
         }
       }
     });
   },
 
   /**
-   * 切换录音状态
+   * 松开结束录音
    */
-  toggleRecording() {
-    if (!this.data.isRecording) {
-      // 开始录音
-      this.startRecording();
-    } else {
-      // 停止录音
+  onRecordEnd() {
+    console.log('========== 松开麦克风按钮 ==========');
+    console.log('当前 isRecording 状态:', this.data.isRecording);
+    
+    // 只有在录音中才执行停止
+    if (this.data.isRecording) {
       this.stopRecording();
     }
   },
 
   /**
-   * 开始录音
+   * 开始录音（废弃的点击方法，保留以防兼容）
+   */
+  onRecord() {
+    console.log('========== onRecord 按钮点击（废弃） ==========');
+    console.log('当前 isRecording 状态:', this.data.isRecording);
+    console.log('recognizer 是否存在:', !!this.recognizer);
+    
+    // 不再使用点击切换模式，此方法保留但不执行任何操作
+    console.log('提示：现在使用按住录音模式');
+  },
+
+  /**
+   * 切换录音状态（废弃，现在使用按住模式）
+   */
+  toggleRecording() {
+    console.log('========== toggleRecording 调用（废弃） ==========');
+    // 不再使用切换模式
+  },
+
+  /**
+   * 开始录音和识别
    */
   startRecording() {
-    if (!this.recorderManager) {
-      this.recorderManager = wx.getRecorderManager();
-      
-      this.recorderManager.onStart(() => {
-        console.log('开始录音');
-        this.setData({
-          isRecording: true
-        });
+    if (!this.recognizer) {
+      wx.showModal({
+        title: '未配置语音识别',
+        content: '请先在代码中配置腾讯云密钥。\n\n获取密钥：https://console.cloud.tencent.com/cam/capi',
+        showCancel: false
       });
-
-      this.recorderManager.onStop((res) => {
-        console.log('录音结束', res);
-        this.setData({
-          isRecording: false
-        });
-        // 处理录音结果，这里可以上传音频或进行语音识别
-        this.handleRecordResult(res);
-      });
-
-      this.recorderManager.onError((res) => {
-        console.error('录音失败:', res);
-        this.setData({
-          isRecording: false
-        });
-        wx.showToast({
-          title: '录音失败',
-          icon: 'none'
-        });
-      });
+      return;
     }
 
-    const options = {
-      duration: 10000, // 录音时长
-      sampleRate: 44100,
-      numberOfChannels: 1,
-      encodeBitRate: 192000,
-      format: 'mp3'
+    // 如果正在录音，阻止重复调用
+    if (this.data.isRecording) {
+      console.log('正在录音中，忽略重复调用');
+      return;
+    }
+
+    this.startRecordingInternal();
+  },
+
+  /**
+   * 重新初始化识别器
+   */
+  reinitRecognizer() {
+    console.log('重新初始化识别器');
+    // SDK使用单例模式，直接重新设置回调即可
+    this.setupRecognizerCallbacks();
+  },
+
+  /**
+   * 设置识别器回调
+   */
+  setupRecognizerCallbacks() {
+    if (!this.recognizer) return;
+
+    this.recognizer.OnRecognitionStart = (res) => {
+      console.log('识别开始:', res);
+      
+      // 不再显示"正在识别..."提示，只在loading中显示
     };
 
-    this.recorderManager.start(options);
+    this.recognizer.OnSentenceBegin = (res) => {
+      console.log('句子开始:', res);
+    };
+
+    this.recognizer.OnRecognitionResultChange = (res) => {
+      console.log('识别中间结果:', res);
+      
+      // 实时更新识别的中间结果
+      if (res && res.result && res.result.voice_text_str) {
+        const intermediateText = res.result.voice_text_str;
+        console.log('实时识别:', intermediateText);
+        this.updateUserResponse(intermediateText);
+      }
+    };
+
+    this.recognizer.OnSentenceEnd = (res) => {
+      console.log('句子结束:', res);
+      
+      // 更新句子结束的最终结果
+      if (res && res.result && res.result.voice_text_str) {
+        const finalText = res.result.voice_text_str;
+        console.log('句子识别完成:', finalText);
+        this.updateUserResponse(finalText);
+      }
+    };
+
+    this.recognizer.OnRecognitionComplete = (res) => {
+      console.log('========== 识别完成回调 ==========');
+      console.log('识别完成结果:', res);
+      console.log('回调时 isRecording 状态:', this.data.isRecording);
+
+      // 确保录音状态被重置（兜底保护）
+      if (this.data.isRecording) {
+        console.log('⚠️ 识别完成时录音状态未重置，执行兜底重置');
+        this.setData({
+          isRecording: false
+        });
+      }
+
+      if (res && res.result && res.result.voice_text_str) {
+        const recognizedText = res.result.voice_text_str;
+        console.log('✓ 识别到最终文本:', recognizedText);
+        // 更新为最终结果（可能与实时结果略有差异）
+        this.updateUserResponse(recognizedText);
+        
+        // 识别完成后显示反馈（可选，根据需求决定是否保留）
+        // setTimeout(() => {
+        //   this.showFeedback();
+        // }, 500);
+      } else {
+        console.log('⚠️ 未识别到内容');
+        
+        wx.showToast({
+          title: '未识别到内容',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+      
+      console.log('========== 识别完成回调结束 ==========');
+    };
+
+    this.recognizer.OnError = (err) => {
+      console.error('识别错误:', err);
+
+      // 重置录音状态
+      this.setData({
+        isRecording: false
+      });
+
+      let errorMsg = '语音识别失败';
+      if (err && err.code) {
+        switch (err.code) {
+          case 6000:
+            errorMsg = '网络错误';
+            break;
+          case 6001:
+            errorMsg = '连接未建立';
+            break;
+          case 6002:
+            errorMsg = '鉴权失败，请检查密钥配置';
+            break;
+          case 6003:
+            errorMsg = '连接已关闭';
+            break;
+          default:
+            errorMsg = err.message || '识别失败';
+        }
+      }
+
+      wx.showToast({
+        title: errorMsg,
+        icon: 'none',
+        duration: 2000
+      });
+    };
   },
 
   /**
-   * 停止录音
+   * 内部启动录音方法
+   */
+  startRecordingInternal() {
+    // 创建新的录音会话 ID
+    this.currentRecordingId = Date.now();
+    
+    this.setData({
+      isRecording: true
+    });
+
+    // 直接调用识别（SDK内部会处理录音）
+    this.recognizeSpeechWithAPI('');
+  },  /**
+   * 停止录音和识别
    */
   stopRecording() {
-    if (this.recorderManager) {
-      this.recorderManager.stop();
+    console.log('========== stopRecording 调用 ==========');
+    console.log('当前 isRecording:', this.data.isRecording);
+    
+    if (!this.data.isRecording) {
+      console.log('⚠️ 未在录音中，忽略停止操作');
+      return;
     }
+    
+    console.log('✓ 正在停止录音...');
+    
+    // 先更新UI状态
+    this.setData({
+      isRecording: false
+    }, () => {
+      console.log('✓ isRecording 已设置为 false，当前值:', this.data.isRecording);
+    });
+    
+    // 停止识别器
+    if (this.recognizer) {
+      try {
+        console.log('→ 调用 recognizer.stop()');
+        this.recognizer.stop();
+        console.log('✓ 识别器已停止');
+      } catch (error) {
+        console.error('❌ 停止识别器失败:', error);
+      }
+    } else {
+      console.warn('⚠️ recognizer 不存在');
+    }
+    
+    wx.showToast({
+      title: '录音已停止',
+      icon: 'none',
+      duration: 1500
+    });
+    
+    console.log('========== stopRecording 完成 ==========');
   },
 
   /**
-   * 处理录音结果
+   * 处理录音结果（已由recognizer回调处理）
    */
   handleRecordResult(result: any) {
-    console.log('录音处理结果', result);
-    
-    // 显示识别中的提示
-    wx.showLoading({
-      title: '正在识别...',
-      mask: true
-    });
-    
-    // 将录音转换为文字
-    this.convertSpeechToText(result);
+    // 使用腾讯云SDK后，识别结果会在recognizer的回调中处理
+    // 保留此方法以防需要额外的录音处理逻辑
+    console.log('录音处理（由SDK回调处理）', result);
   },
 
   /**
@@ -465,90 +645,122 @@ Page({
   },
   
   /**
-   * 通过API进行语音识别
+   * 初始化语音识别（从环境变量读取临时凭证）
    */
-  recognizeSpeechWithAPI(audioPath: string) {
-    // 使用后端API进行语音识别
-    // 注意：需要配置实际的后端服务URL
-    const apiUrl = 'https://your-server.com/api/speech-to-text'; // 需要替换为实际的后端服务URL
+  initSpeechRecognition() {
+    // 从配置文件读取临时凭证
+    const tmpSecretId = envConfig.TMP_SECRET_ID || '';
+    const tmpSecretKey = envConfig.TMP_SECRET_KEY || '';
+    const token = envConfig.TMP_TOKEN || '';
     
-    // 检查是否配置了后端服务
-    if (apiUrl.includes('your-server.com')) {
-      wx.hideLoading();
-      wx.showToast({
-        title: '请配置语音识别服务',
-        icon: 'none',
-        duration: 2000
-      });
-      console.error('请配置后端服务URL以使用语音识别功能');
+    if (!tmpSecretId || !tmpSecretKey || !token) {
+      console.warn('⚠️ 未配置临时凭证');
+      console.warn('请在 miniprogram/config/env.js 中配置以下变量：');
+      console.warn('- TMP_SECRET_ID');
+      console.warn('- TMP_SECRET_KEY');
+      console.warn('- TMP_TOKEN');
       return;
     }
     
-    // 上传录音文件到服务器进行识别
-    wx.uploadFile({
-      url: apiUrl,
-      filePath: audioPath,
-      name: 'audio',
-      header: {
-        'content-type': 'multipart/form-data'
-      },
-      success: (res) => {
-        wx.hideLoading();
-        try {
-          // 解析服务器返回的识别结果
-          const data = JSON.parse(res.data);
-          if (data.text && data.text.trim()) {
-            this.updateUserResponse(data.text.trim());
-          } else {
-            // 如果服务器返回格式不正确
-            wx.showToast({
-              title: '识别结果格式错误',
-              icon: 'none',
-              duration: 2000
-            });
-            console.error('服务器返回格式不正确:', data);
-          }
-        } catch (e) {
-          wx.showToast({
-            title: '解析识别结果失败',
-            icon: 'none',
-            duration: 2000
-          });
-          console.error('解析语音识别结果失败:', e);
-        }
-      },
-      fail: (error) => {
-        wx.hideLoading();
-        wx.showToast({
-          title: '语音识别失败',
-          icon: 'none',
-          duration: 2000
-        });
-        console.error('语音识别上传失败:', error);
-      }
-    });
+    // 存储临时凭证
+    this.tempCredentials = {
+      TmpSecretId: tmpSecretId,
+      TmpSecretKey: tmpSecretKey,
+      Token: token
+    };
+    
+    console.log('✅ 已从配置文件加载临时安全凭证');
+    
+    // 获取识别器实例
+    this.recognizer = QCloudASR.getRecorderSpeechRecognizer(true);
+    
+    // 设置回调
+    this.setupRecognizerCallbacks();
+    console.log('✅ 语音识别初始化完成');
+  },
+  
+  /**
+   * 使用腾讯云实时流式语音识别（使用临时凭证）
+   */
+  recognizeSpeechWithAPI(audioPath: string) {
+    console.log('开始语音识别');
+    
+    if (!this.recognizer) {
+      wx.hideLoading();
+      wx.showModal({
+        title: '未初始化语音识别',
+        content: '请稍后重试',
+        showCancel: false
+      });
+      return;
+    }
+    
+    if (!this.tempCredentials) {
+      wx.hideLoading();
+      wx.showToast({
+        title: '未配置临时凭证',
+        icon: 'none'
+      });
+      return;
+    }
+    
+    // 配置识别参数（使用临时凭证）
+    const recognizeParams = {
+      appid: envConfig.APP_ID || '1319046966',  // 从配置读取 AppID
+      secretid: this.tempCredentials.TmpSecretId,
+      secretkey: this.tempCredentials.TmpSecretKey,
+      token: this.tempCredentials.Token,  // 临时凭证的Token
+      engine_model_type: '16k_en',  // 16k英文（可改为 16k_zh 中文）
+      voice_format: 1,  // 1: pcm, 8: mp3
+      hotword_id: '',
+      needvad: 1,
+      filter_dirty: 0,
+      filter_modal: 0,
+      filter_punc: 0,
+      convert_num_mode: 1,
+      word_info: 0
+    };
+    
+    try {
+      // 启动识别（SDK会自动处理录音）
+      this.recognizer.start(recognizeParams);
+      console.log('识别已启动');
+    } catch (error) {
+      console.error('启动识别失败:', error);
+      wx.hideLoading();
+      wx.showToast({
+        title: '启动识别失败',
+        icon: 'none',
+        duration: 2000
+      });
+    }
   },
 
   /**
    * 更新用户回答
    */
   updateUserResponse(text: string) {
-    // 更新对话列表中的用户回答内容
-    let updatedDialogList = this.data.dialogList.map(dialog => {
-      if (dialog.type === 'user') {
-        return {
-          ...dialog,
-          content: text
-        };
-      }
-      return dialog;
-    });
+    if (!text) return;
     
-    // 如果对话列表中没有用户回答，则添加一个
-    const hasUserDialog = updatedDialogList.some(dialog => dialog.type === 'user');
-    if (!hasUserDialog) {
+    const recordingId = this.currentRecordingId;
+    let updatedDialogList = [...this.data.dialogList];
+    
+    // 查找当前录音会话对应的对话
+    const existingIndex = updatedDialogList.findIndex(
+      dialog => dialog.type === 'user' && dialog.recordingId === recordingId
+    );
+    
+    if (existingIndex >= 0) {
+      // 更新现有的对话（实时识别中）
+      updatedDialogList[existingIndex] = {
+        ...updatedDialogList[existingIndex],
+        content: text
+      };
+    } else {
+      // 添加新的用户回答
       updatedDialogList.push({
-        id: Date.now(),
+        id: recordingId,
+        recordingId: recordingId,
         type: 'user',
         content: text
       });
@@ -559,9 +771,6 @@ Page({
       dialogList: updatedDialogList,
       showUserResponse: true
     });
-    
-    // 可以添加反馈评分逻辑
-    this.showFeedback();
   },
 
   /**
