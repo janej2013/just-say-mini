@@ -398,3 +398,201 @@ page {
   from { opacity: 0; transform: translateY(-10rpx); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(93, 64, 55, 0.2); /* warm-brown/20 */
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx;
+}
+
+/* Modal Content */
+.modal-content {
+  width: 100%;
+  max-width: 600rpx;
+  background: #FFFFFF;
+  border-radius: 40rpx;
+  padding: 48rpx;
+  box-shadow: 0 20rpx 50rpx rgba(0,0,0,0.1);
+  border: 8rpx solid #FFFFFF;
+  /* ring-4 ring-soft-mint/20 -> box-shadow or border? Let's use box-shadow for ring */
+  box-shadow: 0 0 0 8rpx rgba(193, 225, 193, 0.2); 
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.header-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #5D4037; /* warm-brown */
+}
+
+.sparkles-icon {
+  font-size: 40rpx;
+  color: #FF7043; /* fox-orange */
+}
+
+.feedback-badge {
+  background: rgba(255, 112, 67, 0.1);
+  color: #3E2723; /* fox-dark */
+  padding: 8rpx 24rpx;
+  border-radius: 100rpx;
+  font-size: 24rpx;
+  font-weight: 700;
+  border: 2rpx solid rgba(255, 112, 67, 0.2);
+}
+
+/* Suggestions List */
+.suggestions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+  margin-bottom: 48rpx;
+}
+
+.suggestion-card {
+  padding: 32rpx;
+  border-radius: 32rpx;
+  position: relative;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 8rpx;
+}
+
+.card-icon {
+  font-size: 28rpx;
+}
+
+.card-label {
+  font-size: 20rpx;
+  font-weight: 800;
+  letter-spacing: 1rpx;
+  text-transform: uppercase;
+}
+
+.card-text {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #5D4037;
+}
+
+/* Concise Card */
+.suggestion-card.concise {
+  background: #F8FAFC; /* slate-50 */
+  border: 2rpx solid #F1F5F9; /* slate-100 */
+}
+
+.suggestion-card.concise .card-label,
+.suggestion-card.concise .card-icon {
+  color: #60A5FA; /* blue-400 */
+}
+
+.suggestion-card.concise .card-text {
+  color: rgba(93, 64, 55, 0.8);
+}
+
+/* Natural Card */
+.suggestion-card.natural {
+  background: rgba(193, 225, 193, 0.2); /* soft-mint/20 */
+  border: 4rpx solid #C1E1C1; /* soft-mint */
+}
+
+.suggestion-card.natural .card-label,
+.suggestion-card.natural .card-icon {
+  color: #16A34A; /* green-600 */
+}
+
+.suggestion-card.natural .card-text {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #5D4037;
+}
+
+.active-indicator {
+  position: absolute;
+  left: -4rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12rpx;
+  height: 80rpx;
+  background: #16A34A; /* mint-dark/green-600 */
+  border-radius: 0 100rpx 100rpx 0;
+}
+
+/* Slang Card */
+.suggestion-card.slang {
+  background: #FAF5FF; /* purple-50 */
+  border: 2rpx solid #F3E8FF; /* purple-100 */
+}
+
+.suggestion-card.slang .card-label,
+.suggestion-card.slang .card-icon {
+  color: #C084FC; /* purple-400 */
+}
+
+.suggestion-card.slang .card-text {
+  color: rgba(93, 64, 55, 0.8);
+}
+
+/* Actions */
+.modal-actions {
+  display: flex;
+  gap: 24rpx;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 28rpx 0;
+  border-radius: 24rpx;
+  font-size: 28rpx;
+  font-weight: 700;
+  text-align: center;
+  border: none;
+  line-height: 1.5;
+}
+
+.action-btn::after {
+  border: none;
+}
+
+.retry-btn {
+  background: #F3F4F6; /* gray-100 */
+  color: rgba(93, 64, 55, 0.6);
+}
+
+.continue-btn {
+  background: #00C688;
+  color: #FFFFFF;
+  box-shadow: 0 8rpx 24rpx rgba(0, 198, 136, 0.2);
+}

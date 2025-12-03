@@ -106,4 +106,58 @@
         </view>
     </view>
   </view>
+
+  <!-- Custom Feedback Modal -->
+  <view class="modal-overlay" wx:if="{{showFeedbackModal}}">
+    <view class="modal-content">
+      <!-- Header -->
+      <view class="modal-header">
+        <view class="header-left">
+          <text class="header-title">Enhance it</text>
+          <text class="sparkles-icon">✨</text>
+        </view>
+        <view class="feedback-badge">Feedback</view>
+      </view>
+
+      <!-- Suggestions List -->
+      <view class="suggestions-list">
+        <!-- Concise -->
+        <view class="suggestion-card concise">
+          <view class="card-header">
+            <text class="card-icon">☂️</text>
+            <text class="card-label">CONCISE</text>
+          </view>
+          <text class="card-text">{{currentTaskData.userAnswers.simple}}</text>
+        </view>
+
+        <!-- Natural -->
+        <view class="suggestion-card natural">
+          <view class="active-indicator"></view>
+          <view class="card-header">
+            <text class="card-icon">🌱</text>
+            <text class="card-label">NATURAL</text>
+          </view>
+          <text class="card-text">{{currentTaskData.userAnswers.natural}}</text>
+        </view>
+
+        <!-- Slang/Native -->
+        <view class="suggestion-card slang">
+          <view class="card-header">
+            <text class="card-icon">🔥</text>
+            <text class="card-label">SLANG</text>
+          </view>
+          <text class="card-text">{{currentTaskData.userAnswers.native}}</text>
+        </view>
+      </view>
+
+      <!-- Actions -->
+      <view class="modal-actions" wx:if="{{modalWithOptions}}">
+        <button class="action-btn retry-btn" bindtap="onModalRetry">Got it, retry</button>
+        <button class="action-btn continue-btn" bindtap="onModalContinue">Got it, continue</button>
+      </view>
+      <view class="modal-actions" wx:else>
+        <button class="action-btn retry-btn" bindtap="onModalClose">Close</button>
+      </view>
+    </view>
+  </view>
 </view>

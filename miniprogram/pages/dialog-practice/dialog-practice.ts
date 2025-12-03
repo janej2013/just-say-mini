@@ -52,7 +52,9 @@ Page({
     allTasksCompleted: false, // 是否完成所有任务
     isTTSPlaying: false, // TTS 是否正在播放
     levelNpc: null, // 关卡的NPC信息（从level层级获取）
-    tasksCompletionStatus: [false, false, false] // 三个任务的完成状态
+    tasksCompletionStatus: [false, false, false], // 三个任务的完成状态
+    showFeedbackModal: false, // 是否显示反馈弹窗
+    modalWithOptions: false // 弹窗是否显示操作按钮
   },
   
   // 音频上下文
@@ -1128,57 +1130,40 @@ Page({
       return;
     }
 
-    const userAnswers = this.data.currentTaskData.userAnswers;
-    
-    let content = '';
-    
-    // 三种答案分行展示
-    if (userAnswers.simple) {
-      content += `【简单】\n${userAnswers.simple}\n\n`;
-    }
-    if (userAnswers.natural) {
-      content += `【自然】\n${userAnswers.natural}\n\n`;
-    }
-    if (userAnswers.native) {
-      content += `【地道】\n${userAnswers.native}\n\n`;
-    }
-    
-    // 添加评分详情（使用气泡样式）
-    if (feedbackResult && feedbackResult.details) {
-      const details = feedbackResult.details;
-      content += `━━━━━━━━━━━━━━\n\n`;
-      content += `💯 总评分\n${Math.round(feedbackResult.score)} 分\n\n`;
-      content += `🎯 关键词命中\n${details.keywordMatches} / ${details.totalKeywords}\n\n`;
-      content += `📝 句式相似度\n${Math.round(details.maxSimilarity * 100)}%`;
-    }
-
-    wx.showModal({
-      title: '示例答案',
-      content: content,
-      showCancel: withOptions,
-      cancelText: '再试一次',
-      cancelColor: '#ff6a72',
-      confirmText: withOptions ? '继续吧' : '知道了',
-      confirmColor: '#5a3e36',
-      success: (res) => {
-        if (res.confirm) {
-          // 点击“继续吧”或“知道了”
-          if (withOptions) {
-            console.log('用户选择：继续对话');
-            // 标记当前任务完成
-            this.markCurrentTaskCompleted();
-            // 延迟2秒后继续对话
-            setTimeout(() => {
-              this.continueDialog();
-            }, 2000);
-          }
-        } else if (res.cancel && withOptions) {
-          // 点击“再试一次”
-          console.log('用户选择：再试一次');
-          this.retryAnswer();
-        }
-      }
+    this.setData({
+      showFeedbackModal: true,
+      modalWithOptions: withOptions
     });
+  },
+
+  /**
+   * 弹窗点击重试
+   */
+  onModalRetry() {
+    console.log('用户选择：再试一次');
+    this.setData({ showFeedbackModal: false });
+    this.retryAnswer();
+  },
+
+  /**
+   * 弹窗点击继续
+   */
+  onModalContinue() {
+    console.log('用户选择：继续对话');
+    this.setData({ showFeedbackModal: false });
+    // 标记当前任务完成
+    this.markCurrentTaskCompleted();
+    // 延迟后继续对话
+    setTimeout(() => {
+      this.continueDialog();
+    }, 500);
+  },
+
+  /**
+   * 关闭弹窗（仅查看模式）
+   */
+  onModalClose() {
+    this.setData({ showFeedbackModal: false });
   },
 
   /**
