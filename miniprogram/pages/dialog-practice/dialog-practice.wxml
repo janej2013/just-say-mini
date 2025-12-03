@@ -41,14 +41,13 @@
                         <text wx:else>❚❚</text>
                     </view>
                     <view class="audio-wave">
-                        <view class="wave-bar {{audioPlaying && currentPlayingDialogId == item.id ? 'active' : ''}}" wx:for="{{[1,2,3,4,5]}}" wx:key="index"></view>
+                        <view class="wave-bar {{audioPlaying && currentPlayingDialogId == item.id ? 'active' : ''}}" wx:for="{{[1,2,3,4,5,6,7,8,9,10,11,12]}}" wx:key="index"></view>
                     </view>
-                    <text class="audio-duration">0:04</text>
-                </view>
-                
-                <!-- 'A' Toggle Button -->
-                <view class="npc-text-toggle {{item.showText ? 'active' : ''}}" bindtap="toggleNpcText" data-id="{{item.id}}">
-                    <text>A</text>
+                    
+                    <!-- 'A' Toggle Button (Moved inside) -->
+                    <view class="npc-text-toggle {{item.showText ? 'active' : ''}}" catchtap="toggleNpcText" data-id="{{item.id}}">
+                        <text>A</text>
+                    </view>
                 </view>
              </view>
 

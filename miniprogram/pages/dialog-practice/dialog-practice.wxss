@@ -196,26 +196,20 @@ page {
   50% { height: 30rpx; }
 }
 
-.audio-duration {
-  font-size: 24rpx;
-  color: #8D6E63;
-  font-weight: 600;
-}
-
 /* 'A' Toggle Button */
 .npc-text-toggle {
-  width: 80rpx;
-  height: 80rpx;
+  width: 60rpx;
+  height: 60rpx;
   border-radius: 50%;
-  background: #FFF;
+  background: #F5F5F5;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2rpx solid #FFF;
-  box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.05);
-  color: #D7CCC8;
+  color: #8D6E63;
   font-weight: 700;
+  font-size: 24rpx;
   transition: all 0.3s ease;
+  margin-left: 10rpx;
 }
 
 .npc-text-toggle.active {
