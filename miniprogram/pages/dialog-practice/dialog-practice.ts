@@ -13,9 +13,9 @@ const MOCK_MODE_ENABLED = true;
 const mockData = {
   mockEnabled: true,
   mockAnswers: {
-    "airport_l1_t1": "Yes, where is the baggage claim?",
-    "airport_l1_t2": "Could you tell me how to get to the taxi pickup?",
-    "airport_l1_t3": "Where can I find a luggage cart?",
+    "airport_l1_t1": "Where baggage?", // tips - 不完整，缺少关键词
+    "airport_l1_t2": "Could you tell me how to get to the taxi pickup?", // perfect
+    "airport_l1_t3": "Cart please?", // tips - 太简短，缺少关键词
     "airport_l2_t1": "Could you tell me where to get a SIM card?",
     "airport_l2_t2": "Where is the restroom?",
     "airport_l2_t3": "Could you tell me the airport bus routes and prices?",
@@ -170,9 +170,11 @@ Page({
       });
       
       // 自动播放新的NPC对话（使用TTS）
-      setTimeout(() => {
-        this.playNpcAudioByDialogId(newDialogId);
-      }, 100);
+      if (!MOCK_MODE_ENABLED) {
+        setTimeout(() => {
+          this.playNpcAudioByDialogId(newDialogId);
+        }, 100);
+      }
     } else {
       // 替换模式：初始化时使用
       // 创建对话列表 - 只包含当前任务的对话
@@ -205,9 +207,11 @@ Page({
       });
       
       // NPC对话默认语音播放（使用TTS）
-      setTimeout(() => {
-        this.playNpcAudioByDialogId(1);
-      }, 100);
+      if (!MOCK_MODE_ENABLED) {
+        setTimeout(() => {
+          this.playNpcAudioByDialogId(1);
+        }, 100);
+      }
     }
   },
 
@@ -275,6 +279,12 @@ Page({
    * 根据dialogId播放NPC音频
    */
   async playNpcAudioByDialogId(dialogId) {
+    // Mock 模式下不播放语音
+    if (MOCK_MODE_ENABLED) {
+      console.log('🎭 Mock模式：跳过NPC语音播放');
+      return;
+    }
+    
     const dialog = this.data.dialogList.find(d => d.id === dialogId);
     
     if (!dialog || dialog.type !== 'npc') {
