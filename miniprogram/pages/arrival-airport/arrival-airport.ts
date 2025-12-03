@@ -181,7 +181,7 @@ Page({
             const levelDataStr = encodeURIComponent(JSON.stringify(levelData));
             
             wx.navigateTo({
-                url: `/pages/dialog-practice/dialog-practice?levelData=${levelDataStr}&scriptPath=pages/arrival-airport/script.json`
+                url: `/pages/dialog-practice/dialog-practice?levelData=${levelDataStr}`
             });
         } else {
             console.error('没有找到有效的任务数据');

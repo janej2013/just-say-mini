@@ -34,7 +34,7 @@ const airportData = {
             "natural": "Yeah, could you tell me where the baggage claim is?",
             "native": "Yep! Where can I pick up my luggage?"
           },
-          "keywordsHint": ["baggage", "claim", "luggage", "where", "find"],
+          "keywordsHint": ["baggage", "claim", "luggage"],
           "en": "Ask where the baggage claim is.",
           "zh": "询问行李提取处在哪里。"
         },
@@ -54,7 +54,7 @@ const airportData = {
             "natural": "Could you tell me how to get to the taxi pickup?",
             "native": "Yeah, where do I go to grab a taxi?"
           },
-          "keywordsHint": ["exit", "taxi", "pickup", "where", "go"],
+          "keywordsHint": ["exit", "taxi", "pickup"],
           "en": "Ask how to get to the exit or taxi area.",
           "zh": "询问出口或出租车站怎么走。"
         },
@@ -74,7 +74,7 @@ const airportData = {
             "natural": "Could you tell me where I can get a luggage cart?",
             "native": "Yeah, where do I grab a cart?"
           },
-          "keywordsHint": ["luggage", "cart", "where", "find", "get"],
+          "keywordsHint": ["luggage", "cart"],
           "en": "Ask where to find a luggage cart.",
           "zh": "询问哪里有行李推车。"
         }
@@ -107,7 +107,7 @@ const airportData = {
             "natural": "Could you tell me where to get a SIM card?",
             "native": "Yeah, where can I pick up a SIM card?"
           },
-          "keywordsHint": ["SIM card", "buy", "where", "shop"],
+          "keywordsHint": ["SIM card", "buy"],
           "en": "Ask where to buy a SIM card.",
           "zh": "询问哪里可以买电话卡。"
         },
@@ -127,7 +127,7 @@ const airportData = {
             "natural": "Could you tell me where the restroom or water fountain is?",
             "native": "Yeah, where's the bathroom around here?"
           },
-          "keywordsHint": ["restroom", "water", "Wi-Fi", "where", "find"],
+          "keywordsHint": ["restroom", "water", "Wi-Fi"],
           "en": "Ask for restroom, water fountain, or Wi-Fi.",
           "zh": "询问洗手间、饮水机或 Wi-Fi。"
         },
