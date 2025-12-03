@@ -3,6 +3,8 @@
 const QCloudASR = require('../../lib/asr.min.js');
 // 引入环境变量配置
 const envConfig = require('../../config/env.js');
+// 引入 TTS 管理器
+import ttsManager from '../../utils/tts-manager';
 
 // ==================== Mock 模式配置 ====================
 // 设置为 true 启用Mock模式，false 使用真实语音识别
@@ -47,7 +49,8 @@ Page({
     currentTaskIdx: 0, // 当前任务索引
     dialogIdCounter: 1, // 对话 ID计数器
     currentPlayingDialogId: null, // 当前播放语音的对话ID
-    allTasksCompleted: false // 是否完成所有任务
+    allTasksCompleted: false, // 是否完成所有任务
+    isTTSPlaying: false // TTS 是否正在播放
   },
   
   // 音频上下文
@@ -250,9 +253,9 @@ Page({
   },
 
   /**
-   * 播放NPC音频
+   * 播放NPC音频（使用 TTS）
    */
-  onPlayNpcAudio(e) {
+  async onPlayNpcAudio(e) {
     const dialogId = e.currentTarget.dataset.id;
     const dialog = this.data.dialogList.find(d => d.id === dialogId);
     
@@ -260,25 +263,71 @@ Page({
       return;
     }
     
-    // 如果正在播放该音频，则暂停
-    if (this.data.audioPlaying && this.data.currentPlayingDialogId === dialogId) {
+    // 如果正在播放该音频，则停止
+    if (this.data.isTTSPlaying && this.data.currentPlayingDialogId === dialogId) {
+      ttsManager.stop();
       this.setData({
-        audioPlaying: false,
-        currentPlayingDialogId: null
+        isTTSPlaying: false,
+        currentPlayingDialogId: null,
+        audioPlaying: false
       });
-      
-      if (this.innerAudioContext) {
-        this.innerAudioContext.pause();
-      }
       return;
     }
     
-    // 播放该音频
-    this.setData({
-      currentPlayingDialogId: dialogId
-    });
-    
-    this.playTextAsAudio(dialog.content);
+    try {
+      // 停止之前的播放
+      ttsManager.stop();
+      
+      this.setData({
+        isTTSPlaying: true,
+        currentPlayingDialogId: dialogId,
+        audioPlaying: true
+      });
+      
+      // 根据 NPC 动物选择音色
+      const npcAnimal = this.data.currentTaskData?.npc?.animal || 'Panda';
+      const voiceType = ttsManager.getVoiceTypeByNPC(npcAnimal);
+      
+      console.log(`🎙️ 播放 NPC (${npcAnimal}) 语音:`, dialog.content.substring(0, 50) + '...');
+      
+      // 调用 TTS 播放
+      await ttsManager.speak({
+        text: dialog.content,
+        voiceType,
+        speed: 3,
+        volume: 0,
+        primaryLanguage: 2, // 英文
+        emotionCategory: 'happy'
+      }, {
+        onStart: () => {
+          console.log('🔊 TTS 开始播放');
+        },
+        onEnd: () => {
+          console.log('⏹️ TTS 播放结束');
+          this.setData({
+            isTTSPlaying: false,
+            currentPlayingDialogId: null,
+            audioPlaying: false
+          });
+        },
+        onError: (err) => {
+          console.error('❌ TTS 播放失败:', err);
+          wx.showToast({
+            title: '语音播放失败',
+            icon: 'none',
+            duration: 2000
+          });
+          this.setData({
+            isTTSPlaying: false,
+            currentPlayingDialogId: null,
+            audioPlaying: false
+          });
+        }
+      });
+      
+    } catch (error) {
+      console.error('❌ TTS 播放异常:', error);
+    }
   },
 
   /**
@@ -1278,5 +1327,23 @@ Page({
         });
       }
     }, 300 + words.length * 150 + 200);
+  },
+
+  /**
+   * 页面卸载时清理资源
+   */
+  onUnload() {
+    // 停止 TTS 播放
+    ttsManager.stop();
+    console.log('🗑️ 页面卸载，已清理 TTS 资源');
+  },
+
+  /**
+   * 页面隐藏时暂停 TTS
+   */
+  onHide() {
+    // 暂停 TTS 播放
+    ttsManager.pause();
+    console.log('⏸️ 页面隐藏，已暂停 TTS');
   }
 })

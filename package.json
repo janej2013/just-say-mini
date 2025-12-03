@@ -8,8 +8,10 @@
   "author": "",
   "license": "",
   "dependencies": {
+    "crypto-js": "^4.2.0"
   },
   "devDependencies": {
-    "miniprogram-api-typings": "^2.8.3-1"
+    "miniprogram-api-typings": "^2.8.3-1",
+    "@types/crypto-js": "^4.2.1"
   }
 }
