@@ -169,8 +169,10 @@ Page({
         currentPlayingDialogId: newDialogId
       });
       
-      // 播放新的NPC对话
-      this.playTextAsAudio(botQuestion);
+      // 自动播放新的NPC对话（使用TTS）
+      setTimeout(() => {
+        this.playNpcAudioByDialogId(newDialogId);
+      }, 100);
     } else {
       // 替换模式：初始化时使用
       // 创建对话列表 - 只包含当前任务的对话
@@ -202,8 +204,10 @@ Page({
         currentPlayingDialogId: 1
       });
       
-      // NPC对话默认语音播放
-      this.playTextAsAudio(botQuestion);
+      // NPC对话默认语音播放（使用TTS）
+      setTimeout(() => {
+        this.playNpcAudioByDialogId(1);
+      }, 100);
     }
   },
 
@@ -264,6 +268,13 @@ Page({
    */
   async onPlayNpcAudio(e) {
     const dialogId = e.currentTarget.dataset.id;
+    this.playNpcAudioByDialogId(dialogId);
+  },
+
+  /**
+   * 根据dialogId播放NPC音频
+   */
+  async playNpcAudioByDialogId(dialogId) {
     const dialog = this.data.dialogList.find(d => d.id === dialogId);
     
     if (!dialog || dialog.type !== 'npc') {
@@ -1033,7 +1044,7 @@ Page({
       this.markCurrentTaskCompleted();
       setTimeout(() => {
         this.continueDialog();
-      }, 1000);
+      }, 2000);
     } else {
       // 需要优化，展示示例答案弹窗
       console.log('💡 需要优化，展示示例答案');
@@ -1146,7 +1157,10 @@ Page({
             console.log('用户选择：继续对话');
             // 标记当前任务完成
             this.markCurrentTaskCompleted();
-            this.continueDialog();
+            // 延迟2秒后继续对话
+            setTimeout(() => {
+              this.continueDialog();
+            }, 2000);
           }
         } else if (res.cancel && withOptions) {
           // 点击“再试一次”
