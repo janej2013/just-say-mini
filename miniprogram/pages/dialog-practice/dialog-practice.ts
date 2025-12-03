@@ -1,4 +1,4 @@
-// pages/dialog-practice/dialog-practice.ts
+﻿// pages/dialog-practice/dialog-practice.ts
 // 引入腾讯云语音识别SDK
 const QCloudASR = require('../../lib/asr.min.js');
 // 引入环境变量配置
@@ -51,7 +51,8 @@ Page({
     currentPlayingDialogId: null, // 当前播放语音的对话ID
     allTasksCompleted: false, // 是否完成所有任务
     isTTSPlaying: false, // TTS 是否正在播放
-    levelNpc: null // 关卡的NPC信息（从level层级获取）
+    levelNpc: null, // 关卡的NPC信息（从level层级获取）
+    tasksCompletionStatus: [false, false, false] // 三个任务的完成状态
   },
   
   // 音频上下文
@@ -110,7 +111,9 @@ Page({
       allTasks: tasks,
       currentTaskIdx: currentTaskIdx,
       taskTitle: levelData.levelTitle || 'Practice',
-      levelNpc: levelData.npc || { animal: 'Panda', role: 'Staff' }
+      levelNpc: levelData.npc || { animal: 'Panda', role: 'Staff' },
+      tasksCompletionStatus: [false, false, false], // 初始化3个任务的完成状态
+      allTasksCompleted: false // 重置完成状态
     });
     
     // 初始化第一个任务
@@ -1025,8 +1028,9 @@ Page({
 
     // 根据反馈类型执行不同操作
     if (feedbackType === 'perfect') {
-      // 完美回答，直接继续对话
-      console.log('🎉 完美回答，继续对话');
+      // 完美回答，标记当前任务完成
+      console.log('🎉 完美回答，标记任务完成并继续对话');
+      this.markCurrentTaskCompleted();
       setTimeout(() => {
         this.continueDialog();
       }, 1000);
@@ -1140,6 +1144,8 @@ Page({
           // 点击“继续吧”或“知道了”
           if (withOptions) {
             console.log('用户选择：继续对话');
+            // 标记当前任务完成
+            this.markCurrentTaskCompleted();
             this.continueDialog();
           }
         } else if (res.cancel && withOptions) {
@@ -1149,6 +1155,21 @@ Page({
         }
       }
     });
+  },
+
+  /**
+   * 标记当前任务为已完成
+   */
+  markCurrentTaskCompleted() {
+    const currentIdx = this.data.currentTaskIdx;
+    if (currentIdx >= 0 && currentIdx < 3) {
+      const newStatus = [...this.data.tasksCompletionStatus];
+      newStatus[currentIdx] = true;
+      this.setData({
+        tasksCompletionStatus: newStatus
+      });
+      console.log(`✅ 任务 ${currentIdx + 1} 已标记为完成，完成状态:`, newStatus);
+    }
   },
 
   /**
@@ -1173,16 +1194,28 @@ Page({
       // 已经完成所有3个任务
       console.log('✅ 所有任务已完成！');
       
-      // 设置完成状态，按钮变为对号
-      this.setData({
-        allTasksCompleted: true
-      });
+      // 检查是否所有任务都标记为完成
+      const allCompleted = this.data.tasksCompletionStatus.every(status => status === true);
       
-      wx.showToast({
-        title: '🎉 恭喜完成所有任务！',
-        icon: 'success',
-        duration: 2000
-      });
+      if (allCompleted) {
+        // 所有任务都已完成，设置完成状态，按钮变为对号
+        this.setData({
+          allTasksCompleted: true
+        });
+        
+        wx.showToast({
+          title: '🎉 恭喜完成所有任务！',
+          icon: 'success',
+          duration: 2000
+        });
+      } else {
+        console.log('⚠️ 还有任务未完成，请完成所有任务');
+        wx.showToast({
+          title: '请完成所有任务',
+          icon: 'none',
+          duration: 2000
+        });
+      }
       
       return;
     }
