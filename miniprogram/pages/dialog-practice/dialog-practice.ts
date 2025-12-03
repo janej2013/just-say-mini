@@ -54,7 +54,8 @@ Page({
     levelNpc: null, // 关卡的NPC信息（从level层级获取）
     tasksCompletionStatus: [false, false, false], // 三个任务的完成状态
     showFeedbackModal: false, // 是否显示反馈弹窗
-    modalWithOptions: false // 弹窗是否显示操作按钮
+    modalWithOptions: false, // 弹窗是否显示操作按钮
+    language: 'zh' // 当前语言，默认中文
   },
   
   // 音频上下文
@@ -69,6 +70,12 @@ Page({
    */
   onLoad(options) {
     console.log('对话练习页面加载', options);
+    
+    // 获取全局语言设置
+    const app = getApp<IAppOption>();
+    this.setData({
+      language: app.globalData.language || 'zh'
+    });
     
     // Mock模式提示
     if (MOCK_MODE_ENABLED) {

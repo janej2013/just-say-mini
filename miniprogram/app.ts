@@ -1,6 +1,8 @@
 // app.ts
 App<IAppOption>({
-  globalData: {},
+  globalData: {
+    language: 'zh' // 默认中文，可选值: 'zh' | 'en'
+  },
   onLaunch() {
     // 展示本地存储能力
     const logs = wx.getStorageSync('logs') || []

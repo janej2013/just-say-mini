@@ -17,7 +17,7 @@
     </view>
     
     <!-- 当前任务说明 -->
-    <view class="current-task-title">{{currentTaskData.zh}}</view>
+    <view class="current-task-title">{{language === 'zh' ? currentTaskData.zh : currentTaskData.en}}</view>
   </view>
 
   <!-- 对话内容区域 -->
@@ -113,10 +113,10 @@
       <!-- Header -->
       <view class="modal-header">
         <view class="header-left">
-          <text class="header-title">Enhance it</text>
+          <text class="header-title">{{language === 'zh' ? '优化建议' : 'Enhance it'}}</text>
           <text class="sparkles-icon">✨</text>
         </view>
-        <view class="feedback-badge">Feedback</view>
+        <view class="feedback-badge">{{language === 'zh' ? '反馈' : 'Feedback'}}</view>
       </view>
 
       <!-- Suggestions List -->
@@ -125,7 +125,7 @@
         <view class="suggestion-card concise">
           <view class="card-header">
             <text class="card-icon">☂️</text>
-            <text class="card-label">CONCISE</text>
+            <text class="card-label">{{language === 'zh' ? '简洁' : 'CONCISE'}}</text>
           </view>
           <text class="card-text">{{currentTaskData.userAnswers.simple}}</text>
         </view>
@@ -135,7 +135,7 @@
           <view class="active-indicator"></view>
           <view class="card-header">
             <text class="card-icon">🌱</text>
-            <text class="card-label">NATURAL</text>
+            <text class="card-label">{{language === 'zh' ? '自然' : 'NATURAL'}}</text>
           </view>
           <text class="card-text">{{currentTaskData.userAnswers.natural}}</text>
         </view>
@@ -144,7 +144,7 @@
         <view class="suggestion-card slang">
           <view class="card-header">
             <text class="card-icon">🔥</text>
-            <text class="card-label">SLANG</text>
+            <text class="card-label">{{language === 'zh' ? '地道' : 'SLANG'}}</text>
           </view>
           <text class="card-text">{{currentTaskData.userAnswers.native}}</text>
         </view>
@@ -152,11 +152,11 @@
 
       <!-- Actions -->
       <view class="modal-actions" wx:if="{{modalWithOptions}}">
-        <button class="action-btn retry-btn" bindtap="onModalRetry">Got it, retry</button>
-        <button class="action-btn continue-btn" bindtap="onModalContinue">Got it, continue</button>
+        <button class="action-btn retry-btn" bindtap="onModalRetry">{{language === 'zh' ? '好的，重试' : 'Got it, retry'}}</button>
+        <button class="action-btn continue-btn" bindtap="onModalContinue">{{language === 'zh' ? '好的，继续' : 'Got it, continue'}}</button>
       </view>
       <view class="modal-actions" wx:else>
-        <button class="action-btn retry-btn" bindtap="onModalClose">Close</button>
+        <button class="action-btn retry-btn" bindtap="onModalClose">{{language === 'zh' ? '关闭' : 'Close'}}</button>
       </view>
     </view>
   </view>

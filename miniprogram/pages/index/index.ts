@@ -13,8 +13,30 @@ Component({
     hasUserInfo: false,
     canIUseGetUserProfile: wx.canIUse('getUserProfile'),
     canIUseNicknameComp: wx.canIUse('input.type.nickname'),
+    currentLanguage: 'zh', // 当前语言
+  },
+  lifetimes: {
+    attached() {
+      // 组件实例进入页面节点树时执行
+      this.setData({
+        currentLanguage: app.globalData.language || 'zh'
+      });
+    }
   },
   methods: {
+    // 切换语言
+    toggleLanguage() {
+      const newLanguage = this.data.currentLanguage === 'zh' ? 'en' : 'zh';
+      this.setData({
+        currentLanguage: newLanguage
+      });
+      app.globalData.language = newLanguage;
+      wx.showToast({
+        title: newLanguage === 'zh' ? '已切换为中文' : 'Switched to English',
+        icon: 'success',
+        duration: 1500
+      });
+    },
     // 事件处理函数
     bindViewTap() {
       wx.navigateTo({
