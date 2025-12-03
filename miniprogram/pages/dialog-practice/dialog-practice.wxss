@@ -1,506 +1,387 @@
 /* pages/dialog-practice/dialog-practice.wxss */
 page {
-  background: linear-gradient(180deg, #f5f7fa 0%, #e8ecf1 100%);
+  background-color: #FDF6E3; /* Cream Background */
   height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  color: #5D4037; /* Warm Brown Text */
 }
 
 .container {
-  height: 100vh;
-  background: linear-gradient(180deg, #f5f7fa 0%, #e8ecf1 100%);
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   position: relative;
-}
-
-/* 关闭按钮（页面右上角） */
-.close-btn {
-  position: fixed;
-  top: 25rpx;
-  right: 25rpx;
-  width: 56rpx;
-  height: 56rpx;
-  border-radius: 50%;
-  background: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 40rpx;
-  color: #9e9e9e;
-  border: none;
+  box-sizing: border-box;
   padding: 0;
-  z-index: 100;
 }
 
-.close-btn::after {
-  border: none;
-}
-
-/* 顶部区域：进度条 + 当前任务说明 */
+/* --- Top Section --- */
 .top-section {
-  padding: 50rpx 40rpx 35rpx;
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(10rpx);
-}
-
-/* 三个任务进度点 */
-.task-progress-dots {
-  display: flex;
-  gap: 16rpx;
-  margin-bottom: 28rpx;
-  justify-content: space-between;
   width: 100%;
+  padding: 20rpx 0 10rpx;
+  background: #FDF6E3;
+  z-index: 10;
+  box-sizing: border-box;
 }
 
-.progress-dot {
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10rpx;
+  padding: 0 40rpx;
+}
+
+/* Segmented Progress Bar */
+.progress-segments {
+  display: flex;
+  gap: 12rpx;
+  width: 240rpx;
+  margin-top: 0;
+}
+
+.segment {
   flex: 1;
   height: 12rpx;
-  background: #e0e0e0;
-  border-radius: 6rpx;
-  transition: background 0.3s ease;
+  background: #E0E0E0;
+  border-radius: 10rpx;
+  transition: background-color 0.3s ease;
 }
 
-.progress-dot.completed {
-  background: linear-gradient(90deg, #00d856, #00d856);
+.segment.active {
+  background: #A5D6A7; /* Mint Dark */
 }
 
-/* 当前任务标题 */
+/* Close Button (Simple X) */
+.close-btn-wrapper {
+  padding: 10rpx;
+}
+
+.close-icon {
+  font-size: 48rpx;
+  color: #8D6E63;
+  line-height: 1;
+}
+
+/* Task Title */
 .current-task-title {
-  font-size: 34rpx;
-  font-weight: 600;
-  color: #2c2c2c;
-  line-height: 1.3;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #5D4037;
+  margin-top: 0;
+  margin-bottom: 20rpx;
+  padding: 0 40rpx;
 }
 
-/* 对话内容区域 */
+/* --- Chat Area --- */
 .chat-container {
+  width: 100%;
   flex: 1;
-  padding: 20rpx 30rpx 30rpx;
+  padding: 20rpx 40rpx 40rpx;
   overflow-y: auto;
-  background: transparent;
+  box-sizing: border-box;
 }
 
 .chat-bubbles {
   display: flex;
   flex-direction: column;
-  gap: 20rpx;
+  gap: 40rpx;
 }
 
-/* 对话行容器 */
 .dialog-row {
   display: flex;
-  margin-bottom: 20rpx;
+  gap: 20rpx;
+  width: 100%;
 }
 
-/* NPC气泡行（靠左） */
-.npc-row {
-  justify-content: flex-start;
-}
-
-/* 用户气泡行（靠右） */
-.user-row {
-  justify-content: flex-end;
-  gap: 15rpx;
-}
-
-/* NPC语音播放器气泡 */
-.npc-audio-player {
-  display: flex;
-  flex-direction: column;
-  background: #ffffff;
-  border-radius: 24rpx;
-  padding: 28rpx 32rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
-  max-width: 72%;
-}
-
-.npc-audio-player > view:first-child {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.audio-controls {
-  display: flex;
-  align-items: center;
-  flex: 1;
-}
-
-.audio-icon {
-  width: 68rpx;
-  height: 68rpx;
-  margin-right: 24rpx;
-  background: #000000;
+/* Avatar Styles */
+.avatar {
+  width: 80rpx;
+  height: 80rpx;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
-  font-size: 26rpx;
+  flex-shrink: 0;
+  border: 4rpx solid #FFF;
+  box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.05);
+}
+
+.npc-avatar {
+  background: #FFAB91; /* Fox Orange */
+}
+
+.npc-avatar text {
+  color: #FFF;
+  font-weight: 700;
+  font-size: 28rpx;
+}
+
+.user-avatar {
+  background: #C1E1C1; /* Soft Mint */
+}
+
+.user-avatar text {
+  font-size: 40rpx;
+}
+
+/* NPC Row Layout */
+.npc-row {
+  justify-content: flex-start;
+}
+
+.npc-content-col {
+  display: flex;
+  flex-direction: column;
+  max-width: 75%;
+}
+
+.npc-audio-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+/* Audio Player Pill */
+.npc-audio-player {
+  background: #FFF;
+  border-radius: 40rpx;
+  padding: 16rpx 24rpx;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(141, 110, 99, 0.08);
+  min-width: 300rpx;
+}
+
+.audio-control-btn {
+  width: 60rpx;
+  height: 60rpx;
+  background: #5D4037;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FFF;
+  font-size: 24rpx;
   flex-shrink: 0;
 }
 
 .audio-wave {
   display: flex;
-  align-items: flex-end;
-  height: 44rpx;
+  align-items: center;
+  gap: 6rpx;
+  height: 30rpx;
   flex: 1;
-  gap: 5rpx;
 }
 
 .wave-bar {
-  flex: 1;
   width: 6rpx;
-  background: #d5d5d5;
-  border-radius: 3rpx;
-  height: 22rpx;
-  opacity: 0.7;
-  transition: all 0.3s ease;
+  height: 16rpx;
+  background: #D7CCC8;
+  border-radius: 4rpx;
 }
 
 .wave-bar.active {
-  background: #ddd;
-  animation: wave 1.2s infinite ease-in-out;
-}
-
-.wave-bar.active:nth-child(2n) {
-  animation-delay: 0.2s;
-}
-
-.wave-bar.active:nth-child(3n) {
-  animation-delay: 0.4s;
+  background: #5D4037;
+  animation: wave 1s infinite;
 }
 
 @keyframes wave {
-  0%, 100% { 
-    height: 20rpx; 
-    opacity: 0.6;
-  }
-  50% { 
-    height: 40rpx; 
-    opacity: 1;
-  }
+  0%, 100% { height: 16rpx; }
+  50% { height: 30rpx; }
 }
 
-.npc-text-toggle {
-  flex-shrink: 0;
-  margin-left: 20rpx;
-  white-space: nowrap;
-}
-
-.role-label {
-  font-size: 26rpx;
+.audio-duration {
+  font-size: 24rpx;
+  color: #8D6E63;
   font-weight: 600;
-  color: #666;
-  background: #f5f5f5;
-  width: 52rpx;
-  height: 52rpx;
+}
+
+/* 'A' Toggle Button */
+.npc-text-toggle {
+  width: 80rpx;
+  height: 80rpx;
   border-radius: 50%;
+  background: #FFF;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1rpx solid #e0e0e0;
-  flex-shrink: 0;
+  border: 2rpx solid #FFF;
+  box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.05);
+  color: #D7CCC8;
+  font-weight: 700;
+  transition: all 0.3s ease;
 }
 
-/* NPC文本内容区域 */
-.npc-text-content {
+.npc-text-toggle.active {
+  background: #5D4037;
+  color: #FFF;
+}
+
+/* NPC Text Bubble */
+.npc-text-bubble {
   margin-top: 20rpx;
-  padding-top: 20rpx;
-  border-top: 1rpx solid #eee;
-  font-size: 28rpx;
-  line-height: 1.6;
-  color: #333;
-  animation: slideDown 0.3s ease-out;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    max-height: 0;
-    transform: translateY(-10rpx);
-  }
-  to {
-    opacity: 1;
-    max-height: 500rpx;
-    transform: translateY(0);
-  }
-}
-
-
-
-
-
-/* 关键词提示容器 */
-.keywords-hint-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15rpx;
-  justify-content: center;
-  margin: 20rpx 0;
-  padding: 0 20rpx;
-}
-
-/* 单个关键词样式 */
-.keyword-item {
-  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-  border-radius: 30rpx;
-  padding: 12rpx 24rpx;
-  border: 2rpx solid #bbdefb;
-  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.05);
-}
-
-.keyword-text {
-  font-size: 26rpx;
-  color: #1565c0;
-  font-weight: 500;
-}
-
-/* 对话气泡 */
-.chat-bubble {
-  padding: 25rpx 30rpx;
-  border-radius: 30rpx;
-  font-size: 28rpx;
-  line-height: 1.5;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
-}
-
-.user-bubble {
-  background: linear-gradient(135deg, #00d856, #00e676);
-  color: #ffffff;
-  border-radius: 24rpx 24rpx 4rpx 24rpx;
-  max-width: 70%;
+  background: #C1E1C1; /* Mint Green as per image for NPC text? No, image shows Green for User, White for NPC text? Wait. 
+  Image: 
+  - Fox Audio Player: White
+  - Fox Text Bubble: Green? No, the image shows "Hi, what can I get for you today? I like a small latte." in a GREEN bubble. That is the USER message.
+  - The Fox message "We have a great hazelnut latte..." is NOT shown as text in the main view, only audio.
+  - Wait, the prompt says "AI messages have a separate 'Audio Player' bubble... User messages are simple text bubbles in mint green."
+  - So NPC Text Bubble (when revealed) should probably be White to match the Audio Player theme, or maybe Cream. Let's stick to White as per React code "bg-white".
+  */
+  background: #FFF;
+  padding: 30rpx;
+  border-radius: 40rpx;
+  border-top-left-radius: 4rpx; /* Square corner */
+  box-shadow: 0 4rpx 12rpx rgba(141, 110, 99, 0.08);
   font-size: 30rpx;
-  animation: slideInRight 0.3s ease-out;
+  line-height: 1.5;
+  color: #5D4037;
+  animation: fadeIn 0.3s ease;
 }
 
-/* 用户气泡包装器（包含气泡和反馈按钮） */
-.user-bubble-wrapper {
+/* User Row Layout */
+.user-row {
+  justify-content: flex-end;
+}
+
+.user-content-col {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   max-width: 75%;
 }
 
-/* 用户头像 */
-.user-avatar {
-  width: 64rpx;
-  height: 64rpx;
-  border-radius: 50%;
-  background: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 34rpx;
-  flex-shrink: 0;
-  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.08);
-  border: 2rpx solid #f0f0f0;
+.user-bubble {
+  background: #C1E1C1; /* Soft Mint */
+  padding: 30rpx;
+  border-radius: 40rpx;
+  border-top-right-radius: 4rpx; /* Square corner */
+  box-shadow: 0 4rpx 12rpx rgba(141, 110, 99, 0.08);
+  font-size: 30rpx;
+  line-height: 1.5;
+  color: #5D4037;
 }
 
-/* 反馈按钮 */
-.feedback-button {
-  margin-top: 12rpx;
-  padding: 10rpx 24rpx;
-  border-radius: 18rpx;
-  font-size: 24rpx;
-  font-weight: 500;
-  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-  animation: fadeIn 0.5s ease-out;
-  align-self: flex-end;
-}
-
-.feedback-button.perfect {
-  background: #ffffff;
-  color: #00d856;
-  border: 1rpx solid rgba(0, 216, 86, 0.3);
-}
-
-.feedback-button.tips {
-  background: #ffffff;
-  color: #ff9800;
-  border: 1rpx solid rgba(255, 152, 0, 0.3);
-}
-
-.feedback-button:active {
-  transform: scale(0.95);
-  box-shadow: 0 1rpx 3rpx rgba(0, 0, 0, 0.15);
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10rpx);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(20rpx);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-
-
-/* 反馈标签 */
 .feedback-badge {
-  background: linear-gradient(135deg, #a8d8b9, #80c994);
-  color: white;
-  padding: 12rpx 25rpx;
+  margin-top: 16rpx;
+  background: #E8F5E9;
+  padding: 10rpx 24rpx;
   border-radius: 30rpx;
-  align-self: flex-end;
-  margin-bottom: 25rpx;
   display: flex;
   align-items: center;
-  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+  gap: 10rpx;
 }
 
-.feedback-text {
-  font-size: 26rpx;
-  font-weight: bold;
+.feedback-badge.perfect {
+  background: #E8F5E9;
+  color: #2E7D32;
 }
 
-/* 分页指示器 */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20rpx 0 30rpx;
-  padding: 0 30rpx;
-}
-
-.pagination-dot {
-  width: 14rpx;
-  height: 14rpx;
+.check-icon {
+  width: 32rpx;
+  height: 32rpx;
+  background: #4CAF50;
   border-radius: 50%;
-  background-color: #d0c0b0;
-  margin: 0 12rpx;
-  transition: all 0.3s ease;
-}
-
-.pagination-dot.active {
-  background: linear-gradient(135deg, #ff9a8b, #ff6a72);
-  width: 28rpx;
-  height: 14rpx;
-  border-radius: 7rpx;
-}
-
-/* 底部操作栏 */
-.bottom-bar {
+  color: #FFF;
+  font-size: 20rpx;
   display: flex;
-  align-items: flex-end;
   justify-content: center;
-  padding: 35rpx 40rpx 40rpx;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10rpx);
+  align-items: center;
 }
 
-.input-area {
+/* --- Bottom Bar --- */
+.bottom-bar {
+  padding: 20rpx 0 60rpx; /* Increased bottom padding */
+  background: #FDF6E3;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
 }
 
-/* 关键词提示容器 */
-.keywords-hint-container {
+/* Suggestion Chips */
+.suggestion-chips-wrapper {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 12rpx;
   justify-content: center;
+  gap: 16rpx;
   margin-bottom: 20rpx;
-  max-width: 100%;
+  padding: 0 40rpx;
+  box-sizing: border-box;
 }
 
-/* 单个关键词样式 */
-.keyword-item {
-  background: #f8f8f8;
-  border-radius: 24rpx;
-  padding: 10rpx 20rpx;
-  border: 1rpx solid #ebebeb;
+.chip-item {
+  background: #FFF;
+  padding: 16rpx 32rpx;
+  border-radius: 40rpx;
+  box-shadow: 0 2rpx 8rpx rgba(141, 110, 99, 0.08);
+  color: #5D4037;
+  font-size: 28rpx;
+  font-weight: 600;
 }
 
-.keyword-text {
-  font-size: 26rpx;
-  color: #757575;
-  white-space: nowrap;
+/* Controls Row */
+.controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20rpx;
+}
+
+.icon-btn {
+  width: 80rpx;
+  height: 80rpx;
+  background: #FFF;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36rpx;
+  box-shadow: 0 4rpx 12rpx rgba(141, 110, 99, 0.1);
+  color: #5D4037;
+}
+
+.mic-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .microphone-btn {
-  width: 100%;
-  max-width: 680rpx;
-  height: 100rpx;
-  border-radius: 50rpx;
-  background: linear-gradient(135deg, #00d856, #00e676);
+  width: 600rpx !important;
+  height: 120rpx;
+  border-radius: 60rpx;
+  background: linear-gradient(45deg, #2dd4bf, #C1E1C1); /* Teal-400 to Soft Mint */
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 52rpx;
+  font-size: 48rpx;
   border: none;
   padding: 0;
-  box-shadow: 0 6rpx 16rpx rgba(0, 216, 86, 0.3);
+  margin: 0 auto;
+  box-shadow: 0 10rpx 30rpx rgba(45, 212, 191, 0.4);
   transition: all 0.3s ease;
-  position: relative;
-}
-
-.microphone-btn::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50rpx;
-  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.2), transparent 65%);
-  pointer-events: none;
-}
-
-.microphone-btn text {
-  font-size: 48rpx;
-  line-height: 1;
-  position: relative;
-  z-index: 1;
 }
 
 .microphone-btn.recording {
-  background: linear-gradient(135deg, #ff5252, #ff7979);
-  box-shadow: 0 6rpx 16rpx rgba(255, 82, 82, 0.35);
-  animation: pulse-recording 1.5s ease-in-out infinite;
+  background: linear-gradient(135deg, #FF7043, #F4511E);
+  transform: scale(1.1);
 }
 
 .microphone-btn.completed {
-  background: linear-gradient(135deg, #4caf50, #66bb6a);
-  box-shadow: 0 6rpx 16rpx rgba(76, 175, 80, 0.35);
+  background: linear-gradient(135deg, #66BB6A, #43A047);
 }
 
-.microphone-btn.completed text {
-  font-size: 56rpx;
-  font-weight: bold;
-}
-
-@keyframes pulse-recording {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-}
-
-.microphone-btn::after {
-  border: none;
-}
-
-.microphone-btn:active {
-  transform: scale(0.95);
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10rpx); }
+  to { opacity: 1; transform: translateY(0); }
 }

@@ -21,7 +21,7 @@
             "natural": "Yeah, could you tell me where the baggage claim is?",
             "native": "Yep! Where can I pick up my luggage?"
           },
-          "keywordsHint": ["baggage", "claim", "luggage", "where", "find"]
+          "keywordsHint": ["baggage", "claim", "luggage"]
         },
         {
           "taskId": "airport_l1_t2",
@@ -39,7 +39,7 @@
             "natural": "Could you tell me how to get to the taxi pickup?",
             "native": "Yeah, where do I go to grab a taxi?"
           },
-          "keywordsHint": ["exit", "taxi", "pickup", "where", "go"]
+          "keywordsHint": ["exit", "taxi", "pickup"]
         },
         {
           "taskId": "airport_l1_t3",
@@ -57,7 +57,7 @@
             "natural": "Could you tell me where I can get a luggage cart?",
             "native": "Yeah, where do I grab a cart?"
           },
-          "keywordsHint": ["luggage", "cart", "where", "find", "get"]
+          "keywordsHint": ["luggage", "cart"]
         }
       ]
     },
@@ -81,7 +81,7 @@
             "natural": "Could you tell me where to get a SIM card?",
             "native": "Yeah, where can I pick up a SIM card?"
           },
-          "keywordsHint": ["SIM card", "buy", "where", "shop"]
+          "keywordsHint": ["SIM card", "buy"]
         },
         {
           "taskId": "airport_l2_t2",
@@ -99,7 +99,7 @@
             "natural": "Could you tell me where the restroom or water fountain is?",
             "native": "Yeah, where’s the bathroom around here?"
           },
-          "keywordsHint": ["restroom", "water", "Wi-Fi", "where", "find"]
+          "keywordsHint": ["restroom", "water", "Wi-Fi"]
         },
         {
           "taskId": "airport_l2_t3",

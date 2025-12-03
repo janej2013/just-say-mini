@@ -1,15 +1,19 @@
 <!--pages/dialog-practice/dialog-practice.wxml-->
 <view class="container">
-  <!-- 关闭按钮（右上角） -->
-  <button class="close-btn" bindtap="onClose">✕</button>
   
-  <!-- 顶部区域：进度条 + 当前任务说明 -->
+  <!-- 顶部区域：进度条 + 标题 + 关闭按钮 -->
   <view class="top-section">
-    <!-- 三个任务进度指示器 -->
-    <view class="task-progress-dots">
-      <view class="progress-dot {{currentTaskIdx >= 0 ? 'completed' : ''}}"></view>
-      <view class="progress-dot {{currentTaskIdx >= 1 ? 'completed' : ''}}"></view>
-      <view class="progress-dot {{currentTaskIdx >= 2 ? 'completed' : ''}}"></view>
+    <view class="header-row">
+        <!-- 进度条 (Segmented) -->
+        <view class="progress-segments">
+            <view class="segment {{currentTaskIdx >= 0 ? 'active' : ''}}"></view>
+            <view class="segment {{currentTaskIdx >= 1 ? 'active' : ''}}"></view>
+            <view class="segment {{currentTaskIdx >= 2 ? 'active' : ''}}"></view>
+        </view>
+        <!-- 关闭按钮 -->
+        <view class="close-btn-wrapper" bindtap="onClose">
+            <text class="close-icon">✕</text>
+        </view>
     </view>
     
     <!-- 当前任务说明 -->
@@ -18,72 +22,90 @@
 
   <!-- 对话内容区域 -->
   <view class="chat-container">
-    <!-- 对话气泡 -->
     <view class="chat-bubbles">
       <block wx:for="{{dialogList}}" wx:key="id">
-        <!-- NPC语音播放器气泡（靠左） -->
+        
+        <!-- NPC Row -->
         <view wx:if="{{item.type == 'npc'}}" class="dialog-row npc-row">
-          <view class="npc-audio-player">
-            <view class="audio-controls">
-              <view class="audio-icon" bindtap="onPlayNpcAudio" data-id="{{item.id}}">
-                <text wx:if="{{!audioPlaying || currentPlayingDialogId != item.id}}">▶</text>
-                <text wx:else>❚❚</text>
-              </view>
-              <view class="audio-wave">
-                <view class="wave-bar {{audioPlaying && currentPlayingDialogId == item.id ? 'active' : ''}}" wx:for="{{[1,2,3,4,5,6,7,8,9,10]}}" wx:key="index"></view>
-              </view>
-            </view>
-            <view class="npc-text-toggle" bindtap="toggleNpcText" data-id="{{item.id}}">
-              <text class="role-label">A</text>
-            </view>
-            <!-- NPC文本（可展开/收起） -->
-            <view wx:if="{{item.showText}}" class="npc-text-content">
-              <text>{{item.content}}</text>
-            </view>
+          <!-- Avatar -->
+          <view class="avatar npc-avatar">
+            <text>Fox</text>
+          </view>
+          
+          <view class="npc-content-col">
+             <!-- Audio Player & Toggle Row -->
+             <view class="npc-audio-row">
+                <view class="npc-audio-player">
+                    <view class="audio-control-btn" bindtap="onPlayNpcAudio" data-id="{{item.id}}">
+                        <text wx:if="{{!audioPlaying || currentPlayingDialogId != item.id}}">▶</text>
+                        <text wx:else>❚❚</text>
+                    </view>
+                    <view class="audio-wave">
+                        <view class="wave-bar {{audioPlaying && currentPlayingDialogId == item.id ? 'active' : ''}}" wx:for="{{[1,2,3,4,5]}}" wx:key="index"></view>
+                    </view>
+                    <text class="audio-duration">0:04</text>
+                </view>
+                
+                <!-- 'A' Toggle Button -->
+                <view class="npc-text-toggle {{item.showText ? 'active' : ''}}" bindtap="toggleNpcText" data-id="{{item.id}}">
+                    <text>A</text>
+                </view>
+             </view>
+
+             <!-- Text Bubble (Hidden by default) -->
+             <view wx:if="{{item.showText}}" class="npc-text-bubble">
+                <text>{{item.content}}</text>
+             </view>
           </view>
         </view>
         
-        <!-- 用户气泡（靠右，带头像和反馈按钮） -->
+        <!-- User Row -->
         <view wx:if="{{item.type == 'user'}}" class="dialog-row user-row">
-          <view class="user-bubble-wrapper">
-            <view class="chat-bubble user-bubble">
+          <view class="user-content-col">
+            <!-- Text Bubble -->
+            <view class="user-bubble">
               <text>{{item.content}}</text>
             </view>
-            <!-- 反馈按钮（显示该气泡自己的反馈结果） -->
-            <view wx:if="{{item.feedbackResult}}" class="feedback-button {{item.feedbackResult.type}}" bindtap="onShowExamples" data-result="{{item.feedbackResult}}">
-              <text wx:if="{{item.feedbackResult.type == 'perfect'}}">✓ Perfect</text>
-              <text wx:else>💡 Tips</text>
+            
+            <!-- Feedback Badge -->
+            <view wx:if="{{item.feedbackResult}}" class="feedback-badge {{item.feedbackResult.type}}" bindtap="onShowExamples" data-result="{{item.feedbackResult}}">
+              <view class="check-icon" wx:if="{{item.feedbackResult.type == 'perfect'}}">✓</view>
+              <text>{{item.feedbackResult.type == 'perfect' ? 'Perfect' : 'Tips'}}</text>
             </view>
           </view>
-          <!-- 用户头像 -->
-          <view class="user-avatar">👤</view>
+
+          <!-- Avatar -->
+          <view class="avatar user-avatar">
+            <text>👤</text>
+          </view>
         </view>
+
       </block>
     </view>
   </view>
 
-  
-
   <!-- 底部操作栏 -->
   <view class="bottom-bar">
-    <view class="input-area">
-      <!-- 关键词提示（显示在麦克风上方） -->
-      <view wx:if="{{keywordsHint.length > 0 && !allTasksCompleted}}" class="keywords-hint-container">
-        <view class="keyword-item" wx:for="{{keywordsHint}}" wx:key="index">
-          <text class="keyword-text">{{item}}</text>
+    <!-- Suggestion Chips -->
+    <view class="suggestion-chips-wrapper" wx:if="{{keywordsHint.length > 0 && !allTasksCompleted}}">
+        <view class="chip-item" wx:for="{{keywordsHint}}" wx:key="index">
+            <text>{{item}}</text>
         </view>
-      </view>
-      
-      <!-- 录音/完成按钮（椭圆形） -->
-      <button class="microphone-btn {{allTasksCompleted ? 'completed' : ''}} {{isRecording ? 'recording' : ''}}" 
-              bindtouchstart="{{allTasksCompleted ? '' : 'onRecordStart'}}" 
-              bindtouchend="{{allTasksCompleted ? '' : 'onRecordEnd'}}" 
-              bindtouchcancel="{{allTasksCompleted ? '' : 'onRecordEnd'}}"
-              bindtap="{{allTasksCompleted ? 'onCompleteClick' : ''}}">
-        <text wx:if="{{allTasksCompleted}}">✓</text>
-        <text wx:elif="{{isRecording}}">●</text>
-        <text wx:else>🎤</text>
-      </button>
+    </view>
+
+    <view class="controls-row">
+        <!-- Microphone Button -->
+        <view class="mic-wrapper">
+            <button class="microphone-btn {{allTasksCompleted ? 'completed' : ''}} {{isRecording ? 'recording' : ''}}" 
+                    bindtouchstart="{{allTasksCompleted ? '' : 'onRecordStart'}}" 
+                    bindtouchend="{{allTasksCompleted ? '' : 'onRecordEnd'}}" 
+                    bindtouchcancel="{{allTasksCompleted ? '' : 'onRecordEnd'}}"
+                    bindtap="{{allTasksCompleted ? 'onCompleteClick' : ''}}">
+                <text wx:if="{{allTasksCompleted}}">✓</text>
+                <text wx:elif="{{isRecording}}">●</text>
+                <text wx:else>🎤</text>
+            </button>
+        </view>
     </view>
   </view>
 </view>
