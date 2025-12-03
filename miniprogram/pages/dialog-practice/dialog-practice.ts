@@ -4,6 +4,26 @@ const QCloudASR = require('../../lib/asr.min.js');
 // 引入环境变量配置
 const envConfig = require('../../config/env.js');
 
+// ==================== Mock 模式配置 ====================
+// 设置为 true 启用Mock模式，false 使用真实语音识别
+const MOCK_MODE_ENABLED = true;
+// Mock数据（直接在代码中定义，避免小程序require JSON文件的限制）
+const mockData = {
+  mockEnabled: true,
+  mockAnswers: {
+    "airport_l1_t1": "Yes, where is the baggage claim?",
+    "airport_l1_t2": "Could you tell me how to get to the taxi pickup?",
+    "airport_l1_t3": "Where can I find a luggage cart?",
+    "airport_l2_t1": "Could you tell me where to get a SIM card?",
+    "airport_l2_t2": "Where is the restroom?",
+    "airport_l2_t3": "Could you tell me the airport bus routes and prices?",
+    "airport_l3_t1": "My luggage hasn't arrived. I'd like to report it.",
+    "airport_l3_t2": "I'm here for tourism and will stay for a week.",
+    "airport_l3_t3": "My suitcase is damaged. I'd like to report it."
+  }
+};
+// =======================================================
+
 Page({
   data: {
     // 页面数据
@@ -18,10 +38,16 @@ Page({
     currentPage: 0,
     totalPages: 0,
     paginationList: [], // 用于分页指示器
-    showNpcText: false,    // 是否显示NPC文本
-    showUserResponse: false, // 是否显示用户回答
     isRecording: false,    // 是否正在录音
-    npcDialogContent: '' // NPC对话内容
+    npcDialogContent: '', // NPC对话内容
+    currentTaskData: null, // 当前任务完整数据
+    userRecognizedText: '', // 用户识别的文本
+    feedbackResult: null, // 反馈结果 {type: 'perfect'|'tips', score: number, details: object}
+    allTasks: [], // 所有任务列表
+    currentTaskIdx: 0, // 当前任务索引
+    dialogIdCounter: 1, // 对话 ID计数器
+    currentPlayingDialogId: null, // 当前播放语音的对话ID
+    allTasksCompleted: false // 是否完成所有任务
   },
   
   // 音频上下文
@@ -37,82 +63,69 @@ Page({
   onLoad(options) {
     console.log('对话练习页面加载', options);
     
+    // Mock模式提示
+    if (MOCK_MODE_ENABLED) {
+      console.log('🎭 Mock模式已启用');
+    }
+    
     // 初始化语音识别
     this.initSpeechRecognition();
-    // 从参数中获取script.json路径和任务信息
-    if (options.scriptPath && options.levelId && options.taskId) {
-      // 由于微信小程序限制，我们需要通过其他方式加载数据
-      // 这里提供两种方案：直接在参数中传递数据，或使用全局数据
-      if (options.taskData) {
-        // 如果任务数据直接通过参数传递
-        try {
-          const taskData = JSON.parse(decodeURIComponent(options.taskData));
-          this.processScriptDataFromParam(taskData, options.levelId, options.taskId);
-        } catch (e) {
-          console.error('解析任务数据失败:', e);
-          this.loadTaskData(options.scriptPath, options.levelId, options.taskId);
-        }
-      } else {
-        this.loadTaskData(options.scriptPath, options.levelId, options.taskId);
+    
+    // 加载关卡数据
+    if (options.levelData) {
+      try {
+        const levelData = JSON.parse(decodeURIComponent(options.levelData));
+        console.log('接收到关卡数据:', levelData);
+        this.initWithLevelData(levelData);
+      } catch (e) {
+        console.error('解析关卡数据失败:', e);
+        this.loadDefaultData();
       }
     } else {
       // 如果没有传入参数，使用默认数据
+      console.warn('⚠️ 未接收到关卡数据，使用默认数据');
       this.loadDefaultData();
     }
   },
 
   /**
-   * 从参数处理任务数据
+   * 使用关卡数据初始化（每个关卡固定3个任务）
    */
-  processScriptDataFromParam(taskData, levelId, taskId) {
-    console.log('处理传入的任务数据:', taskData);
-    console.log('NPC数据:', taskData.npc);
-    console.log('机器人问题 (simple):', taskData.botQuestions && taskData.botQuestions.simple);
-    console.log('用户回答 (simple):', taskData.userAnswers && taskData.userAnswers.simple);
-    console.log('关键词提示:', taskData.keywordsHint);
-    this.initDialogData(taskData);
-  },
-
-  /**
-   * 加载任务数据
-   */
-  loadTaskData(scriptPath, levelId, taskId) {
-    // 由于微信小程序限制，本地文件访问受限制
-    // 我们将使用 wx.request 尝试访问，但更多依赖参数传递的数据
-    console.warn('推荐通过参数传递任务数据，而不是通过文件路径加载');
-    this.loadDefaultData();
-  },
-
-  /**
-   * 处理脚本数据
-   */
-  processScriptData(scriptData, levelId, taskId) {
-    console.log('处理脚本数据:', scriptData, levelId, taskId);
+  initWithLevelData(levelData) {
+    const tasks = levelData.tasks || [];
+    const currentTaskIdx = levelData.currentTaskIndex || 0;
     
-    // 查找对应的关卡和任务
-    let level = null;
-    let task = null;
-    
-    if (scriptData.levels) {
-      level = scriptData.levels.find(lvl => lvl.levelId === levelId);
-      if (level && level.tasks) {
-        task = level.tasks.find(t => t.taskId === taskId);
-      }
-    }
-    
-    if (task) {
-      this.initDialogData(task);
-    } else {
-      console.error('未找到指定的任务:', levelId, taskId);
+    if (tasks.length !== 3) {
+      console.error(`关卡任务数量异常: ${tasks.length}, 期望为 3`);
       this.loadDefaultData();
+      return;
     }
+    
+    // 保存所有任务和当前索引
+    this.setData({
+      allTasks: tasks,
+      currentTaskIdx: currentTaskIdx,
+      taskTitle: levelData.levelTitle || 'Practice'
+    });
+    
+    // 初始化第一个任务
+    const firstTask = tasks[currentTaskIdx];
+    this.initDialogData(firstTask, false);
+    
+    // 设置初始进度（3个任务：33%, 67%, 100%）
+    const progress = Math.round(((currentTaskIdx + 1) / 3) * 100);
+    this.setData({
+      progress: progress
+    });
   },
 
   /**
    * 初始化对话数据
+   * @param task 任务数据
+   * @param isAppend 是否追加模式（默认false，即替换模式）
    */
-  initDialogData(task) {
-    console.log('初始化对话数据:', task);
+  initDialogData(task, isAppend = false) {
+    console.log('初始化对话数据:', task, '追加模式:', isAppend);
     
     // 提取数据
     const botQuestion = (task.botQuestions && task.botQuestions.simple) || (task.botQuestions && task.botQuestions.natural) || 'Hello!';
@@ -120,44 +133,68 @@ Page({
     const keywordsHint = task.keywordsHint || [];
     const npcAnimal = (task.npc && task.npc.animal) || 'A';
     
-    // 创建对话列表 - 只包含当前任务的对话
-    const dialogList = [
-      {
-        id: 1,
-        type: 'npc',
-        content: botQuestion,
-        // 在实际项目中，这里应该包含音频URL
-        // audioUrl: task.audio?.npcSimple || '' 
-      },
-      {
-        id: 2,
-        type: 'user',
-        content: userAnswer,
-        feedback: 'Perfect' // 模拟用户回答反馈
-      }
-    ];
-    
-    // 设置页面数据
-    const total = dialogList.length;
-    const paginationList = Array.from({ length: total }, (_, i) => i);
-    
+    // 保存完整任务数据供后续评分使用
     this.setData({
-      dialogList: dialogList,
-      keywordsHint: keywordsHint,
-      taskTitle: `${task.taskId || 'Practice Task'}`,
-      npcRole: npcAnimal.charAt(0), // 使用动物名字的首字母
-      totalTasks: total,
-      currentPage: 0, // 当前页从0开始
-      totalPages: total,
-      paginationList: paginationList,
-      progress: 60, // 设置初始进度
-      npcDialogContent: botQuestion, // 设置NPC对话内容
-      showNpcText: false, // 默认不显示NPC文本
-      showUserResponse: false // 默认不显示用户回答
+      currentTaskData: task
     });
     
-    // NPC对话默认语音播放
-    this.playTextAsAudio(botQuestion);
+    if (isAppend) {
+      // 追加模式：在现有对话列表中追加新的bot问题
+      const currentDialogList = [...this.data.dialogList];
+      const newDialogId = this.data.dialogIdCounter + 1;
+      
+      currentDialogList.push({
+        id: newDialogId,
+        type: 'npc',
+        content: botQuestion,
+        showText: false // 默认不显示文本
+      });
+      
+      this.setData({
+        dialogList: currentDialogList,
+        keywordsHint: keywordsHint,
+        npcRole: npcAnimal.charAt(0),
+        npcDialogContent: botQuestion,
+        dialogIdCounter: newDialogId,
+        currentPlayingDialogId: newDialogId
+      });
+      
+      // 播放新的NPC对话
+      this.playTextAsAudio(botQuestion);
+    } else {
+      // 替换模式：初始化时使用
+      // 创建对话列表 - 只包含当前任务的对话
+      const dialogList = [
+        {
+          id: 1,
+          type: 'npc',
+          content: botQuestion,
+          showText: false // 默认不显示文本
+        }
+      ];
+      
+      // 设置页面数据
+      const total = dialogList.length;
+      const paginationList = Array.from({ length: total }, (_, i) => i);
+      
+      this.setData({
+        dialogList: dialogList,
+        keywordsHint: keywordsHint,
+        taskTitle: `${task.taskId || 'Practice Task'}`,
+        npcRole: npcAnimal.charAt(0), // 使用动物名字的首字母
+        totalTasks: total,
+        currentPage: 0, // 当前页从0开始
+        totalPages: total,
+        paginationList: paginationList,
+        progress: 60, // 设置初始进度
+        npcDialogContent: botQuestion, // 设置NPC对话内容
+        dialogIdCounter: 1,
+        currentPlayingDialogId: 1
+      });
+      
+      // NPC对话默认语音播放
+      this.playTextAsAudio(botQuestion);
+    }
   },
 
   /**
@@ -193,7 +230,59 @@ Page({
   },
 
   /**
-   * 点击播放音频
+   * 切换NPC文本显示/隐藏
+   */
+  toggleNpcText(e) {
+    const dialogId = e.currentTarget.dataset.id;
+    const updatedDialogList = this.data.dialogList.map(dialog => {
+      if (dialog.id === dialogId && dialog.type === 'npc') {
+        return {
+          ...dialog,
+          showText: !dialog.showText
+        };
+      }
+      return dialog;
+    });
+    
+    this.setData({
+      dialogList: updatedDialogList
+    });
+  },
+
+  /**
+   * 播放NPC音频
+   */
+  onPlayNpcAudio(e) {
+    const dialogId = e.currentTarget.dataset.id;
+    const dialog = this.data.dialogList.find(d => d.id === dialogId);
+    
+    if (!dialog || dialog.type !== 'npc') {
+      return;
+    }
+    
+    // 如果正在播放该音频，则暂停
+    if (this.data.audioPlaying && this.data.currentPlayingDialogId === dialogId) {
+      this.setData({
+        audioPlaying: false,
+        currentPlayingDialogId: null
+      });
+      
+      if (this.innerAudioContext) {
+        this.innerAudioContext.pause();
+      }
+      return;
+    }
+    
+    // 播放该音频
+    this.setData({
+      currentPlayingDialogId: dialogId
+    });
+    
+    this.playTextAsAudio(dialog.content);
+  },
+
+  /**
+   * 点击播放音频（废弃，现在每个NPC都有自己的播放按钮）
    */
   onPlayAudio() {
     console.log('播放音频');
@@ -218,18 +307,6 @@ Page({
         console.log('暂停播放音频');
       }
     }
-  },
-
-  /**
-   * 切换NPC文本显示状态（点击'A'按钮）
-   */
-  toggleNpcTextDisplay() {
-    const currentShowNpcText = this.data.showNpcText;
-    this.setData({
-      showNpcText: !currentShowNpcText
-    });
-    
-    console.log(currentShowNpcText ? '收回NPC文本显示' : '展示NPC文本内容');
   },
 
   /**
@@ -333,6 +410,30 @@ Page({
   },
 
   /**
+   * 完成所有任务后的按钮点击
+   */
+  onCompleteClick() {
+    console.log('✅ 点击完成按钮，返回上一页');
+    wx.navigateBack();
+  },
+
+  /**
+   * 完成所有任务后的按钮点击
+   */
+  onCompleteClick() {
+    console.log('✅ 点击完成按钮，返回上一页');
+    wx.navigateBack();
+  },
+
+  /**
+   * 完成所有任务后的按钮点击
+   */
+  onCompleteClick() {
+    console.log('✅ 点击完成按钮，返回上一页');
+    wx.navigateBack();
+  },
+
+  /**
    * 按下开始录音
    */
   onRecordStart() {
@@ -342,6 +443,13 @@ Page({
     // 如果已经在录音中，忽略
     if (this.data.isRecording) {
       console.log('已在录音中，忽略');
+      return;
+    }
+    
+    // Mock模式和常规模式都调用startRecording
+    if (MOCK_MODE_ENABLED) {
+      console.log('🎭 Mock模式：开始录音');
+      this.startRecording();
       return;
     }
     
@@ -395,37 +503,18 @@ Page({
     console.log('========== 松开麦克风按钮 ==========');
     console.log('当前 isRecording 状态:', this.data.isRecording);
     
-    // 只有在录音中才执行停止
+    // 只有在录音中才执行停止（Mock模式和常规模式统一处理）
     if (this.data.isRecording) {
       this.stopRecording();
     }
   },
 
   /**
-   * 开始录音（废弃的点击方法，保留以防兼容）
-   */
-  onRecord() {
-    console.log('========== onRecord 按钮点击（废弃） ==========');
-    console.log('当前 isRecording 状态:', this.data.isRecording);
-    console.log('recognizer 是否存在:', !!this.recognizer);
-    
-    // 不再使用点击切换模式，此方法保留但不执行任何操作
-    console.log('提示：现在使用按住录音模式');
-  },
-
-  /**
-   * 切换录音状态（废弃，现在使用按住模式）
-   */
-  toggleRecording() {
-    console.log('========== toggleRecording 调用（废弃） ==========');
-    // 不再使用切换模式
-  },
-
-  /**
    * 开始录音和识别
    */
   startRecording() {
-    if (!this.recognizer) {
+    // Mock模式下不需要检查recognizer
+    if (!MOCK_MODE_ENABLED && !this.recognizer) {
       wx.showModal({
         title: '未配置语音识别',
         content: '请先在代码中配置腾讯云密钥。\n\n获取密钥：https://console.cloud.tencent.com/cam/capi',
@@ -509,18 +598,19 @@ Page({
         // 更新为最终结果（可能与实时结果略有差异）
         this.updateUserResponse(recognizedText);
         
-        // 识别完成后显示反馈（可选，根据需求决定是否保留）
-        // setTimeout(() => {
-        //   this.showFeedback();
-        // }, 500);
+        // 保存识别文本
+        this.setData({
+          userRecognizedText: recognizedText
+        });
+        
+        // 识别完成后进行评分
+        setTimeout(() => {
+          this.evaluateUserAnswer(recognizedText);
+        }, 500);
       } else {
         console.log('⚠️ 未识别到内容');
         
-        wx.showToast({
-          title: '未识别到内容',
-          icon: 'none',
-          duration: 2000
-        });
+        // 不显示"未识别到内容"提示，静默处理
       }
       
       console.log('========== 识别完成回调结束 ==========');
@@ -573,7 +663,13 @@ Page({
       isRecording: true
     });
 
-    // 直接调用识别（SDK内部会处理录音）
+    // Mock模式：模拟ASR识别流程
+    if (MOCK_MODE_ENABLED) {
+      this.simulateMockASR();
+      return;
+    }
+
+    // 真实ASR识别
     this.recognizeSpeechWithAPI('');
   },  /**
    * 停止录音和识别
@@ -596,8 +692,8 @@ Page({
       console.log('✓ isRecording 已设置为 false，当前值:', this.data.isRecording);
     });
     
-    // 停止识别器
-    if (this.recognizer) {
+    // 停止识别器（Mock模式下跳过）
+    if (!MOCK_MODE_ENABLED && this.recognizer) {
       try {
         console.log('→ 调用 recognizer.stop()');
         this.recognizer.stop();
@@ -758,18 +854,323 @@ Page({
       };
     } else {
       // 添加新的用户回答
+      const newDialogId = this.data.dialogIdCounter + 1;
       updatedDialogList.push({
-        id: recordingId,
+        id: newDialogId,
         recordingId: recordingId,
         type: 'user',
-        content: text
+        content: text,
+        feedbackResult: null // 每个气泡保存自己的反馈结果
+      });
+      
+      this.setData({
+        dialogIdCounter: newDialogId
       });
     }
     
-    // 显示用户回答
+    // 更新对话列表
+    this.setData({
+      dialogList: updatedDialogList
+    });
+  },
+
+  /**
+   * 评估用户回答（方案四：混合评分法）
+   */
+  evaluateUserAnswer(userText: string) {
+    if (!userText || !this.data.currentTaskData) {
+      console.log('缺少评分必要数据');
+      return;
+    }
+
+    const task = this.data.currentTaskData;
+    const userAnswer = userText.toLowerCase().trim();
+    let totalScore = 0;
+    const details: any = {};
+
+    // 1. 关键词覆盖率评分（30分）
+    const keywords = task.keywordsHint || [];
+    let keywordMatches = 0;
+    keywords.forEach(keyword => {
+      if (userAnswer.includes(keyword.toLowerCase())) {
+        keywordMatches++;
+      }
+    });
+    const keywordScore = keywords.length > 0 ? (keywordMatches / keywords.length) * 30 : 30;
+    totalScore += keywordScore;
+    details.keywordScore = keywordScore;
+    details.keywordMatches = keywordMatches;
+    details.totalKeywords = keywords.length;
+
+    // 2. 句式相似度评分（40分）
+    const userAnswers = task.userAnswers || {};
+    const templates = [
+      userAnswers.simple,
+      userAnswers.natural,
+      userAnswers.native
+    ].filter(Boolean);
+    
+    let maxSimilarity = 0;
+    templates.forEach(template => {
+      if (template) {
+        const similarity = this.calculateSimilarity(userAnswer, template.toLowerCase());
+        maxSimilarity = Math.max(maxSimilarity, similarity);
+      }
+    });
+    const similarityScore = maxSimilarity * 40;
+    totalScore += similarityScore;
+    details.similarityScore = similarityScore;
+    details.maxSimilarity = maxSimilarity;
+
+    // 3. 长度合理性评分（30分）
+    // 基于模板平均长度判断
+    const avgTemplateLength = templates.reduce((sum, t) => sum + (t ? t.length : 0), 0) / Math.max(templates.length, 1);
+    const lengthRatio = userAnswer.length / Math.max(avgTemplateLength, 1);
+    let lengthScore = 30;
+    if (lengthRatio < 0.5 || lengthRatio > 2) {
+      lengthScore = 15; // 长度差异过大
+    } else if (lengthRatio < 0.7 || lengthRatio > 1.5) {
+      lengthScore = 22; // 长度有些差异
+    }
+    totalScore += lengthScore;
+    details.lengthScore = lengthScore;
+
+    // 确定反馈类型
+    const feedbackType = totalScore >= 80 ? 'perfect' : 'tips';
+    
+    console.log('评分结果:', {
+      totalScore,
+      feedbackType,
+      details
+    });
+
+    // 将反馈结果保存到对应的用户气泡中
+    const recordingId = this.currentRecordingId;
+    const updatedDialogList = this.data.dialogList.map(dialog => {
+      if (dialog.type === 'user' && dialog.recordingId === recordingId) {
+        return {
+          ...dialog,
+          feedbackResult: {
+            type: feedbackType,
+            score: totalScore,
+            details: details
+          }
+        };
+      }
+      return dialog;
+    });
+    
     this.setData({
       dialogList: updatedDialogList,
-      showUserResponse: true
+      feedbackResult: {
+        type: feedbackType,
+        score: totalScore,
+        details: details
+      }
+    });
+
+    // 根据反馈类型执行不同操作
+    if (feedbackType === 'perfect') {
+      // 完美回答，直接继续对话
+      console.log('🎉 完美回答，继续对话');
+      setTimeout(() => {
+        this.continueDialog();
+      }, 1000);
+    } else {
+      // 需要优化，展示示例答案弹窗
+      console.log('💡 需要优化，展示示例答案');
+      setTimeout(() => {
+        this.showExamplesWithOptions();
+      }, 500);
+    }
+  },
+
+  /**
+   * 计算两个字符串的相似度（使用Levenshtein距离）
+   */
+  calculateSimilarity(str1: string, str2: string): number {
+    const len1 = str1.length;
+    const len2 = str2.length;
+    const matrix: number[][] = [];
+
+    // 初始化矩阵
+    for (let i = 0; i <= len1; i++) {
+      matrix[i] = [i];
+    }
+    for (let j = 0; j <= len2; j++) {
+      matrix[0][j] = j;
+    }
+
+    // 计算编辑距离
+    for (let i = 1; i <= len1; i++) {
+      for (let j = 1; j <= len2; j++) {
+        const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j] + 1,      // 删除
+          matrix[i][j - 1] + 1,      // 插入
+          matrix[i - 1][j - 1] + cost // 替换
+        );
+      }
+    }
+
+    const distance = matrix[len1][len2];
+    const maxLen = Math.max(len1, len2);
+    return maxLen === 0 ? 1 : 1 - distance / maxLen;
+  },
+
+  /**
+   * 点击反馈按钮，显示示例答案（仅查看）
+   */
+  onShowExamples(event: any) {
+    // 从 data-result 获取该气泡的反馈结果
+    const bubbleFeedbackResult = event.currentTarget.dataset.result;
+    this.showExamplesModal(false, bubbleFeedbackResult);
+  },
+
+  /**
+   * 展示带选项的示例答案弹窗（tips时自动调用）
+   */
+  showExamplesWithOptions() {
+    // 使用全局的 feedbackResult
+    this.showExamplesModal(true, this.data.feedbackResult);
+  },
+
+  /**
+   * 展示示例答案弹窗
+   * @param withOptions 是否显示“继续吧”和“再试一次”选项
+   * @param feedbackResult 要显示的反馈结果
+   */
+  showExamplesModal(withOptions: boolean, feedbackResult: any) {
+    if (!this.data.currentTaskData || !this.data.currentTaskData.userAnswers) {
+      wx.showToast({
+        title: '暂无示例答案',
+        icon: 'none'
+      });
+      return;
+    }
+
+    const userAnswers = this.data.currentTaskData.userAnswers;
+    
+    let content = '';
+    
+    // 三种答案分行展示
+    if (userAnswers.simple) {
+      content += `【简单】\n${userAnswers.simple}\n\n`;
+    }
+    if (userAnswers.natural) {
+      content += `【自然】\n${userAnswers.natural}\n\n`;
+    }
+    if (userAnswers.native) {
+      content += `【地道】\n${userAnswers.native}\n\n`;
+    }
+    
+    // 添加评分详情（使用气泡样式）
+    if (feedbackResult && feedbackResult.details) {
+      const details = feedbackResult.details;
+      content += `━━━━━━━━━━━━━━\n\n`;
+      content += `💯 总评分\n${Math.round(feedbackResult.score)} 分\n\n`;
+      content += `🎯 关键词命中\n${details.keywordMatches} / ${details.totalKeywords}\n\n`;
+      content += `📝 句式相似度\n${Math.round(details.maxSimilarity * 100)}%`;
+    }
+
+    wx.showModal({
+      title: '示例答案',
+      content: content,
+      showCancel: withOptions,
+      cancelText: '再试一次',
+      cancelColor: '#ff6a72',
+      confirmText: withOptions ? '继续吧' : '知道了',
+      confirmColor: '#5a3e36',
+      success: (res) => {
+        if (res.confirm) {
+          // 点击“继续吧”或“知道了”
+          if (withOptions) {
+            console.log('用户选择：继续对话');
+            this.continueDialog();
+          }
+        } else if (res.cancel && withOptions) {
+          // 点击“再试一次”
+          console.log('用户选择：再试一次');
+          this.retryAnswer();
+        }
+      }
+    });
+  },
+
+  /**
+   * 继续对话（bot继续下一轮）
+   * 每个关卡固定3个任务
+   */
+  continueDialog() {
+    console.log('继续对话，当前任务索引:', this.data.currentTaskIdx);
+    console.log('🐾 继续对话...');
+    
+    // 获取下一个任务
+    const nextTaskIdx = this.data.currentTaskIdx + 1;
+    const allTasks = this.data.allTasks;
+    
+    if (!allTasks || allTasks.length !== 3) {
+      console.error('任务列表异常，期望3个任务');
+      return;
+    }
+    
+    // 检查是否已完成所有3个任务
+    if (nextTaskIdx >= 3) {
+      // 已经完成所有3个任务
+      console.log('✅ 所有任务已完成！');
+      
+      // 设置完成状态，按钮变为对号
+      this.setData({
+        allTasksCompleted: true
+      });
+      
+      wx.showToast({
+        title: '🎉 恭喜完成所有任务！',
+        icon: 'success',
+        duration: 2000
+      });
+      
+      return;
+    }
+    
+    // 获取下一个任务
+    const nextTask = allTasks[nextTaskIdx];
+    console.log(`下一个任务 (${nextTaskIdx + 1}/3):`, nextTask);
+    
+    // 更新当前任务索引
+    this.setData({
+      currentTaskIdx: nextTaskIdx,
+      feedbackResult: null, // 清除上一次的反馈结果
+      userRecognizedText: '' // 清除上一次的识别文本
+    });
+    
+    // 以追加模式初始化新任务
+    this.initDialogData(nextTask, true);
+    
+    // 更新进度（3个任务：33%, 67%, 100%）
+    const progress = Math.round(((nextTaskIdx + 1) / 3) * 100);
+    this.setData({
+      progress: progress
+    });
+  },
+
+  /**
+   * 再试一次（不删除历史回答，只是等待用户重新录音）
+   */
+  retryAnswer() {
+    console.log('🔄 再试一次...');
+    
+    // 不删除任何对话，保留所有历史记录
+    // 只需要清除当前状态，等待用户重新录音
+    this.setData({
+      userRecognizedText: '',
+      feedbackResult: null // 清除全局反馈结果，但每个气泡自己的反馈仍然保留
+    });
+    
+    wx.showToast({
+      title: '请再次回答',
+      icon: 'none',
+      duration: 1500
     });
   },
 
@@ -789,5 +1190,93 @@ Page({
         }
       }
     });
+  },
+
+  /**
+   * 处理Mock录音（模拟用户回答）
+   */
+  /**
+   * 模拟ASR识别流程（复用真实ASR的所有回调逻辑）
+   */
+  simulateMockASR() {
+    if (!this.data.currentTaskData || !this.data.currentTaskData.taskId) {
+      console.log('⚠️ 无法获取当前任务ID');
+      // 模拟错误回调
+      if (this.recognizer && this.recognizer.OnError) {
+        this.recognizer.OnError({ code: 9999, message: '无法获取任务ID' });
+      }
+      return;
+    }
+
+    const taskId = this.data.currentTaskData.taskId;
+    const mockAnswer = mockData?.mockAnswers?.[taskId];
+
+    if (!mockAnswer) {
+      console.log(`⚠️ 未找到任务 ${taskId} 的Mock答案`);
+      // 模拟错误回调
+      if (this.recognizer && this.recognizer.OnError) {
+        this.recognizer.OnError({ code: 9998, message: '未配置Mock数据' });
+      }
+      return;
+    }
+
+    console.log(`🎭 Mock模式：模拟ASR识别流程，答案: ${mockAnswer}`);
+
+    // 模拟识别开始回调
+    setTimeout(() => {
+      if (this.recognizer && this.recognizer.OnRecognitionStart) {
+        console.log('🎭 Mock: 触发 OnRecognitionStart');
+        this.recognizer.OnRecognitionStart({ message: 'Mock recognition started' });
+      }
+    }, 100);
+
+    // 模拟句子开始回调
+    setTimeout(() => {
+      if (this.recognizer && this.recognizer.OnSentenceBegin) {
+        console.log('🎭 Mock: 触发 OnSentenceBegin');
+        this.recognizer.OnSentenceBegin({ message: 'Mock sentence begin' });
+      }
+    }, 200);
+
+    // 模拟实时识别结果（分段显示，模拟真实打字效果）
+    const words = mockAnswer.split(' ');
+    let partialText = '';
+    words.forEach((word, index) => {
+      setTimeout(() => {
+        partialText += (index > 0 ? ' ' : '') + word;
+        if (this.recognizer && this.recognizer.OnRecognitionResultChange) {
+          console.log(`🎭 Mock: 触发 OnRecognitionResultChange - ${partialText}`);
+          this.recognizer.OnRecognitionResultChange({
+            result: {
+              voice_text_str: partialText
+            }
+          });
+        }
+      }, 300 + index * 150);
+    });
+
+    // 模拟句子结束回调
+    setTimeout(() => {
+      if (this.recognizer && this.recognizer.OnSentenceEnd) {
+        console.log('🎭 Mock: 触发 OnSentenceEnd');
+        this.recognizer.OnSentenceEnd({
+          result: {
+            voice_text_str: mockAnswer
+          }
+        });
+      }
+    }, 300 + words.length * 150 + 100);
+
+    // 模拟识别完成回调
+    setTimeout(() => {
+      if (this.recognizer && this.recognizer.OnRecognitionComplete) {
+        console.log('🎭 Mock: 触发 OnRecognitionComplete');
+        this.recognizer.OnRecognitionComplete({
+          result: {
+            voice_text_str: mockAnswer
+          }
+        });
+      }
+    }, 300 + words.length * 150 + 200);
   }
 })

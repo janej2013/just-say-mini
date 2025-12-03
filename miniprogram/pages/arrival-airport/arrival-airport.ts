@@ -165,16 +165,23 @@ Page({
             this.data.levels[levelIndex].tasks.length > 0) {
             
             const levelId = this.data.levels[levelIndex].levelId;
-            const task = this.data.levels[levelIndex].tasks[taskIndex];
+            const level = this.data.levels[levelIndex];
+            const task = level.tasks[taskIndex];
             const taskId = task.taskId;
             
             console.log('准备跳转到对话练习，任务数据:', task);
             
-            // 将任务数据序列化并编码，作为参数传递
-            const taskDataStr = encodeURIComponent(JSON.stringify(task));
+            // 将整个关卡的所有任务传递过去
+            const levelData = {
+                levelId: levelId,
+                levelTitle: level.title,
+                tasks: level.tasks,
+                currentTaskIndex: taskIndex
+            };
+            const levelDataStr = encodeURIComponent(JSON.stringify(levelData));
             
             wx.navigateTo({
-                url: `/pages/dialog-practice/dialog-practice?taskData=${taskDataStr}&levelId=${levelId}&taskId=${taskId}&scriptPath=pages/arrival-airport/script.json`
+                url: `/pages/dialog-practice/dialog-practice?levelData=${levelDataStr}&scriptPath=pages/arrival-airport/script.json`
             });
         } else {
             console.error('没有找到有效的任务数据');

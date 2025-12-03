@@ -1,0 +1,14 @@
+{
+  "mockEnabled": true,
+  "mockAnswers": {
+    "airport_l1_t1": "Yes, where is the baggage claim?",
+    "airport_l1_t2": "Could you tell me how to get to the taxi pickup?",
+    "airport_l1_t3": "Where can I find a luggage cart?",
+    "airport_l2_t1": "Could you tell me where to get a SIM card?",
+    "airport_l2_t2": "Where is the restroom?",
+    "airport_l2_t3": "Could you tell me the airport bus routes and prices?",
+    "airport_l3_t1": "My luggage hasn't arrived. I'd like to report it.",
+    "airport_l3_t2": "I'm here for tourism and will stay for a week.",
+    "airport_l3_t3": "My suitcase is damaged. I'd like to report it."
+  }
+}
