@@ -101,9 +101,8 @@
                     bindtouchend="{{allTasksCompleted ? '' : 'onRecordEnd'}}" 
                     bindtouchcancel="{{allTasksCompleted ? '' : 'onRecordEnd'}}"
                     bindtap="{{allTasksCompleted ? 'onCompleteClick' : ''}}">
-                <text wx:if="{{allTasksCompleted}}">✓</text>
-                <text wx:elif="{{isRecording}}">●</text>
-                <text wx:else>🎤</text>
+                <view wx:if="{{allTasksCompleted}}" class="btn-icon icon-check"></view>
+                <view wx:else class="btn-icon icon-mic"></view>
             </button>
         </view>
     </view>

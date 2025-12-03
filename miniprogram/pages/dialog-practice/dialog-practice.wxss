@@ -333,6 +333,8 @@ page {
   justify-content: center;
   width: 100%;
   margin-bottom: 20rpx;
+  padding: 0 40rpx;
+  box-sizing: border-box;
 }
 
 .icon-btn {
@@ -356,7 +358,7 @@ page {
 }
 
 .microphone-btn {
-  width: 600rpx !important;
+  width: 100% !important;
   height: 120rpx;
   border-radius: 60rpx;
   background: linear-gradient(45deg, #2dd4bf, #C1E1C1); /* Teal-400 to Soft Mint */
@@ -372,9 +374,26 @@ page {
   transition: all 0.3s ease;
 }
 
+.btn-icon {
+  width: 64rpx;
+  height: 64rpx;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.icon-mic {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z'/%3E%3Cpath d='M19 10v2a7 7 0 0 1-14 0v-2'/%3E%3Cline x1='12' y1='19' x2='12' y2='23'/%3E%3Cline x1='8' y1='23' x2='16' y2='23'/%3E%3C/svg%3E");
+}
+
+.icon-check {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+}
+
 .microphone-btn.recording {
-  background: linear-gradient(135deg, #FF7043, #F4511E);
-  transform: scale(1.1);
+  background: linear-gradient(135deg, #E9967A, #FA8072); /* DarkSalmon to Salmon */
+  transform: scale(1.05);
+  box-shadow: 0 0 30rpx rgba(250, 128, 114, 0.6);
 }
 
 .microphone-btn.completed {
