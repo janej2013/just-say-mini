@@ -50,7 +50,8 @@ Page({
     dialogIdCounter: 1, // 对话 ID计数器
     currentPlayingDialogId: null, // 当前播放语音的对话ID
     allTasksCompleted: false, // 是否完成所有任务
-    isTTSPlaying: false // TTS 是否正在播放
+    isTTSPlaying: false, // TTS 是否正在播放
+    levelNpc: null // 关卡的NPC信息（从level层级获取）
   },
   
   // 音频上下文
@@ -104,11 +105,12 @@ Page({
       return;
     }
     
-    // 保存所有任务和当前索引
+    // 保存所有任务、当前索引和level的NPC信息
     this.setData({
       allTasks: tasks,
       currentTaskIdx: currentTaskIdx,
-      taskTitle: levelData.levelTitle || 'Practice'
+      taskTitle: levelData.levelTitle || 'Practice',
+      levelNpc: levelData.npc || { animal: 'Panda', role: 'Staff' }
     });
     
     // 初始化第一个任务
@@ -134,7 +136,9 @@ Page({
     const botQuestion = (task.botQuestions && task.botQuestions.simple) || (task.botQuestions && task.botQuestions.natural) || 'Hello!';
     const userAnswer = (task.userAnswers && task.userAnswers.simple) || (task.userAnswers && task.userAnswers.natural) || 'Hi there!';
     const keywordsHint = task.keywordsHint || [];
-    const npcAnimal = (task.npc && task.npc.animal) || 'A';
+    // 仏level层级获取NPC信息
+    const levelNpc = this.data.levelNpc || { animal: 'Panda', role: 'Staff' };
+    const npcAnimal = levelNpc.animal || 'Panda';
     
     // 保存完整任务数据供后续评分使用
     this.setData({
@@ -285,7 +289,8 @@ Page({
       });
       
       // 根据 NPC 动物选择音色
-      const npcAnimal = this.data.currentTaskData?.npc?.animal || 'Panda';
+      const levelNpc = this.data.levelNpc || { animal: 'Panda', role: 'Staff' };
+      const npcAnimal = levelNpc.animal || 'Panda';
       const voiceType = ttsManager.getVoiceTypeByNPC(npcAnimal);
       
       console.log(`🎙️ 播放 NPC (${npcAnimal}) 语音:`, dialog.content.substring(0, 50) + '...');

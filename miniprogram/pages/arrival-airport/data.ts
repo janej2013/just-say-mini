@@ -17,13 +17,13 @@ const airportData = {
         "en": "Basic survival communication after landing.",
         "zh": "刚落地后的基础沟通。"
       },
+      "npc": {
+        "animal": "Panda",
+        "role": "Airport Information Desk Staff"
+      },
       "tasks": [
         {
           "taskId": "airport_l1_t1",
-          "npc": {
-            "animal": "Panda",
-            "role": "Airport Information Desk Staff"
-          },
           "botQuestions": {
             "simple": "Hello! Do you need help finding the baggage claim?",
             "natural": "Hi there! Are you looking for the baggage claim area?",
@@ -40,10 +40,6 @@ const airportData = {
         },
         {
           "taskId": "airport_l1_t2",
-          "npc": {
-            "animal": "Owl",
-            "role": "Airport Guide Volunteer"
-          },
           "botQuestions": {
             "simple": "Do you need help finding the exit or taxi area?",
             "natural": "Are you trying to get to the exit or taxi pickup?",
@@ -60,10 +56,6 @@ const airportData = {
         },
         {
           "taskId": "airport_l1_t3",
-          "npc": {
-            "animal": "Koala",
-            "role": "Airport Attendant"
-          },
           "botQuestions": {
             "simple": "Do you need a luggage cart?",
             "natural": "Are you looking for a luggage cart?",
@@ -90,13 +82,13 @@ const airportData = {
         "en": "Handle common questions inside the airport.",
         "zh": "处理在机场的常见问题。"
       },
+      "npc": {
+        "animal": "Elephant",
+        "role": "Airport Shop Staff"
+      },
       "tasks": [
         {
           "taskId": "airport_l2_t1",
-          "npc": {
-            "animal": "Elephant",
-            "role": "Airport Shop Staff"
-          },
           "botQuestions": {
             "simple": "Are you looking for a SIM card?",
             "natural": "Do you need to buy a SIM card?",
@@ -113,10 +105,6 @@ const airportData = {
         },
         {
           "taskId": "airport_l2_t2",
-          "npc": {
-            "animal": "Giraffe",
-            "role": "Airport Facility Guide"
-          },
           "botQuestions": {
             "simple": "Do you need help finding the restroom or water?",
             "natural": "Looking for the restroom, water fountain, or Wi-Fi?",
@@ -133,10 +121,6 @@ const airportData = {
         },
         {
           "taskId": "airport_l2_t3",
-          "npc": {
-            "animal": "Beaver",
-            "role": "Airport Bus Ticket Staff"
-          },
           "botQuestions": {
             "simple": "Do you want to know the bus route?",
             "natural": "Do you want information about airport bus routes or prices?",
@@ -163,13 +147,13 @@ const airportData = {
         "en": "Deal with unexpected airport situations.",
         "zh": "处理突发的机场状况。"
       },
+      "npc": {
+        "animal": "Hippo",
+        "role": "Baggage Service Desk Officer"
+      },
       "tasks": [
         {
           "taskId": "airport_l3_t1",
-          "npc": {
-            "animal": "Hippo",
-            "role": "Baggage Service Desk Officer"
-          },
           "botQuestions": {
             "simple": "Do you want to report delayed baggage?",
             "natural": "Is your luggage delayed? Do you want to report it?",
@@ -186,10 +170,6 @@ const airportData = {
         },
         {
           "taskId": "airport_l3_t2",
-          "npc": {
-            "animal": "Parrot",
-            "role": "Airport Security Officer"
-          },
           "botQuestions": {
             "simple": "Do you need to explain your travel purpose?",
             "natural": "Do you need to explain why you're traveling here?",
@@ -206,10 +186,6 @@ const airportData = {
         },
         {
           "taskId": "airport_l3_t3",
-          "npc": {
-            "animal": "Squirrel",
-            "role": "Lost & Found Staff"
-          },
           "botQuestions": {
             "simple": "Do you want to report damaged luggage?",
             "natural": "Did your luggage get damaged? Do you want to report it?",

@@ -171,12 +171,13 @@ Page({
             
             console.log('准备跳转到对话练习，任务数据:', task);
             
-            // 将整个关卡的所有任务传递过去
+            // 将整个关卡的所有任务传递过去（包括level的npc信息）
             const levelData = {
                 levelId: levelId,
                 levelTitle: level.title,
                 tasks: level.tasks,
-                currentTaskIndex: taskIndex
+                currentTaskIndex: taskIndex,
+                npc: level.npc // 传递关卡的NPC信息
             };
             const levelDataStr = encodeURIComponent(JSON.stringify(levelData));
             
