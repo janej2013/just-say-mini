@@ -52,7 +52,7 @@ const AIRPORT_DATA = {
 const LEVEL_POSITIONS = [
   { top: 580, left: 40 },  // L1: Bottom Left
   { top: 340, left: 240 }, // L2: Middle Right
-  { top: 70, left: 40 }    // L3: Top Left
+  { top: 10, left: 40 }    // L3: Top Left
 ];
 
 const ICON_MAP = [

@@ -227,14 +227,14 @@
   box-shadow: 0 4rpx 0 #E64A19;
 }
 
-.btn-yellow {
-  background-color: #FFF59D; /* Soft Pale Yellow */
-  box-shadow: 0 10rpx 0 #FBC02D; /* Darker Yellow Shadow */
+.btn-pale-blue {
+  background-color: #b0d3e7; /* Very Pale, Low Saturation Blue */
+  box-shadow: 0 10rpx 0 #86a1b5; /* Soft Blue Shadow */
 }
 
-.btn-yellow:active {
+.btn-pale-blue:active {
   transform: translateY(6rpx);
-  box-shadow: 0 4rpx 0 #FBC02D;
+  box-shadow: 0 4rpx 0 #D6EAF8;
 }
 
 .btn-blue {
@@ -409,9 +409,9 @@
   background: linear-gradient(to right, #FF7043, #D84315);
 }
 
-.start-btn-yellow {
-  background: linear-gradient(to right, #FDD835, #F9A825);
-  color: #5D4037; /* Dark text for contrast on yellow */
+.start-btn-pale-blue {
+  background: linear-gradient(to right, #EBF5FB, #D6EAF8);
+  color: #546E7A; /* Blue-grey text for contrast */
 }
 
 .start-btn-blue {
