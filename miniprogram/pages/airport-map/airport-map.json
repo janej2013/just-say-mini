@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "动物机场",
-  "navigationStyle": "custom",
-  "usingComponents": {}
+    "navigationBarTitleText": "Airport Terminal",
+    "navigationBarBackgroundColor": "#E0F7FA",
+    "navigationBarTextStyle": "black"
 }

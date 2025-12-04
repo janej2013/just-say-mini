@@ -18,21 +18,6 @@
     <!-- Ground Hint -->
     <view class="ground-hint"></view>
   </view>
-
-  <!-- Header -->
-  <view class="header" style="padding-top: {{statusBarHeight}}px;">
-    <view class="header-content">
-      <view class="back-btn" catchtap="onBack">
-        <image class="icon-chevron" src="/assets/images/level_task_map/icon-chevron-left.svg" mode="aspectFit"></image>
-      </view>
-      <view class="title-pill">
-        <image class="icon-map-header" src="/assets/images/level_task_map/icon-map.svg" mode="aspectFit"></image>
-        <text>{{airportData.name.zh}}</text>
-      </view>
-      <view class="placeholder"></view>
-    </view>
-  </view>
-
   <!-- Map Content -->
   <view class="map-content">
     <!-- SVG Path Background -->
