@@ -92,12 +92,12 @@
 
 .control-tower-img {
   position: absolute;
-  top: 64px;
-  right: -20px;
-  width: 120px;
-  height: 180px;
-  opacity: 0.1;
-  transform: scale(0.75);
+  top: 80px;
+  right: 40px;
+  width: 180px;
+  height: 270px;
+  opacity: 0.2;
+  transform: scale(1.2);
 }
 
 .ground-hint {
@@ -199,41 +199,51 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100rpx;
-  height: 100rpx;
-  border-radius: 35rpx;
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 45rpx;
   transition: all 0.1s ease;
 }
 
 /* Color Variants for Level Buttons */
 .btn-green {
   background-color: #A5D6A7; /* Soft Green */
-  box-shadow: 0 8rpx 0 #388E3C; /* Darker Green Shadow */
+  box-shadow: 0 10rpx 0 #388E3C;
 }
 
 .btn-green:active {
   transform: translateY(6rpx);
-  box-shadow: 0 2rpx 0 #388E3C;
+  box-shadow: 0 4rpx 0 #388E3C;
 }
 
 .btn-orange {
   background-color: #FFAB91; /* Soft Orange */
-  box-shadow: 0 8rpx 0 #E64A19; /* Darker Orange Shadow */
+  box-shadow: 0 10rpx 0 #E64A19;
 }
 
 .btn-orange:active {
   transform: translateY(6rpx);
-  box-shadow: 0 2rpx 0 #E64A19;
+  box-shadow: 0 4rpx 0 #E64A19;
+}
+
+.btn-yellow {
+  background-color: #FFF59D; /* Soft Pale Yellow */
+  box-shadow: 0 10rpx 0 #FBC02D; /* Darker Yellow Shadow */
+}
+
+.btn-yellow:active {
+  transform: translateY(6rpx);
+  box-shadow: 0 4rpx 0 #FBC02D;
 }
 
 .btn-blue {
   background-color: #90CAF9; /* Soft Blue */
-  box-shadow: 0 8rpx 0 #1976D2; /* Darker Blue Shadow */
+  box-shadow: 0 10rpx 0 #1976D2;
 }
 
 .btn-blue:active {
   transform: translateY(6rpx);
-  box-shadow: 0 2rpx 0 #1976D2;
+  box-shadow: 0 4rpx 0 #1976D2;
 }
 
 .node-icon { 
@@ -396,6 +406,11 @@
 
 .start-btn-orange {
   background: linear-gradient(to right, #FF7043, #D84315);
+}
+
+.start-btn-yellow {
+  background: linear-gradient(to right, #FDD835, #F9A825);
+  color: #5D4037; /* Dark text for contrast on yellow */
 }
 
 .start-btn-blue {

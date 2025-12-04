@@ -1,17 +1,6 @@
 <view class="container" catchtap="handleBgClick">
   <!-- Background Elements -->
   <view class="bg-elements">
-    <!-- Soft Clouds -->
-    <view class="cloud cloud-1"></view>
-    <view class="cloud cloud-2"></view>
-    <view class="cloud cloud-3"></view>
-    
-    <!-- Thematic Icons -->
-    <image class="icon-cloud icon-cloud-1" src="/assets/images/level_task_map/icon-cloud.svg" mode="aspectFit"></image>
-    <image class="icon-cloud icon-cloud-2" src="/assets/images/level_task_map/icon-cloud.svg" mode="aspectFit"></image>
-    <image class="icon-wind" src="/assets/images/level_task_map/icon-wind.svg" mode="aspectFit"></image>
-    <image class="icon-plane-bg" src="/assets/images/level_task_map/icon-plane.svg" mode="aspectFit"></image>
-    
     <!-- Control Tower -->
     <image class="control-tower-img" src="/assets/images/level_task_map/img-control-tower.svg" mode="aspectFit"></image>
     
@@ -32,7 +21,7 @@
         data-index="{{index}}"
       >
         <!-- Icon Circle -->
-        <view class="cartoon-btn-container {{index === 0 ? 'btn-green' : index === 1 ? 'btn-orange' : 'btn-blue'}} {{activeLevelIndex === index ? 'selected' : ''}}">
+        <view class="cartoon-btn-container {{index === 0 ? 'btn-green' : index === 1 ? 'btn-orange' : 'btn-yellow'}} {{activeLevelIndex === index ? 'selected' : ''}}">
           <image 
             class="node-icon {{index === 0 ? 'plane-rotate' : ''}}" 
             src="{{index === 0 ? '/assets/images/level_task_map/icon-plane-white.svg' : index === 1 ? '/assets/images/level_task_map/icon-map-white.svg' : '/assets/images/level_task_map/icon-luggage-white.svg'}}" 
@@ -80,7 +69,7 @@
 
           <!-- Start Button -->
           <button 
-            class="start-btn {{item.status === 'locked' ? 'btn-locked' : activeLevelIndex === 0 ? 'start-btn-green' : activeLevelIndex === 1 ? 'start-btn-orange' : 'start-btn-blue'}}" 
+            class="start-btn {{item.status === 'locked' ? 'btn-locked' : activeLevelIndex === 0 ? 'start-btn-green' : activeLevelIndex === 1 ? 'start-btn-orange' : 'start-btn-yellow'}}" 
             disabled="{{item.status === 'locked'}}"
             catchtap="onStart"
           >
