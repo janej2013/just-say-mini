@@ -32,11 +32,12 @@
         data-index="{{index}}"
       >
         <!-- Icon Circle -->
-        <view class="node-circle {{item.status}} {{activeLevelIndex === index ? 'selected' : ''}}">
+        <view class="cartoon-btn-container {{index === 0 ? 'btn-green' : index === 1 ? 'btn-orange' : 'btn-blue'}} {{activeLevelIndex === index ? 'selected' : ''}}">
           <image 
             class="node-icon {{index === 0 ? 'plane-rotate' : ''}}" 
-            src="{{index === 0 ? '/assets/images/level_task_map/icon-plane.svg' : index === 1 ? '/assets/images/level_task_map/icon-map.svg' : '/assets/images/level_task_map/icon-luggage.svg'}}" 
+            src="{{index === 0 ? '/assets/images/level_task_map/icon-plane-white.svg' : index === 1 ? '/assets/images/level_task_map/icon-map-white.svg' : '/assets/images/level_task_map/icon-luggage-white.svg'}}" 
             mode="aspectFit"
+            style="width: 50%; height: 50%;"
           ></image>
           
           <!-- Selected Ring -->
@@ -79,12 +80,12 @@
 
           <!-- Start Button -->
           <button 
-            class="start-btn {{item.status === 'locked' ? 'btn-locked' : ''}}" 
+            class="start-btn {{item.status === 'locked' ? 'btn-locked' : activeLevelIndex === 0 ? 'start-btn-green' : activeLevelIndex === 1 ? 'start-btn-orange' : 'start-btn-blue'}}" 
             disabled="{{item.status === 'locked'}}"
             catchtap="onStart"
           >
             <text>{{item.status === 'locked' ? 'Locked' : 'Start'}}</text>
-            <image wx:if="{{item.status !== 'locked'}}" class="play-icon" src="/assets/images/level_task_map/icon-play.svg" mode="aspectFit"></image>
+            <image wx:if="{{item.status !== 'locked'}}" class="play-icon" src="/assets/images/level_task_map/icon-play-white.svg" mode="aspectFit"></image>
           </button>
         </view>
 
@@ -104,7 +105,7 @@
         style="top: {{index === 0 ? 535 : index === 1 ? 295 : 55}}px; left: {{index === 1 ? 290 : 90}}px;"
       >
         <view class="avatar-circle">
-          <image class="paw-icon" src="/assets/images/level_task_map/icon-paw.svg" mode="aspectFit"></image>
+          <image class="paw-icon" src="/assets/images/level_task_map/icon-paw-custom.svg" mode="aspectFit"></image>
         </view>
       </view>
 
