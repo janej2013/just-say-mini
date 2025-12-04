@@ -77,9 +77,9 @@ Component({
         url: '../map/map',
       })
     },
-    goToMap2() {
+    goToAirportMap() {
       wx.navigateTo({
-        url: '../map2/map2',
+        url: '../airport-map/airport-map',
       })
     },
   },

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="224" viewBox="0 0 64 224" fill="none">
+  <!-- Antenna -->
+  <rect x="30" y="0" width="4" height="24" fill="#475569"/>
+  <!-- Dome -->
+  <path d="M 0 72 A 32 32 0 0 1 64 72 L 0 72 Z" fill="#64748B"/>
+  <path d="M 8 72 A 24 24 0 0 1 56 72 L 8 72 Z" fill="#BAE6FD" opacity="0.5"/>
+  <!-- Neck -->
+  <rect x="12" y="72" width="40" height="24" fill="#94A3B8"/>
+  <!-- Body -->
+  <rect x="4" y="96" width="56" height="128" rx="8" fill="#CBD5E1"/>
+</svg>

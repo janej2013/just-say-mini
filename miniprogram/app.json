@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/airport-map/airport-map",
     "pages/map/map",
-    "pages/map2/map2",
     "pages/arrival-district/arrival-district",
     "pages/arrival-airport/arrival-airport",
     "pages/arrival-taxi/arrival-taxi",
