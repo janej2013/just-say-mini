@@ -16,7 +16,7 @@
     <block wx:for="{{airportData.levels}}" wx:key="levelId" wx:for-index="index">
       <view 
         class="level-node-wrapper" 
-        style="top: {{index === 0 ? 580 : index === 1 ? 340 : 40}}px; left: {{index === 1 ? 240 : 40}}px;"
+        style="top: {{index === 0 ? 580 : index === 1 ? 340 : 70}}px; left: {{index === 1 ? 240 : 40}}px;"
         catchtap="handleLevelClick"
         data-index="{{index}}"
       >
@@ -91,7 +91,7 @@
       <view 
         wx:if="{{item.status === 'active'}}" 
         class="avatar-wrapper"
-        style="top: {{index === 0 ? 535 : index === 1 ? 295 : 55}}px; left: {{index === 1 ? 290 : 90}}px;"
+        style="top: {{index === 0 ? 535 : index === 1 ? 295 : 85}}px; left: {{index === 1 ? 290 : 90}}px;"
       >
         <view class="avatar-circle">
           <image class="paw-icon" src="/assets/images/level_task_map/icon-paw-custom.svg" mode="aspectFit"></image>
