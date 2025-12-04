@@ -27,7 +27,7 @@
     <block wx:for="{{airportData.levels}}" wx:key="levelId" wx:for-index="index">
       <view 
         class="level-node-wrapper" 
-        style="top: {{index === 0 ? 580 : index === 1 ? 340 : 100}}px; left: {{index === 1 ? 240 : 40}}px;"
+        style="top: {{index === 0 ? 580 : index === 1 ? 340 : 40}}px; left: {{index === 1 ? 240 : 40}}px;"
         catchtap="handleLevelClick"
         data-index="{{index}}"
       >
