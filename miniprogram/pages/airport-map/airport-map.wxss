@@ -267,23 +267,11 @@
 }
 
 .star-icon { 
-  width: 12px; 
-  height: 12px; 
+  width: 14px; 
+  height: 14px; 
 }
 
-.star-filled { 
-  opacity: 1; 
-}
-
-.star-empty { 
-  opacity: 0.3; 
-  filter: grayscale(100%); 
-}
-
-.star-active-empty { 
-  opacity: 0.5; 
-  filter: hue-rotate(20deg); 
-}
+/* Removed legacy star filter classes as we now use specific SVGs */
 
 /* Task Bubble */
 .task-bubble {

@@ -47,8 +47,8 @@
         <view class="stars-container">
           <block wx:for="{{starArray}}" wx:key="*this" wx:for-item="star">
             <image 
-              class="star-icon {{star <= item.stars ? 'star-filled' : item.status === 'active' && star > item.stars ? 'star-active-empty' : 'star-empty'}}" 
-              src="/assets/images/level_task_map/icon-star.svg" 
+              class="star-icon" 
+              src="{{star <= item.stars ? '/assets/images/level_task_map/icon-star-active.svg' : '/assets/images/level_task_map/icon-star-inactive.svg'}}" 
               mode="aspectFit"
             ></image>
           </block>
