@@ -52,7 +52,7 @@ const AIRPORT_DATA = {
 const LEVEL_POSITIONS = [
   { top: 580, left: 40 },  // L1: Bottom Left
   { top: 340, left: 240 }, // L2: Middle Right
-  { top: 10, left: 40 }    // L3: Top Left
+  { top: 50, left: 80 }    // L3: Top Left
 ];
 
 const ICON_MAP = [
@@ -111,6 +111,8 @@ Page({
       arrowClass = 'arrow-right';
     } else {
       // L1 & L3 (Left Side) -> Show Bubble on RIGHT
+      // Adjusted for larger icons (140rpx approx 70px)
+      // Previous offset was +90, increasing to +110 to avoid overlap
       top = pos.top - 100;
       left = pos.left + 90;
       arrowClass = 'arrow-left';
