@@ -13,13 +13,13 @@
 
 .map-content {
   width: 100%;
-  height: 1600px; /* Match SVG height */
+  /* height set via inline style */
   position: relative;
 }
 
 .map-bg {
   width: 100%;
-  height: 1600px;
+  /* height set via inline style */
   display: block;
   position: absolute;
   top: 0;
@@ -30,6 +30,7 @@
 .zone {
   position: absolute;
   z-index: 10;
+  background: transparent !important;
   /* transform: translate(-50%, -50%);  CSS transform translate works differently with left/top */
   /* We will use specific positioning */
 }
@@ -37,6 +38,8 @@
 .zone-image {
   width: 100%;
   height: 100%;
+  display: block;
+  background: transparent !important;
 }
 
 /* Airport: translate(200, 1350) in 375 width SVG. 

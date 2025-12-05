@@ -1,8 +1,8 @@
 <view class="city-map-container">
   <scroll-view scroll-y class="map-scroll" scroll-top="{{scrollTop}}" scroll-with-animation="true">
-    <view class="map-content">
+    <view class="map-content" style="height: {{mapHeight}}px;">
       <!-- Background Map -->
-      <image class="map-bg" src="{{mapSvgUrl}}" mode="widthFix"></image>
+      <image class="map-bg" src="{{mapSvgUrl}}" mode="widthFix" style="height: {{mapHeight}}px;"></image>
       
       <!-- Interactive Zones (Absolute positioning) -->
       

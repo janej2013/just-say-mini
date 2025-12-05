@@ -1,32 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 180">
-  <!-- Oval Background -->
-  <ellipse cx="70" cy="100" rx="65" ry="70" fill="#F8BBD0" opacity="0.7" />
-
-  <!-- Hotel Building -->
-  <rect x="30" y="40" width="80" height="110" rx="4" fill="#F06292" />
-  <!-- Roof -->
-  <path d="M 25 40 L 115 40 L 70 10 Z" fill="#D81B60" />
-  
-  <!-- Entrance Canopy -->
-  <path d="M 50 120 L 90 120 L 100 135 L 40 135 Z" fill="#C2185B" />
-  <rect x="40" y="135" width="5" height="15" fill="#D81B60" />
-  <rect x="95" y="135" width="5" height="15" fill="#D81B60" />
-
-  <!-- Windows -->
-  <g fill="#FCE4EC">
-     <rect x="40" y="60" width="15" height="20" />
-     <rect x="62" y="60" width="15" height="20" />
-     <rect x="85" y="60" width="15" height="20" />
-     
-     <rect x="40" y="90" width="15" height="20" />
-     <rect x="62" y="90" width="15" height="20" />
-     <rect x="85" y="90" width="15" height="20" />
-  </g>
-
-  <!-- Lock Overlay -->
-  <g transform="translate(45, 60)" opacity="0.9">
-      <circle cx="25" cy="25" r="30" fill="#37474F" opacity="0.8" />
-      <rect x="15" y="22" width="20" height="16" rx="2" fill="#FFF" />
-      <path d="M 19 22 L 19 16 A 6 6 0 0 1 31 16 L 31 22" stroke="#FFF" stroke-width="3" fill="none" />
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 130">
+    <!-- Shadow -->
+    <circle cx="0" cy="5" r="40" fill="#E65100" opacity="0.2" />
+    <!-- Body -->
+    <circle cx="0" cy="0" r="40" fill="#FFB74D" stroke="white" stroke-width="4" />
+    <circle cx="0" cy="0" r="34" fill="#FFCC80" />
+    <!-- Icon -->
+    <g transform="translate(-15, -20)">
+        <rect x="0" y="5" width="30" height="35" fill="#FF7043" rx="2" />
+        <rect x="5" y="10" width="6" height="8" fill="#FFCCBC" />
+        <rect x="19" y="10" width="6" height="8" fill="#FFCCBC" />
+        <rect x="5" y="22" width="6" height="8" fill="#FFCCBC" />
+        <rect x="19" y="22" width="6" height="8" fill="#FFCCBC" />
+        <path d="M -5 5 L 35 5 L 15 -10 Z" fill="#D84315" />
+        <rect x="10" y="32" width="10" height="8" fill="#3E2723" />
+        <rect x="11" y="32" width="8" height="8" fill="#8D6E63" opacity="0.5" />
+    </g>
+    <!-- Label -->
+    <g transform="translate(0, 50)">
+        <rect x="-30" y="-12" width="60" height="24" rx="12" fill="white" stroke="#FFB74D" stroke-width="2" />
+        <text x="0" y="4" text-anchor="middle" font-size="10" font-weight="bold" fill="#E65100" font-family="sans-serif">HOTEL</text>
+    </g>
 </svg>
