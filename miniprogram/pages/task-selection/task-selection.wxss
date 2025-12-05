@@ -127,12 +127,13 @@
   position: absolute;
   width: 260px;
   height: 360px;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); /* Slower transition for stacking */
   perspective: 1000px;
   /* Default state: spread out */
   /* Modified to lower side cards (translateY) and stack effect */
   /* Using squared difference to simulate abs() for compatibility: (index-1)^2 is 1 for side cards, 0 for middle */
-  transform: translateX(calc((var(--index) - 1) * 110%)) translateY(calc((var(--index) - 1) * (var(--index) - 1) * 20px)) rotate(calc((var(--index) - 1) * 5deg));
+  /* Reduced translateX from 110% to 80% for closer static distance */
+  transform: translateX(calc((var(--index) - 1) * 80%)) translateY(calc((var(--index) - 1) * (var(--index) - 1) * 20px)) rotate(calc((var(--index) - 1) * 5deg));
   z-index: 10;
 }
 
@@ -302,13 +303,13 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  align-items: center; /* Ensure horizontal centering of children */
   gap: 16px;
   width: 100%;
   max-width: 280px;
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.5s ease-out;
-  pointer-events: none;
   pointer-events: none;
 }
 
