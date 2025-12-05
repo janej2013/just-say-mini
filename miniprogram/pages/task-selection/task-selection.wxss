@@ -130,14 +130,16 @@
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   perspective: 1000px;
   /* Default state: spread out */
-  transform: translateX(calc((var(--index) - 1) * 110%)) rotate(calc((var(--index) - 1) * 5deg));
+  /* Modified to lower side cards (translateY) and stack effect */
+  /* Using squared difference to simulate abs() for compatibility: (index-1)^2 is 1 for side cards, 0 for middle */
+  transform: translateX(calc((var(--index) - 1) * 110%)) translateY(calc((var(--index) - 1) * (var(--index) - 1) * 20px)) rotate(calc((var(--index) - 1) * 5deg));
   z-index: 10;
 }
 
 /* Shuffling State */
 .card.shuffling {
   transform: translateX(0) rotate(0) scale(1);
-  animation: shuffle 0.3s ease-in-out infinite alternate;
+  animation: shuffle 0.5s ease-in-out infinite alternate; /* Slower shuffle */
   animation-delay: calc(var(--index) * 0.1s);
 }
 
@@ -164,7 +166,7 @@
   width: 100%;
   height: 100%;
   text-align: center;
-  transition: transform 0.8s;
+  transition: transform 0.4s; /* Faster flip */
   transform-style: preserve-3d;
   border-radius: 24px;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
@@ -291,10 +293,13 @@
   font-size: 14px;
   line-height: 1.4;
 }
-
 /* Actions */
 .actions {
-  margin-top: 48px;
+  position: absolute;
+  bottom: 48px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -303,6 +308,7 @@
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.5s ease-out;
+  pointer-events: none;
   pointer-events: none;
 }
 

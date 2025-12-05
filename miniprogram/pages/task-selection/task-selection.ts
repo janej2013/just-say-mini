@@ -187,7 +187,7 @@ Page({
           isShuffling: true
       });
 
-      // 2. Stop Shuffling (Spread out) after 1200ms
+      // 2. Stop Shuffling (Spread out) after 1600ms (Slower shuffle duration)
       setTimeout(() => {
           this.setData({ isShuffling: false });
           
@@ -201,7 +201,7 @@ Page({
               }, 600); // Wait for centering move
 
           }, 800); // Wait for spread to finish
-      }, 1200); // Duration of "stacked/shuffling" state
+      }, 1600); // Duration of "stacked/shuffling" state
   },
 
   handleShuffleClick() {
