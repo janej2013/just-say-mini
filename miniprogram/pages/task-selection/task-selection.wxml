@@ -1,0 +1,72 @@
+<view class="container {{levelInfo.color}}">
+  <!-- Header -->
+  <view class="header" style="padding-top: {{statusBarHeight}}px;">
+    <view class="back-btn" bindtap="onBack">
+      <text class="icon-chevron-left">‹</text>
+    </view>
+    <view class="header-title">
+      <text class="icon">{{levelInfo.icon}}</text>
+      <text class="title-text">{{levelInfo.title}}</text>
+    </view>
+    <view class="placeholder"></view>
+  </view>
+
+  <!-- Main Content -->
+  <view class="main-content">
+    <view class="title-section">
+      <text class="main-title">Your Mission</text>
+      <text class="subtitle">Select a card to reveal your tasks</text>
+    </view>
+
+    <!-- Cards Container -->
+    <view class="cards-container">
+      <block wx:for="{{cardOptions}}" wx:key="index">
+        <view 
+          class="card {{isShuffling ? 'shuffling' : ''}} {{selectedCardIndex === index ? 'selected' : ''}} {{selectedCardIndex !== null && selectedCardIndex !== index ? 'hidden-card' : ''}}"
+          style="--index: {{index}};"
+        >
+          <view class="card-inner {{isRevealed && selectedCardIndex === index ? 'flipped' : ''}}">
+            <!-- Card Back -->
+            <view class="card-face card-back">
+              <view class="pattern"></view>
+              <view class="card-icon-container">
+                <text class="card-icon">?</text>
+              </view>
+              <text class="card-label">Mystery Tasks</text>
+            </view>
+
+            <!-- Card Front -->
+            <view class="card-face card-front">
+              <view class="card-header">
+                <text class="card-header-icon">✨</text>
+                <text class="card-header-text">Mission Tasks</text>
+              </view>
+              <view class="task-list">
+                <block wx:for="{{item}}" wx:for-item="task" wx:for-index="taskIndex" wx:key="taskIndex">
+                  <view class="task-item">
+                    <view class="check-circle">
+                      <text class="check-icon">✓</text>
+                    </view>
+                    <text class="task-text">{{task}}</text>
+                  </view>
+                </block>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!-- Action Buttons -->
+    <view class="actions {{isRevealed ? 'visible' : ''}}">
+      <button class="btn btn-secondary" bindtap="handleShuffleClick">
+        <text class="btn-icon">↻</text>
+        <text>Shuffle Again</text>
+      </button>
+      <button class="btn btn-primary" bindtap="onStartAdventure">
+        <text class="btn-icon">▶</text>
+        <text>Start Adventure</text>
+      </button>
+    </view>
+  </view>
+</view>

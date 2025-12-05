@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/city-map/city-map",
+    "pages/task-selection/task-selection",
     "pages/airport-map/airport-map",
     "pages/map/map",
     "pages/arrival-district/arrival-district",

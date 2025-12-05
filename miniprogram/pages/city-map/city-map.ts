@@ -160,26 +160,29 @@ Page({
     
     if (!level) return;
 
-    if (!level.isUnlocked) {
-      wx.showToast({
-        title: '请先解锁前置关卡',
-        icon: 'none'
-      });
-      return;
-    }
+    // Map numeric ID to string key for task-selection page
+    const levelIdMap: Record<number, string> = {
+      1: 'airport',
+      2: 'taxi',
+      3: 'hotel',
+      4: 'rental',
+      5: 'apartment',
+      6: 'property',
+      7: 'cafe',
+      8: 'milktea',
+      9: 'fastfood',
+      10: 'bakery',
+      11: 'supermarket',
+      12: 'market',
+      13: 'gym',
+      14: 'pool',
+      15: 'park'
+    };
 
-    // Navigate based on ID or other logic
-    if (id === 1) {
-        wx.navigateTo({ url: '/pages/arrival-airport/arrival-airport' });
-    } else if (id === 2) {
-        wx.navigateTo({ url: '/pages/arrival-taxi/arrival-taxi' }); // Assuming taxi page exists or use dialog-practice
-    } else if (id === 3) {
-        wx.navigateTo({ url: '/pages/arrival-hotel/arrival-hotel' });
-    } else {
-        wx.showToast({
-            title: `进入 ${level.name}`,
-            icon: 'none'
-        });
-    }
+    const levelKey = levelIdMap[id] || 'airport';
+
+    wx.navigateTo({
+      url: `/pages/task-selection/task-selection?levelId=${levelKey}`
+    });
   }
 })
