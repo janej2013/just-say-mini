@@ -23,42 +23,33 @@ Page({
     this.setData({ mapHeight: totalHeight });
 
     // Calculate Level Positions
-    // Pattern for one block (1600 height), 6 levels
-    // Ordered from bottom (near 1600) to top (near 0)
-    const blockPattern = [
-        { x: 250, y: 1467 },
-        { x: 100, y: 1200 },
-        { x: 230, y: 933 },
-        { x: 230, y: 667 },
-        { x: 100, y: 400 },
-        { x: 250, y: 133 }
+    // Manually adjusted positions for levels 1-9, extrapolated for 10-15
+    const levelConfig = [
+        { id: 1, left: 66.67, top: 109 },
+        { id: 2, left: 26.67, top: 105 },
+        { id: 3, left: 61.33, top: 98 },
+        { id: 4, left: 61.33, top: 90 },
+        { id: 5, left: 26.67, top: 85 },
+        { id: 6, left: 66.67, top: 79 },
+        { id: 7, left: 66.67, top: 71 },
+        { id: 8, left: 26.67, top: 65 },
+        { id: 9, left: 61.33, top: 59 },
+        // Extrapolated based on pattern (approx -39% top for every 6 levels)
+        { id: 10, left: 61.33, top: 51 },
+        { id: 11, left: 26.67, top: 46 },
+        { id: 12, left: 66.67, top: 40 },
+        { id: 13, left: 66.67, top: 32 },
+        { id: 14, left: 26.67, top: 26 },
+        { id: 15, left: 61.33, top: 20 }
     ];
 
-    const levelPositions: {id: number, x: number, y: number}[] = [];
-    const totalLevels = 15;
-    
-    for (let i = 0; i < totalLevels; i++) {
-        const levelIndexInBlock = i % 6;
-        // Levels 1-6 in bottom block (index repeatCount-1), 7-12 in middle, etc.
-        const targetBlock = (repeatCount - 1) - Math.floor(i / 6);
-        const pattern = blockPattern[levelIndexInBlock];
-        
-        if (targetBlock >= 0) {
-            levelPositions.push({
-                id: i + 1,
-                x: pattern.x,
-                y: (targetBlock * blockHeight) + pattern.y
-            });
-        }
-    }
-
     const levels = cityMapLevels.map(level => {
-        const pos = levelPositions.find(p => p.id === level.id);
-        if (pos) {
+        const config = levelConfig.find(c => c.id === level.id);
+        if (config) {
             return {
                 ...level,
-                left: (pos.x / 375) * 100,
-                top: (pos.y / totalHeight) * 100
+                left: config.left,
+                top: config.top
             };
         }
         return level;
