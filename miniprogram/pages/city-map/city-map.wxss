@@ -51,41 +51,24 @@
 */
 
 .airport-zone {
-  width: 400rpx; /* 200 * 2 */
-  height: 300rpx; /* 150 * 2 */
-  left: 200rpx; /* (200 - 100) * 2 = 200rpx. Wait.
-                 SVG translate(200, 1350). Image x=-100, y=-75.
-                 So top-left is (100, 1275).
-                 In rpx: left: 200rpx, top: 2550rpx.
-                 */
-  top: 2550rpx;
+  width: 400rpx;
+  height: 300rpx;
+  left: 320rpx;
+  top: 2800rpx;
 }
 
 .taxi-zone {
-  /* SVG translate(60, 600). Image x=-80, y=-60.
-     Top-left: (-20, 540).
-     Wait, x=-20? 60-80 = -20.
-     In rpx: left: -40rpx, top: 1080rpx.
-     Width: 160 * 2 = 320rpx.
-     Height: 120 * 2 = 240rpx.
-  */
   width: 320rpx;
   height: 240rpx;
-  left: -40rpx;
-  top: 1080rpx;
+  left: 40rpx;
+  top: 2500rpx;
 }
 
 .hotel-zone {
-  /* SVG translate(200, 100). Image x=-70, y=-90.
-     Top-left: (130, 10).
-     In rpx: left: 260rpx, top: 20rpx.
-     Width: 140 * 2 = 280rpx.
-     Height: 180 * 2 = 360rpx.
-  */
   width: 280rpx;
   height: 360rpx;
   left: 260rpx;
-  top: 20rpx;
+  top: 2020rpx;
 }
 
 .bridge-decoration {
