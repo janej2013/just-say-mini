@@ -4,27 +4,23 @@
       <!-- Background Map -->
       <image class="map-bg" src="{{mapSvgUrl}}" mode="widthFix" style="height: {{mapHeight}}px;"></image>
       
-      <!-- Interactive Zones (Absolute positioning) -->
+      <!-- Interactive Zones (Dynamic) -->
+      <block wx:for="{{levels}}" wx:key="id">
+        <view 
+            class="zone" 
+            style="left: {{item.left}}%; top: {{item.top}}%;"
+            bindtap="onLevelTap"
+            data-id="{{item.id}}"
+        >
+            <image src="{{item.icon}}" mode="aspectFit" class="zone-image {{!item.isUnlocked ? 'locked' : ''}}"></image>
+            <!-- Optional: Add lock overlay if needed -->
+        </view>
+      </block>
       
-      <!-- Airport (Bottom) -->
-      <view class="zone airport-zone" bindtap="onNavigateToAirport">
-        <image src="/assets/images/city-map/level-airport.svg" mode="aspectFit" class="zone-image"></image> 
-      </view>
-      
-      <!-- Bridge Decoration -->
-      <view class="decoration bridge-decoration">
+      <!-- Bridge Decoration (Optional, keep if needed or remove if it interferes) -->
+      <!-- <view class="decoration bridge-decoration">
          <view class="bridge-rect"></view>
-      </view>
-
-      <!-- Taxi (Middle) -->
-      <view class="zone taxi-zone" bindtap="onNavigateToChat">
-         <image src="/assets/images/city-map/level-taxi.svg" mode="aspectFit" class="zone-image"></image>
-      </view>
-      
-      <!-- Hotel (Top) -->
-      <view class="zone hotel-zone">
-         <image src="/assets/images/city-map/level-hotel.svg" mode="aspectFit" class="zone-image"></image>
-      </view>
+      </view> -->
 
     </view>
   </scroll-view>

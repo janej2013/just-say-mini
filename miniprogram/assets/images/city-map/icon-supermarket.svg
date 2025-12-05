@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 130">
+    <!-- Drop Shadow -->
+    <circle cx="0" cy="8" r="40" fill="#1B5E20" opacity="0.2" />
+    
+    <!-- 3D Extrusion Layer -->
+    <circle cx="0" cy="5" r="40" fill="#2E7D32" stroke="white" stroke-width="4" />
+    
+    <!-- Main Face Layer -->
+    <circle cx="0" cy="0" r="40" fill="#43A047" stroke="white" stroke-width="4" />
+    <circle cx="0" cy="0" r="34" fill="#A5D6A7" />
+    
+    <!-- Icon Content: Basket -->
+    <g transform="translate(-15, -12)">
+       <path d="M 5 15 L 0 15 L 5 35 L 25 35 L 30 15 L 25 15" fill="#C8E6C9" stroke="#1B5E20" stroke-width="2" stroke-linejoin="round" />
+       <path d="M 5 15 Q 15 0 25 15" fill="none" stroke="#1B5E20" stroke-width="2" />
+       <rect x="8" y="15" width="4" height="20" fill="#1B5E20" opacity="0.3" />
+       <rect x="18" y="15" width="4" height="20" fill="#1B5E20" opacity="0.3" />
+    </g>
+    
+    <!-- Label -->
+    <g transform="translate(0, 55)">
+        <rect x="-40" y="-10" width="80" height="24" rx="12" fill="#2E7D32" opacity="0.2" />
+        <rect x="-40" y="-12" width="80" height="24" rx="12" fill="white" stroke="#43A047" stroke-width="2" />
+        <text x="0" y="4" text-anchor="middle" font-size="10" font-weight="bold" fill="#1B5E20" font-family="sans-serif">SUPERMARKET</text>
+    </g>
+</svg>

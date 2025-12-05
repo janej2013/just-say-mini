@@ -31,8 +31,9 @@
   position: absolute;
   z-index: 10;
   background: transparent !important;
-  /* transform: translate(-50%, -50%);  CSS transform translate works differently with left/top */
-  /* We will use specific positioning */
+  width: 160rpx;
+  height: 160rpx;
+  transform: translate(-50%, -50%);
 }
 
 .zone-image {
@@ -42,37 +43,17 @@
   background: transparent !important;
 }
 
-/* Airport: translate(200, 1350) in 375 width SVG. 
-   We need to map this to screen coordinates. 
-   Assuming widthFix scales the map to screen width (100vw).
-   The SVG viewBox is 0 0 375 1600.
-   So 1 unit = 100vw / 375.
-*/
+.zone-image.locked {
+  filter: grayscale(100%);
+  opacity: 0.7;
+}
+
 
 /* Using rpx might be easier if we assume 750rpx = 375pt (standard).
    So 1 SVG unit = 2rpx.
 */
 
-.airport-zone {
-  width: 400rpx;
-  height: 300rpx;
-  left: 320rpx;
-  top: 2800rpx;
-}
-
-.taxi-zone {
-  width: 320rpx;
-  height: 240rpx;
-  left: 40rpx;
-  top: 2500rpx;
-}
-
-.hotel-zone {
-  width: 280rpx;
-  height: 360rpx;
-  left: 260rpx;
-  top: 2020rpx;
-}
+/* Zones are now dynamically positioned */
 
 .bridge-decoration {
   position: absolute;

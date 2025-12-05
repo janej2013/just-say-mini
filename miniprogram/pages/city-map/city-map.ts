@@ -1,11 +1,14 @@
 
+import { cityMapLevels, LevelData } from './data';
+
 Page({
   data: {
     mapSvgUrl: '',
     scrollTop: 0,
     statusBarHeight: 20,
-    repeatCount: 2,
-    mapHeight: 1600
+    repeatCount: 3,
+    mapHeight: 4800,
+    levels: [] as any[]
   },
   onLoad() {
     // Get status bar height for custom header
@@ -18,6 +21,40 @@ Page({
     
     // Update mapHeight for WXML
     this.setData({ mapHeight: totalHeight });
+
+    // Calculate Level Positions
+    const levelPositions = [
+        // Level 1 (Bottom)
+        { id: 1, y: 4700, x: 200 },
+        { id: 2, y: 4400, x: 100 },
+        { id: 3, y: 4100, x: 200 },
+        { id: 4, y: 3900, x: 200 },
+        { id: 5, y: 3600, x: 100 },
+        { id: 6, y: 3300, x: 250 },
+        { id: 7, y: 3100, x: 200 },
+        { id: 8, y: 2800, x: 100 },
+        { id: 9, y: 2500, x: 200 },
+        { id: 10, y: 2300, x: 200 },
+        { id: 11, y: 2000, x: 100 },
+        { id: 12, y: 1700, x: 250 },
+        { id: 13, y: 1500, x: 200 },
+        { id: 14, y: 1200, x: 100 },
+        { id: 15, y: 900, x: 200 }
+    ];
+
+    const levels = cityMapLevels.map(level => {
+        const pos = levelPositions.find(p => p.id === level.id);
+        if (pos) {
+            return {
+                ...level,
+                left: (pos.x / 375) * 100,
+                top: (pos.y / totalHeight) * 100
+            };
+        }
+        return level;
+    });
+
+    this.setData({ levels });
 
     // Redesigned paths for seamless looping
     // River: Start (150,0) -> End (150,1600) with matching vertical tangents
@@ -116,11 +153,32 @@ Page({
     wx.navigateBack();
   },
 
-  onNavigateToAirport() {
-    wx.navigateTo({ url: '/pages/arrival-airport/arrival-airport' });
-  },
-  
-  onNavigateToChat() {
-      wx.navigateTo({ url: '/pages/dialog-practice/dialog-practice' });
+  onLevelTap(e: any) {
+    const id = e.currentTarget.dataset.id;
+    const level = this.data.levels.find((l: any) => l.id === id);
+    
+    if (!level) return;
+
+    if (!level.isUnlocked) {
+      wx.showToast({
+        title: '请先解锁前置关卡',
+        icon: 'none'
+      });
+      return;
+    }
+
+    // Navigate based on ID or other logic
+    if (id === 1) {
+        wx.navigateTo({ url: '/pages/arrival-airport/arrival-airport' });
+    } else if (id === 2) {
+        wx.navigateTo({ url: '/pages/arrival-taxi/arrival-taxi' }); // Assuming taxi page exists or use dialog-practice
+    } else if (id === 3) {
+        wx.navigateTo({ url: '/pages/arrival-hotel/arrival-hotel' });
+    } else {
+        wx.showToast({
+            title: `进入 ${level.name}`,
+            icon: 'none'
+        });
+    }
   }
 })

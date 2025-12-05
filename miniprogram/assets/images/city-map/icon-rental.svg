@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 130">
+    <!-- Drop Shadow -->
+    <circle cx="0" cy="8" r="40" fill="#6A1B9A" opacity="0.2" />
+    
+    <!-- 3D Extrusion Layer -->
+    <circle cx="0" cy="5" r="40" fill="#7B1FA2" stroke="white" stroke-width="4" />
+    
+    <!-- Main Face Layer -->
+    <circle cx="0" cy="0" r="40" fill="#AB47BC" stroke="white" stroke-width="4" />
+    <circle cx="0" cy="0" r="34" fill="#CE93D8" />
+    
+    <!-- Icon Content: Key -->
+    <g transform="translate(-15, -15)">
+       <circle cx="20" cy="10" r="8" fill="#FFF" stroke="#4A148C" stroke-width="2" />
+       <path d="M 18 18 L 10 35 L 15 35 L 15 40 L 20 40 L 25 30" stroke="#4A148C" stroke-width="3" fill="none" />
+       <rect x="10" y="35" width="5" height="2" fill="#4A148C" />
+    </g>
+    
+    <!-- Label -->
+    <g transform="translate(0, 55)">
+        <rect x="-30" y="-10" width="60" height="24" rx="12" fill="#7B1FA2" opacity="0.2" />
+        <rect x="-30" y="-12" width="60" height="24" rx="12" fill="white" stroke="#AB47BC" stroke-width="2" />
+        <text x="0" y="4" text-anchor="middle" font-size="10" font-weight="bold" fill="#6A1B9A" font-family="sans-serif">RENTAL</text>
+    </g>
+</svg>

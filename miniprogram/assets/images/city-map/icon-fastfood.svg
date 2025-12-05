@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 130">
+    <!-- Drop Shadow -->
+    <circle cx="0" cy="8" r="40" fill="#BF360C" opacity="0.2" />
+    
+    <!-- 3D Extrusion Layer -->
+    <circle cx="0" cy="5" r="40" fill="#D84315" stroke="white" stroke-width="4" />
+    
+    <!-- Main Face Layer -->
+    <circle cx="0" cy="0" r="40" fill="#F4511E" stroke="white" stroke-width="4" />
+    <circle cx="0" cy="0" r="34" fill="#FFAB91" />
+    
+    <!-- Icon Content: Burger -->
+    <g transform="translate(-15, -15)">
+        <path d="M 0 15 Q 15 -5 30 15 Z" fill="#FBC02D" />
+        <rect x="0" y="18" width="30" height="6" fill="#5D4037" rx="2" />
+        <rect x="0" y="26" width="30" height="6" fill="#FBC02D" rx="2" />
+        <path d="M 0 18 Q 5 15 10 18 T 20 18 T 30 18" fill="none" stroke="#4CAF50" stroke-width="3" />
+    </g>
+    
+    <!-- Label -->
+    <g transform="translate(0, 55)">
+        <rect x="-35" y="-10" width="70" height="24" rx="12" fill="#D84315" opacity="0.2" />
+        <rect x="-35" y="-12" width="70" height="24" rx="12" fill="white" stroke="#F4511E" stroke-width="2" />
+        <text x="0" y="4" text-anchor="middle" font-size="10" font-weight="bold" fill="#BF360C" font-family="sans-serif">FAST FOOD</text>
+    </g>
+</svg>

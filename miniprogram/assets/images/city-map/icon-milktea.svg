@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 130">
+    <!-- Drop Shadow -->
+    <circle cx="0" cy="8" r="40" fill="#880E4F" opacity="0.2" />
+    
+    <!-- 3D Extrusion Layer -->
+    <circle cx="0" cy="5" r="40" fill="#AD1457" stroke="white" stroke-width="4" />
+    
+    <!-- Main Face Layer -->
+    <circle cx="0" cy="0" r="40" fill="#D81B60" stroke="white" stroke-width="4" />
+    <circle cx="0" cy="0" r="34" fill="#F48FB1" />
+    
+    <!-- Icon Content: Boba Cup -->
+    <g transform="translate(-12, -18)">
+        <path d="M 5 10 L 8 35 Q 8 40 12 40 L 20 40 Q 24 40 24 35 L 27 10 Z" fill="#FFF" opacity="0.5"/>
+        <path d="M 6 12 L 8 35 Q 8 38 12 38 L 20 38 Q 24 38 24 35 L 26 12 Z" fill="#D7CCC8" />
+        <line x1="16" y1="5" x2="20" y2="15" stroke="#3E2723" stroke-width="3" stroke-linecap="round" />
+        <circle cx="12" cy="32" r="2" fill="#3E2723" />
+        <circle cx="18" cy="34" r="2" fill="#3E2723" />
+        <circle cx="22" cy="28" r="2" fill="#3E2723" />
+        <circle cx="14" cy="26" r="2" fill="#3E2723" />
+    </g>
+    
+    <!-- Label -->
+    <g transform="translate(0, 55)">
+        <rect x="-35" y="-10" width="70" height="24" rx="12" fill="#D81B60" opacity="0.2" />
+        <rect x="-35" y="-12" width="70" height="24" rx="12" fill="white" stroke="#D81B60" stroke-width="2" />
+        <text x="0" y="4" text-anchor="middle" font-size="10" font-weight="bold" fill="#880E4F" font-family="sans-serif">MILK TEA</text>
+    </g>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 130">
+  <!-- Drop Shadow -->
+  <circle cx="0" cy="8" r="40" fill="#01579B" opacity="0.2" />
+  
+  <!-- 3D Extrusion Layer (Darker Shade) -->
+  <circle cx="0" cy="5" r="40" fill="#0277BD" stroke="white" stroke-width="4" />
+  
+  <!-- Main Face Layer -->
+  <circle cx="0" cy="0" r="40" fill="#29B6F6" stroke="white" stroke-width="4" />
+  <circle cx="0" cy="0" r="34" fill="#4FC3F7" />
+  
+  <!-- Icon Content -->
+  <g transform="translate(-20, -20) scale(0.8)">
+      <path d="M 10 30 Q 25 30 35 20 L 45 10 L 55 10 L 45 25 L 55 25 L 55 35 L 45 35 L 55 50 L 45 50 L 30 35 L 10 35 Z" fill="white" />
+      <path d="M 30 10 Q 35 0 45 5 Q 55 0 60 10 Q 65 15 60 20 Q 55 25 45 20 Q 40 25 30 15 Z" fill="white" opacity="0.6" />
+  </g>
+  
+  <!-- Label -->
+  <g transform="translate(0, 55)">
+      <!-- Label Shadow -->
+      <rect x="-35" y="-10" width="70" height="24" rx="12" fill="#0277BD" opacity="0.2" />
+      <!-- Label Body -->
+      <rect x="-35" y="-12" width="70" height="24" rx="12" fill="white" stroke="#29B6F6" stroke-width="2" />
+      <text x="0" y="4" text-anchor="middle" font-size="10" font-weight="bold" fill="#0277BD" font-family="sans-serif">AIRPORT</text>
+  </g>
+</svg>

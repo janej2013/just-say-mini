@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 130">
+    <!-- Drop Shadow -->
+    <circle cx="0" cy="8" r="40" fill="#4E342E" opacity="0.2" />
+    
+    <!-- 3D Extrusion Layer -->
+    <circle cx="0" cy="5" r="40" fill="#5D4037" stroke="white" stroke-width="4" />
+    
+    <!-- Main Face Layer -->
+    <circle cx="0" cy="0" r="40" fill="#795548" stroke="white" stroke-width="4" />
+    <circle cx="0" cy="0" r="34" fill="#D7CCC8" />
+    
+    <!-- Icon Content: Coffee -->
+    <g transform="translate(-12, -18)">
+        <path d="M 0 10 L 0 30 Q 0 40 10 40 L 20 40 Q 30 40 30 30 L 30 10 Z" fill="#4E342E" />
+        <path d="M 30 15 Q 40 15 40 25 Q 40 35 30 35 L 30 30 Q 35 30 35 25 Q 35 20 30 20 Z" fill="#4E342E" />
+        <path d="M 5 5 Q 10 0 15 5 T 25 5" stroke="#795548" stroke-width="2" fill="none" />
+        <path d="M 8 0 Q 13 -5 18 0 T 28 0" stroke="#795548" stroke-width="2" fill="none" opacity="0.6"/>
+    </g>
+    
+    <!-- Label -->
+    <g transform="translate(0, 55)">
+        <rect x="-30" y="-10" width="60" height="24" rx="12" fill="#5D4037" opacity="0.2" />
+        <rect x="-30" y="-12" width="60" height="24" rx="12" fill="white" stroke="#795548" stroke-width="2" />
+        <text x="0" y="4" text-anchor="middle" font-size="10" font-weight="bold" fill="#4E342E" font-family="sans-serif">CAFE</text>
+    </g>
+</svg>
