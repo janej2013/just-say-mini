@@ -24,6 +24,8 @@ Page({
     isShuffling: false,
     statusBarHeight: 20,
     allTasks: [] as any[], // Store all tasks for current level
+    selectedCardTasks: [] as any[], // Store the tasks from selected card
+    selectedTaskGroups: [] as any[][], // Store all task groups
   },
 
   onLoad(options: any) {
@@ -182,31 +184,42 @@ Page({
     });
 
     // Group tasks into sets of 3
-    const taskGroups: string[][] = [];
+    const taskGroups: any[][] = []; // Store task objects, not just text
+    const taskGroupsText: string[][] = []; // Store text for display
+    
     for (let i = 0; i < sortedTasks.length; i += 3) {
-      const group = sortedTasks.slice(i, i + 3).map(task => task.en);
+      const group = sortedTasks.slice(i, i + 3);
       if (group.length === 3) {
         taskGroups.push(group);
+        taskGroupsText.push(group.map(task => task.en));
       }
     }
 
     // Randomly select 3 groups for the 3 cards
     const options: string[][] = [];
-    const availableGroups = [...taskGroups];
+    const selectedTaskGroups: any[][] = [];
+    const availableIndices = taskGroups.map((_, idx) => idx);
     
     for (let i = 0; i < 3; i++) {
-      if (availableGroups.length > 0) {
-        const randomIndex = Math.floor(Math.random() * availableGroups.length);
-        options.push(availableGroups[randomIndex]);
-        availableGroups.splice(randomIndex, 1);
+      if (availableIndices.length > 0) {
+        const randomIdx = Math.floor(Math.random() * availableIndices.length);
+        const groupIndex = availableIndices[randomIdx];
+        
+        options.push(taskGroupsText[groupIndex]);
+        selectedTaskGroups.push(taskGroups[groupIndex]);
+        availableIndices.splice(randomIdx, 1);
       } else {
         // If not enough groups, reuse from taskGroups
         const randomIndex = Math.floor(Math.random() * taskGroups.length);
-        options.push(taskGroups[randomIndex] || ['Task 1', 'Task 2', 'Task 3']);
+        options.push(taskGroupsText[randomIndex] || ['Task 1', 'Task 2', 'Task 3']);
+        selectedTaskGroups.push(taskGroups[randomIndex] || []);
       }
     }
 
-    this.setData({ cardOptions: options });
+    this.setData({ 
+      cardOptions: options,
+      selectedTaskGroups: selectedTaskGroups // Store task groups for later use
+    });
   },
 
   runShuffleSequence() {
@@ -225,9 +238,16 @@ Page({
           setTimeout(() => {
               this.setData({ selectedCardIndex: 1 });
 
-              // 4. Reveal the card
+              // 4. Reveal the card and store selected tasks
               setTimeout(() => {
-                  this.setData({ isRevealed: true });
+                  // Store the tasks from the middle card (index 1)
+                  const selectedTaskGroups = this.data.selectedTaskGroups || [];
+                  const selectedCardTasks = selectedTaskGroups[1] || [];
+                  
+                  this.setData({ 
+                      isRevealed: true,
+                      selectedCardTasks: selectedCardTasks
+                  });
               }, 600); // Wait for centering move
 
           }, 800); // Wait for spread to finish
@@ -239,19 +259,37 @@ Page({
       this.runShuffleSequence();
   },
 
-  onBack() {
-      wx.navigateBack();
-  },
-
   onStartAdventure() {
-      // Navigate to the actual game page or handle start
-      // For now, just log or show a toast
-      wx.showToast({
-          title: 'Starting Adventure!',
-          icon: 'none'
-      });
+      const selectedCardTasks = this.data.selectedCardTasks;
       
-      // Example navigation (adjust as needed)
-      // wx.navigateTo({ url: `/pages/game/game?levelId=${this.data.levelId}` });
+      if (!selectedCardTasks || selectedCardTasks.length !== 3) {
+          wx.showToast({
+              title: '请先抽取任务卡',
+              icon: 'none'
+          });
+          return;
+      }
+
+      // Get all NPC animals from NPC_VOICE_MAP
+      const npcAnimals = ['Panda', 'Owl', 'Koala', 'Elephant', 'Giraffe', 'Beaver', 'Hippo', 'Parrot', 'Squirrel'];
+      
+      // Randomly select one NPC
+      const randomNpc = npcAnimals[Math.floor(Math.random() * npcAnimals.length)];
+      
+      // Prepare level data for dialog-practice page
+      const levelData = {
+          levelTitle: this.data.levelInfo.title,
+          tasks: selectedCardTasks,
+          currentTaskIndex: 0,
+          npc: {
+              animal: randomNpc,
+              role: 'Guide'
+          }
+      };
+      
+      // Navigate to dialog-practice page
+      wx.navigateTo({
+          url: `/pages/dialog-practice/dialog-practice?levelData=${encodeURIComponent(JSON.stringify(levelData))}`
+      });
   }
 });
