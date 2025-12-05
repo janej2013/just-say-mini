@@ -31,8 +31,8 @@
   position: absolute;
   z-index: 10;
   background: transparent !important;
-  width: 160rpx;
-  height: 160rpx;
+  width: 320rpx;
+  height: 320rpx;
   transform: translate(-50%, -50%);
 }
 
@@ -41,11 +41,6 @@
   height: 100%;
   display: block;
   background: transparent !important;
-}
-
-.zone-image.locked {
-  filter: grayscale(100%);
-  opacity: 0.7;
 }
 
 
