@@ -1,0 +1,155 @@
+.city-map-container {
+  width: 100vw;
+  height: 100vh;
+  background-color: #A5D6A7;
+  position: relative;
+  overflow: hidden;
+}
+
+.map-scroll {
+  width: 100%;
+  height: 100%;
+}
+
+.map-content {
+  width: 100%;
+  height: 1600px; /* Match SVG height */
+  position: relative;
+}
+
+.map-bg {
+  width: 100%;
+  height: 1600px;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.zone {
+  position: absolute;
+  z-index: 10;
+  /* transform: translate(-50%, -50%);  CSS transform translate works differently with left/top */
+  /* We will use specific positioning */
+}
+
+.zone-image {
+  width: 100%;
+  height: 100%;
+}
+
+/* Airport: translate(200, 1350) in 375 width SVG. 
+   We need to map this to screen coordinates. 
+   Assuming widthFix scales the map to screen width (100vw).
+   The SVG viewBox is 0 0 375 1600.
+   So 1 unit = 100vw / 375.
+*/
+
+/* Using rpx might be easier if we assume 750rpx = 375pt (standard).
+   So 1 SVG unit = 2rpx.
+*/
+
+.airport-zone {
+  width: 400rpx; /* 200 * 2 */
+  height: 300rpx; /* 150 * 2 */
+  left: 200rpx; /* (200 - 100) * 2 = 200rpx. Wait.
+                 SVG translate(200, 1350). Image x=-100, y=-75.
+                 So top-left is (100, 1275).
+                 In rpx: left: 200rpx, top: 2550rpx.
+                 */
+  top: 2550rpx;
+}
+
+.taxi-zone {
+  /* SVG translate(60, 600). Image x=-80, y=-60.
+     Top-left: (-20, 540).
+     Wait, x=-20? 60-80 = -20.
+     In rpx: left: -40rpx, top: 1080rpx.
+     Width: 160 * 2 = 320rpx.
+     Height: 120 * 2 = 240rpx.
+  */
+  width: 320rpx;
+  height: 240rpx;
+  left: -40rpx;
+  top: 1080rpx;
+}
+
+.hotel-zone {
+  /* SVG translate(200, 100). Image x=-70, y=-90.
+     Top-left: (130, 10).
+     In rpx: left: 260rpx, top: 20rpx.
+     Width: 140 * 2 = 280rpx.
+     Height: 180 * 2 = 360rpx.
+  */
+  width: 280rpx;
+  height: 360rpx;
+  left: 260rpx;
+  top: 20rpx;
+}
+
+.bridge-decoration {
+  position: absolute;
+  left: 300rpx; /* 150 * 2 */
+  top: 2100rpx; /* 1050 * 2 */
+  width: 120rpx; /* 60 * 2 */
+  height: 60rpx; /* 30 * 2 */
+  transform: rotate(30deg);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.bridge-rect {
+  width: 100%;
+  height: 100%;
+  background-color: #8D6E63;
+  border-radius: 8rpx;
+}
+
+.header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 24rpx;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.header-title-pill {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 16rpx 32rpx;
+  border-radius: 999px;
+  box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.1);
+}
+
+.header-title {
+  color: #5D4037;
+  font-weight: bold;
+  font-size: 28rpx;
+}
+
+.close-btn {
+  width: 80rpx;
+  height: 80rpx;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.1);
+}
+
+.close-icon {
+  color: #5D4037;
+  font-size: 32rpx;
+  font-weight: bold;
+}

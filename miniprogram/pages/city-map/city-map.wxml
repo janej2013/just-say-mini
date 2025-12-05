@@ -1,0 +1,43 @@
+<view class="city-map-container">
+  <scroll-view scroll-y class="map-scroll" scroll-top="{{scrollTop}}" scroll-with-animation="true">
+    <view class="map-content">
+      <!-- Background Map -->
+      <image class="map-bg" src="{{mapSvgUrl}}" mode="widthFix"></image>
+      
+      <!-- Interactive Zones (Absolute positioning) -->
+      
+      <!-- Airport (Bottom) -->
+      <view class="zone airport-zone" bindtap="onNavigateToAirport">
+        <image src="/assets/images/city-map/level-airport.svg" mode="aspectFit" class="zone-image"></image> 
+      </view>
+      
+      <!-- Bridge Decoration -->
+      <view class="decoration bridge-decoration">
+         <view class="bridge-rect"></view>
+      </view>
+
+      <!-- Taxi (Middle) -->
+      <view class="zone taxi-zone" bindtap="onNavigateToChat">
+         <image src="/assets/images/city-map/level-taxi.svg" mode="aspectFit" class="zone-image"></image>
+      </view>
+      
+      <!-- Hotel (Top) -->
+      <view class="zone hotel-zone">
+         <image src="/assets/images/city-map/level-hotel.svg" mode="aspectFit" class="zone-image"></image>
+      </view>
+
+    </view>
+  </scroll-view>
+  
+  <!-- Header / Back Button -->
+  <view class="header-overlay" style="padding-top: {{statusBarHeight}}px;">
+      <view class="header-bar">
+          <view class="header-title-pill">
+             <text class="header-title">Adventure Map</text>
+          </view>
+          <view class="close-btn" bindtap="onBack">
+              <text class="close-icon">X</text>
+          </view>
+      </view>
+  </view>
+</view>

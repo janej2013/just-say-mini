@@ -25,6 +25,7 @@
       <button class="map-btn" bindtap="toggleLanguage" type="warn" style="margin-top: 20px;">{{currentLanguage === 'zh' ? '切换为英文 (Switch to EN)' : 'Switch to Chinese (切换为中文)'}}</button>
       <button class="map-btn" bindtap="goToMap" type="primary" style="margin-top: 10px;">Go to Map</button>
       <button class="map-btn" bindtap="goToAirportMap" type="default" style="margin-top: 10px;">Go to Airport Map</button>
+      <button class="map-btn" bindtap="goToCityMap" type="primary" style="margin-top: 10px; background-color: #4DB6AC;">Go to City Map</button>
     </view>
   </view>
 </scroll-view>

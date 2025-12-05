@@ -82,5 +82,10 @@ Component({
         url: '../airport-map/airport-map',
       })
     },
+    goToCityMap() {
+      wx.navigateTo({
+        url: '../city-map/city-map',
+      })
+    },
   },
 })
