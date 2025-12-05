@@ -9,20 +9,10 @@ import ttsManager from '../../utils/tts-manager';
 // ==================== Mock 模式配置 ====================
 // 设置为 true 启用Mock模式，false 使用真实语音识别
 const MOCK_MODE_ENABLED = true;
-// Mock数据（直接在代码中定义，避免小程序require JSON文件的限制）
+// Mock数据将在运行时根据当前任务动态生成
 const mockData = {
   mockEnabled: true,
-  mockAnswers: {
-    "airport_l1_t1": "Where baggage?", // tips - 不完整，缺少关键词
-    "airport_l1_t2": "Could you tell me how to get to the taxi pickup?", // perfect
-    "airport_l1_t3": "Cart please?", // tips - 太简短，缺少关键词
-    "airport_l2_t1": "Could you tell me where to get a SIM card?",
-    "airport_l2_t2": "Where is the restroom?",
-    "airport_l2_t3": "Could you tell me the airport bus routes and prices?",
-    "airport_l3_t1": "My luggage hasn't arrived. I'd like to report it.",
-    "airport_l3_t2": "I'm here for tourism and will stay for a week.",
-    "airport_l3_t3": "My suitcase is damaged. I'd like to report it."
-  }
+  mockAnswers: {} // 将在initWithLevelData时填充
 };
 // =======================================================
 
@@ -113,6 +103,27 @@ Page({
       console.error(`关卡任务数量异常: ${tasks.length}, 期望为 3`);
       this.loadDefaultData();
       return;
+    }
+    
+    // 动态生成 mockAnswers
+    if (MOCK_MODE_ENABLED) {
+      mockData.mockAnswers = {};
+      tasks.forEach((task, index) => {
+        const taskId = task.taskId;
+        let mockAnswer = task.userAnswers?.simple || '';
+        
+        // 对第三个任务（index === 2）截断答案，只取前半部分
+        if (index === 2 && mockAnswer) {
+          const words = mockAnswer.split(' ');
+          const halfLength = Math.ceil(words.length / 2);
+          mockAnswer = words.slice(0, halfLength).join(' ');
+          console.log(`🎭 第三个任务答案已截断: ${mockAnswer}`);
+        }
+        
+        mockData.mockAnswers[taskId] = mockAnswer;
+      });
+      
+      console.log('🎭 动态生成的 mockAnswers:', mockData.mockAnswers);
     }
     
     // 保存所有任务、当前索引和level的NPC信息
