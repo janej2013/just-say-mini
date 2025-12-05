@@ -23,24 +23,34 @@ Page({
     this.setData({ mapHeight: totalHeight });
 
     // Calculate Level Positions
-    const levelPositions = [
-        // Level 1 (Bottom)
-        { id: 1, y: 4700, x: 200 },
-        { id: 2, y: 4400, x: 100 },
-        { id: 3, y: 4100, x: 200 },
-        { id: 4, y: 3900, x: 200 },
-        { id: 5, y: 3600, x: 100 },
-        { id: 6, y: 3300, x: 250 },
-        { id: 7, y: 3100, x: 200 },
-        { id: 8, y: 2800, x: 100 },
-        { id: 9, y: 2500, x: 200 },
-        { id: 10, y: 2300, x: 200 },
-        { id: 11, y: 2000, x: 100 },
-        { id: 12, y: 1700, x: 250 },
-        { id: 13, y: 1500, x: 200 },
-        { id: 14, y: 1200, x: 100 },
-        { id: 15, y: 900, x: 200 }
+    // Pattern for one block (1600 height), 6 levels
+    // Ordered from bottom (near 1600) to top (near 0)
+    const blockPattern = [
+        { x: 250, y: 1467 },
+        { x: 100, y: 1200 },
+        { x: 230, y: 933 },
+        { x: 230, y: 667 },
+        { x: 100, y: 400 },
+        { x: 250, y: 133 }
     ];
+
+    const levelPositions: {id: number, x: number, y: number}[] = [];
+    const totalLevels = 15;
+    
+    for (let i = 0; i < totalLevels; i++) {
+        const levelIndexInBlock = i % 6;
+        // Levels 1-6 in bottom block (index repeatCount-1), 7-12 in middle, etc.
+        const targetBlock = (repeatCount - 1) - Math.floor(i / 6);
+        const pattern = blockPattern[levelIndexInBlock];
+        
+        if (targetBlock >= 0) {
+            levelPositions.push({
+                id: i + 1,
+                x: pattern.x,
+                y: (targetBlock * blockHeight) + pattern.y
+            });
+        }
+    }
 
     const levels = cityMapLevels.map(level => {
         const pos = levelPositions.find(p => p.id === level.id);
