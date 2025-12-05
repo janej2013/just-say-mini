@@ -1,29 +1,14 @@
 <view class="container {{levelInfo.color}}">
-  <!-- Header -->
-  <view class="header" style="padding-top: {{statusBarHeight}}px;">
-    <view class="back-btn" bindtap="onBack">
-      <text class="icon-chevron-left">‹</text>
-    </view>
-    <view class="header-title">
-      <text class="icon">{{levelInfo.icon}}</text>
-      <text class="title-text">{{levelInfo.title}}</text>
-    </view>
-    <view class="placeholder"></view>
-  </view>
-
   <!-- Main Content -->
   <view class="main-content">
-    <view class="title-section">
-      <text class="main-title">Your Mission</text>
-      <text class="subtitle">Select a card to reveal your tasks</text>
-    </view>
-
     <!-- Cards Container -->
     <view class="cards-container">
       <block wx:for="{{cardOptions}}" wx:key="index">
         <view 
           class="card {{isShuffling ? 'shuffling' : ''}} {{selectedCardIndex === index ? 'selected' : ''}} {{selectedCardIndex !== null && selectedCardIndex !== index ? 'hidden-card' : ''}}"
           style="--index: {{index}};"
+          bindtap="onCardTap"
+          data-index="{{index}}"
         >
           <view class="card-inner {{isRevealed && selectedCardIndex === index ? 'flipped' : ''}}">
             <!-- Card Back -->
@@ -32,7 +17,6 @@
               <view class="card-icon-container">
                 <text class="card-icon">?</text>
               </view>
-              <text class="card-label">Mystery Tasks</text>
             </view>
 
             <!-- Card Front -->
@@ -51,6 +35,11 @@
                   </view>
                 </block>
               </view>
+              <view class="card-footer">
+                <button class="btn btn-primary btn-small" catchtap="onStartAdventure">
+                  <text>开始冒险</text>
+                </button>
+              </view>
             </view>
           </view>
         </view>
@@ -58,14 +47,10 @@
     </view>
 
     <!-- Action Buttons -->
-    <view class="actions {{isRevealed ? 'visible' : ''}}">
-      <button class="btn btn-secondary" bindtap="handleShuffleClick">
-        <text class="btn-icon">↻</text>
-        <text>Shuffle Again</text>
-      </button>
-      <button class="btn btn-primary" bindtap="onStartAdventure">
+    <view class="actions visible">
+      <button class="btn btn-primary" bindtap="handleShuffleClick">
         <text class="btn-icon">▶</text>
-        <text>Start Adventure</text>
+        <text>{{isRevealed ? '再抽一次' : '点击抽取任务卡'}}</text>
       </button>
     </view>
   </view>

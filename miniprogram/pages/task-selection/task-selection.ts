@@ -26,10 +26,18 @@ Page({
     this.setData({ levelInfo });
     
     this.generateTasks();
-    // Use a small timeout to ensure render happens before animation starts
-    setTimeout(() => {
-        this.runShuffleSequence();
-    }, 100);
+    // Removed auto-shuffle on init
+  },
+
+  onCardTap(e: any) {
+    // Only allow tap if not shuffling and not yet revealed
+    if (this.data.isShuffling || this.data.isRevealed) return;
+
+    const index = e.currentTarget.dataset.index;
+    // Only the middle card (index 1) triggers the shuffle
+    if (index === 1) {
+        this.handleShuffleClick();
+    }
   },
 
   getLevelInfo(id: string) {

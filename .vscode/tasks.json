@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "append_styles",
+			"type": "shell",
+			"command": "Add-Content",
+			"args": [
+				"d:\\Jane\\Project\\just-say-mini\\miniprogram\\pages\\task-selection\\task-selection.wxss",
+				"\n.card-footer {\n  padding: 16px;\n  display: flex;\n  justify-content: center;\n  margin-top: auto;\n}\n\n.btn-small {\n  padding: 8px 24px;\n  font-size: 14px;\n  border-radius: 20px;\n  width: auto;\n  min-width: 120px;\n}\n\n.actions.visible {\n  opacity: 1;\n  transform: translateY(0);\n  pointer-events: auto;\n}\n"
+			],
+			"isBackground": false,
+			"group": "none"
+		}
+	]
+}

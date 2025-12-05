@@ -345,3 +345,25 @@
 .btn-icon {
   font-size: 18px;
 }
+
+.card-footer {
+ padding: 16px;
+ display: flex;
+ justify-content: center;
+ margin-top: auto;
+}
+
+.btn-small {
+ padding: 8px 24px;
+ font-size: 14px;
+ border-radius: 20px;
+ width: auto;
+ min-width: 120px;
+}
+
+.actions.visible {
+ opacity: 1;
+ transform: translateY(0);
+ pointer-events: auto;
+}
+
