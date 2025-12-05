@@ -1,3 +1,18 @@
+import airportTasks from '../data/airport';
+import taxiTasks from '../data/taxi';
+import hotelTasks from '../data/hotel';
+import rentalTasks from '../data/rental';
+import apartmentTasks from '../data/apartment';
+import propertyTasks from '../data/property';
+import cafeTasks from '../data/cafe';
+import fastfoodTasks from '../data/fastfood';
+import supermarketTasks from '../data/supermarket';
+import marketTasks from '../data/market';
+import bakeryTasks from '../data/bakery';
+import milkteaTasks from '../data/milktea';
+import gymTasks from '../data/gym';
+import poolTasks from '../data/pool';
+import parkTasks from '../data/park';
 
 Page({
   data: {
@@ -8,6 +23,7 @@ Page({
     isRevealed: false,
     isShuffling: false,
     statusBarHeight: 20,
+    allTasks: [] as any[], // Store all tasks for current level
   },
 
   onLoad(options: any) {
@@ -23,10 +39,36 @@ Page({
 
   initLevel(levelId: string) {
     const levelInfo = this.getLevelInfo(levelId);
-    this.setData({ levelInfo });
+    const allTasks = this.loadLevelTasks(levelId);
+    this.setData({ 
+      levelInfo,
+      allTasks
+    });
     
     this.generateTasks();
     // Removed auto-shuffle on init
+  },
+
+  loadLevelTasks(levelId: string) {
+    const taskMap: Record<string, any[]> = {
+      airport: airportTasks,
+      taxi: taxiTasks,
+      hotel: hotelTasks,
+      rental: rentalTasks,
+      apartment: apartmentTasks,
+      property: propertyTasks,
+      cafe: cafeTasks,
+      fastfood: fastfoodTasks,
+      supermarket: supermarketTasks,
+      market: marketTasks,
+      bakery: bakeryTasks,
+      milktea: milkteaTasks,
+      gym: gymTasks,
+      pool: poolTasks,
+      park: parkTasks
+    };
+    
+    return taskMap[levelId] || [];
   },
 
   onCardTap(e: any) {
@@ -137,21 +179,46 @@ Page({
       },
       gym: {
           title: 'City Gym',
-          color: 'bg-indigo-100 text-indigo-800',
-          icon: '💪',
-          tasks: ['Sign up for membership.', 'Ask how to use the treadmill.', 'Find the locker room.', 'Join a yoga class.', 'Ask for a towel.']
-      },
-      pool: {
-          title: 'Public Pool',
-          color: 'bg-blue-100 text-blue-800',
-          icon: '🏊',
-          tasks: ['Buy a swimming cap.', 'Ask where the shower is.', 'Check the water temperature.', 'Rent a locker.', 'Sign up for lessons.']
-      },
-      park: {
-          title: 'Central Park',
-          color: 'bg-lime-100 text-lime-800',
-          icon: '🌳',
-          tasks: ['Ask where the restroom is.', 'Find the dog park.', 'Buy ice cream.', 'Ask to take a photo.', 'Rent a bicycle.']
+  generateTasks() {
+    const allTasks = this.data.allTasks;
+    
+    if (!allTasks || allTasks.length === 0) {
+      console.warn('No tasks found for this level');
+      return;
+    }
+
+    // Sort tasks by taskId to ensure consistent order
+    const sortedTasks = [...allTasks].sort((a, b) => {
+      return a.taskId.localeCompare(b.taskId);
+    });
+
+    // Group tasks into sets of 3
+    const taskGroups: string[][] = [];
+    for (let i = 0; i < sortedTasks.length; i += 3) {
+      const group = sortedTasks.slice(i, i + 3).map(task => task.en);
+      if (group.length === 3) {
+        taskGroups.push(group);
+      }
+    }
+
+    // Randomly select 3 groups for the 3 cards
+    const options: string[][] = [];
+    const availableGroups = [...taskGroups];
+    
+    for (let i = 0; i < 3; i++) {
+      if (availableGroups.length > 0) {
+        const randomIndex = Math.floor(Math.random() * availableGroups.length);
+        options.push(availableGroups[randomIndex]);
+        availableGroups.splice(randomIndex, 1);
+      } else {
+        // If not enough groups, reuse from taskGroups
+        const randomIndex = Math.floor(Math.random() * taskGroups.length);
+        options.push(taskGroups[randomIndex] || ['Task 1', 'Task 2', 'Task 3']);
+      }
+    }
+
+    this.setData({ cardOptions: options });
+  },      tasks: ['Ask where the restroom is.', 'Find the dog park.', 'Buy ice cream.', 'Ask to take a photo.', 'Rent a bicycle.']
       }
     };
   
