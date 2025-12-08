@@ -23,7 +23,8 @@
             <view class="card-face card-front">
               <view class="card-header">
                 <text class="card-header-icon">✨</text>
-                <text class="card-header-text">Mission Tasks</text>
+                <text class="card-header-text">任务卡</text>
+                <text class="card-header-icon">✨</text>
               </view>
               <view class="task-list">
                 <block wx:for="{{item}}" wx:for-item="task" wx:for-index="taskIndex" wx:key="taskIndex">
@@ -37,7 +38,7 @@
               </view>
               <view class="card-footer">
                 <button class="btn btn-primary btn-small" catchtap="onStartAdventure">
-                  <text>开始冒险</text>
+                  <text>🐾 开始冒险 🐾</text>
                 </button>
               </view>
             </view>
@@ -49,8 +50,7 @@
     <!-- Action Buttons -->
     <view class="actions visible">
       <button class="btn btn-primary" bindtap="handleShuffleClick">
-        <text class="btn-icon">▶</text>
-        <text>{{isRevealed ? '再抽一次' : '点击抽取任务卡'}}</text>
+        <text>{{isRevealed ? '🎲 再抽一次 🎲' : '点击抽取任务卡'}}</text>
       </button>
     </view>
   </view>

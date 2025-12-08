@@ -566,7 +566,7 @@ page {
   width: 180rpx !important;
   height: 180rpx;
   border-radius: 50%;
-  background: linear-gradient(to bottom, #f9ac6c, #FB923C); /* Fox Orange Gradient */
+  background: #FFAB91;/* Fox Orange Gradient */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -582,7 +582,7 @@ page {
 }
 
 .giant-mic-btn.recording {
-  background: #EF4444;
+  background: #fc8764;
   transform: scale(1.1);
 }
 
