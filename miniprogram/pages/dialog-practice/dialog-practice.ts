@@ -47,7 +47,10 @@ Page({
     modalWithOptions: false, // 弹窗是否显示操作按钮
     language: 'zh', // 当前语言，默认中文
     isTaskExpanded: false, // 任务面板是否展开
-    showKeywords: false // 是否显示关键词
+    showKeywords: false, // 是否显示关键词
+    showTipsModal: false, // 是否显示提示弹窗
+    showWinModal: false, // 是否显示胜利弹窗
+    levelHints: ["I'd like ...", "Can you help ...?", "Thank you!"] // 关卡提示句型
   },
   
   // 音频上下文
@@ -70,11 +73,19 @@ Page({
   },
 
   onShowTips() {
-    // TODO: Implement Tips Modal
-    wx.showToast({
-      title: 'Tips coming soon!',
-      icon: 'none'
+    this.setData({
+      showTipsModal: true
     });
+  },
+
+  onCloseTips() {
+    this.setData({
+      showTipsModal: false
+    });
+  },
+
+  onReturnToMap() {
+    wx.navigateBack();
   },
 
   /**
@@ -155,7 +166,8 @@ Page({
       taskTitle: levelData.levelTitle || 'Practice',
       levelNpc: levelData.npc || { animal: 'Panda', role: 'Staff' },
       tasksCompletionStatus: [false, false, false], // 初始化3个任务的完成状态
-      allTasksCompleted: false // 重置完成状态
+      allTasksCompleted: false, // 重置完成状态
+      levelHints: this.getLevelHints(levelData.levelId || '')
     });
     
     // 初始化第一个任务
@@ -167,6 +179,13 @@ Page({
     this.setData({
       progress: progress
     });
+  },
+
+  getLevelHints(levelId) {
+    if (levelId && levelId.includes('airport')) return ["Where is the ...?", "How do I get to ...?", "Is there a ...?"];
+    if (levelId && levelId.includes('taxi')) return ["I'd like to go to ...", "Can you turn on ...?", "How much is ...?"];
+    if (levelId && levelId.includes('hotel')) return ["I'd like to ...", "What is the ...?", "When is ...?"];
+    return ["I'd like ...", "Can you help ...?", "Thank you!"];
   },
 
   /**
@@ -1252,11 +1271,12 @@ Page({
           allTasksCompleted: true
         });
         
-        wx.showToast({
-          title: '🎉 恭喜完成所有任务！',
-          icon: 'success',
-          duration: 2000
-        });
+        // 延迟显示胜利弹窗
+        setTimeout(() => {
+            this.setData({
+                showWinModal: true
+            });
+        }, 1000);
       } else {
         console.log('⚠️ 还有任务未完成，请完成所有任务');
         wx.showToast({

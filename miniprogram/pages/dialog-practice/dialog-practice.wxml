@@ -208,4 +208,49 @@
       </view>
     </view>
   </view>
+
+  <!-- Tips Modal -->
+  <view class="modal-overlay" wx:if="{{showTipsModal}}">
+    <view class="tips-modal-content">
+        <!-- Decorative Header -->
+        <view class="tips-header-bg"></view>
+        
+        <view class="tips-header-content">
+            <view class="sparkles-wrapper">
+                <text class="sparkles-icon-large">✨</text>
+            </view>
+            <text class="tips-title">Sentence Patterns</text>
+        </view>
+
+        <view class="tips-list">
+            <block wx:for="{{levelHints}}" wx:key="index">
+                <view class="tip-item">
+                    <view class="tip-number">{{index + 1}}</view>
+                    <text class="tip-text">{{item}}</text>
+                </view>
+            </block>
+        </view>
+
+        <button class="tips-confirm-btn" bindtap="onCloseTips">Got it!</button>
+    </view>
+  </view>
+
+  <!-- Win Modal -->
+  <view class="modal-overlay" wx:if="{{showWinModal}}">
+      <view class="win-modal-content">
+          <view class="trophy-wrapper">
+              <text class="trophy-icon-large">🏆</text>
+          </view>
+          <text class="win-title">Adventure Complete!</text>
+          <text class="win-subtitle">You successfully completed 3 missions!</text>
+          
+          <view class="stars-row">
+              <text class="star-icon small">⭐</text>
+              <text class="star-icon large">⭐</text>
+              <text class="star-icon small">⭐</text>
+          </view>
+
+          <button class="win-confirm-btn" bindtap="onReturnToMap">Return to Map</button>
+      </view>
+  </view>
 </view>
