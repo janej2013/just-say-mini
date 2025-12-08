@@ -224,7 +224,7 @@ page {
 .chat-container {
   width: 100%;
   flex: 1;
-  padding: 180rpx 40rpx 40rpx; /* Increased top padding */
+  padding: 220rpx 40rpx 40rpx; /* Increased top padding */
   overflow-y: auto;
   box-sizing: border-box;
 }
@@ -449,7 +449,6 @@ page {
 /* Keywords Section */
 .keywords-section {
   width: 100%;
-  margin-bottom: 40rpx;
   animation: slideUpFade 0.3s ease-out;
 }
 
@@ -461,7 +460,9 @@ page {
 .keywords-scroll {
   display: flex;
   white-space: nowrap;
-  padding-bottom: 10rpx;
+  justify-content: center;
+  align-items: flex-start;
+  padding-bottom: 20rpx;
 }
 
 .keyword-chip {
@@ -475,6 +476,7 @@ page {
   font-weight: 700;
   color: #475569;
   transition: all 0.2s;
+  height: fit-content;
 }
 
 .keyword-chip:active {
@@ -542,7 +544,6 @@ page {
 /* Giant Mic Button */
 .mic-container {
   position: relative;
-  top: -40rpx; /* Floating effect */
 }
 
 .mic-glow {
@@ -565,7 +566,7 @@ page {
   width: 180rpx !important;
   height: 180rpx;
   border-radius: 50%;
-  background: linear-gradient(to bottom, #FB923C, #9A3412); /* Fox Orange Gradient */
+  background: linear-gradient(to bottom, #f9ac6c, #FB923C); /* Fox Orange Gradient */
   display: flex;
   justify-content: center;
   align-items: center;
