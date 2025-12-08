@@ -11,13 +11,10 @@
     <view class="status-text-container {{isRevealed ? 'hidden' : ''}}">
         <view class="status-pill">
             <block wx:if="{{isShuffling}}">
-                <text class="status-icon spin">🔄</text>
-                <text class="status-label">Shuffling...</text>
+                <text class="status-label">🔄抽卡中🔄</text>
             </block>
             <block wx:else>
-                <text class="status-icon">✨</text>
-                <text class="status-label">Picking Card</text>
-                <text class="status-icon">✨</text>
+                <text class="status-label">✨点击抽卡✨</text>
             </block>
         </view>
     </view>
@@ -67,18 +64,18 @@
     <!-- Bottom Controls -->
     <view class="bottom-controls {{isRevealed ? 'visible' : ''}}">
       <!-- Shuffle Button -->
-      <button class="control-btn small-btn" bindtap="handleShuffleClick">
+      <button class="control-btn small-btn" bindtap="handleShuffleClick" style="width: fit-content;">
         <text class="btn-icon">🔄</text>
       </button>
       
       <!-- Start Adventure Button -->
-      <button class="control-btn primary-btn" bindtap="onStartAdventure">
+      <button class="control-btn primary-btn" bindtap="onStartAdventure" style="width: max-content;">
         <text>Start Adventure</text>
         <text class="btn-icon">▶</text>
       </button>
 
       <!-- Task List Button -->
-      <button class="control-btn small-btn" bindtap="toggleTaskList">
+      <button class="control-btn small-btn" bindtap="toggleTaskList" style="width: fit-content;">
         <text class="btn-icon">📋</text>
       </button>
     </view>
