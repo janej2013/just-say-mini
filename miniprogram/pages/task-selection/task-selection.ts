@@ -195,6 +195,17 @@ Page({
       }
     }
 
+    // Fallback if no full groups found
+    if (taskGroups.length === 0 && sortedTasks.length > 0) {
+        console.warn('⚠️ No full task groups found, creating fallback group');
+        const group: any[] = [];
+        for(let k=0; k<3; k++) {
+            group.push(sortedTasks[k % sortedTasks.length]);
+        }
+        taskGroups.push(group);
+        taskGroupsText.push(group.map(task => task.en));
+    }
+
     // Randomly select 3 groups for the 3 cards
     const options: string[][] = [];
     const selectedTaskGroups: any[][] = [];
@@ -244,6 +255,8 @@ Page({
                   const selectedTaskGroups = this.data.selectedTaskGroups || [];
                   const selectedCardTasks = selectedTaskGroups[1] || [];
                   
+                  console.log('🃏 Revealing card. Tasks:', selectedCardTasks);
+
                   this.setData({ 
                       isRevealed: true,
                       selectedCardTasks: selectedCardTasks
@@ -260,14 +273,33 @@ Page({
   },
 
   onStartAdventure() {
-      const selectedCardTasks = this.data.selectedCardTasks;
+      console.log('🚀 onStartAdventure clicked');
+      let selectedCardTasks = this.data.selectedCardTasks;
+      console.log('📋 selectedCardTasks:', selectedCardTasks);
       
       if (!selectedCardTasks || selectedCardTasks.length !== 3) {
-          wx.showToast({
-              title: '请先抽取任务卡',
-              icon: 'none'
-          });
-          return;
+          console.warn('⚠️ Invalid tasks, attempting fallback...');
+          // Fallback: try to get from selectedTaskGroups
+          const selectedTaskGroups = this.data.selectedTaskGroups;
+          if (selectedTaskGroups && selectedTaskGroups[1] && selectedTaskGroups[1].length === 3) {
+              selectedCardTasks = selectedTaskGroups[1];
+          } else {
+              // Fallback: get first 3 tasks from allTasks
+              const allTasks = this.data.allTasks;
+              if (allTasks && allTasks.length >= 3) {
+                  selectedCardTasks = allTasks.slice(0, 3);
+              }
+          }
+          
+          if (!selectedCardTasks || selectedCardTasks.length !== 3) {
+             console.error('❌ Fallback failed');
+             wx.showToast({
+                title: '请先抽取任务卡',
+                icon: 'none'
+             });
+             return;
+          }
+          console.log('✅ Fallback successful:', selectedCardTasks);
       }
 
       // Get all NPC animals from NPC_VOICE_MAP
@@ -287,9 +319,13 @@ Page({
           }
       };
       
+      console.log('➡️ Navigating to dialog-practice with data:', levelData);
+
       // Navigate to dialog-practice page
       wx.navigateTo({
-          url: `/pages/dialog-practice/dialog-practice?levelData=${encodeURIComponent(JSON.stringify(levelData))}`
+          url: `/pages/dialog-practice/dialog-practice?levelData=${encodeURIComponent(JSON.stringify(levelData))}`,
+          success: () => console.log('✅ Navigation success'),
+          fail: (err) => console.error('❌ Navigation failed:', err)
       });
-  }
+  },
 });
