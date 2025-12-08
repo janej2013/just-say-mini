@@ -1,23 +1,40 @@
 <!--pages/dialog-practice/dialog-practice.wxml-->
 <view class="container">
   
-  <!-- 顶部区域：进度条 + 标题 + 关闭按钮 -->
-  <view class="top-section">
-    <view class="header-row">
-        <!-- 进度条 (Segmented) -->
-        <view class="progress-segments">
-            <view class="segment {{currentTaskIdx >= 0 ? 'active' : ''}}"></view>
-            <view class="segment {{currentTaskIdx >= 1 ? 'active' : ''}}"></view>
-            <view class="segment {{currentTaskIdx >= 2 ? 'active' : ''}}"></view>
+  <!-- 顶部区域：任务面板 -->
+  <view class="top-section-new">
+    <!-- 任务面板 -->
+    <view class="task-board {{isTaskExpanded ? 'expanded' : ''}}" bindtap="toggleTaskBoard">
+        <!-- Row 1: Progress -->
+        <view class="task-board-header">
+            <view class="trophy-icon">🏆</view>
+            <view class="connector-line"></view>
+            <view class="progress-checks">
+                <block wx:for="{{[0, 1, 2]}}" wx:key="*this">
+                    <view class="check-circle {{tasksCompletionStatus[item] ? 'completed' : ''}}">
+                        <text class="check-mark">✓</text>
+                    </view>
+                </block>
+            </view>
         </view>
-        <!-- 关闭按钮 -->
-        <view class="close-btn-wrapper" bindtap="onClose">
-            <text class="close-icon">✕</text>
+
+        <!-- Row 2: Content -->
+        <view class="task-board-content" wx:if="{{isTaskExpanded}}">
+            <block wx:for="{{allTasks}}" wx:key="index">
+                <view class="task-item {{index === currentTaskIdx ? 'active' : ''}}">
+                    <view class="task-check {{tasksCompletionStatus[index] ? 'completed' : ''}}">
+                        <text wx:if="{{tasksCompletionStatus[index]}}" class="check-mark-small">✓</text>
+                    </view>
+                    <text class="task-text {{tasksCompletionStatus[index] ? 'completed-text' : ''}}">{{language === 'zh' ? item.zh : item.en}}</text>
+                </view>
+            </block>
+        </view>
+        <view class="task-board-summary" wx:else>
+            <view class="status-dot"></view>
+            <text class="summary-text">{{allTasksCompleted ? 'All Missions Complete!' : (language === 'zh' ? currentTaskData.zh : currentTaskData.en)}}</text>
+            <text class="chevron-down">▼</text>
         </view>
     </view>
-    
-    <!-- 当前任务说明 -->
-    <view class="current-task-title">{{language === 'zh' ? currentTaskData.zh : currentTaskData.en}}</view>
   </view>
 
   <!-- 对话内容区域 -->
@@ -83,27 +100,58 @@
     </view>
   </view>
 
-  <!-- 底部操作栏 -->
-  <view class="bottom-bar">
-    <!-- Suggestion Chips -->
-    <view class="suggestion-chips-wrapper" wx:if="{{keywordsHint.length > 0 && !allTasksCompleted}}">
-        <view class="chip-item" wx:for="{{keywordsHint}}" wx:key="index">
-            <text>{{item}}</text>
-        </view>
+  <!-- 底部操作栏 (Arcade Style) -->
+  <view class="bottom-bar-arcade">
+    
+    <!-- Keywords Section (Toggled) -->
+    <view class="keywords-section" wx:if="{{showKeywords}}">
+        <scroll-view scroll-x="true" class="keywords-scroll" enable-flex="true">
+            <block wx:for="{{keywordsHint}}" wx:key="index">
+                <view class="keyword-chip" bindtap="onKeywordTap" data-word="{{item}}">
+                    <text>{{item}}</text>
+                </view>
+            </block>
+        </scroll-view>
     </view>
 
-    <view class="controls-row">
-        <!-- Microphone Button -->
-        <view class="mic-wrapper">
-            <button class="microphone-btn {{allTasksCompleted ? 'completed' : ''}} {{isRecording ? 'recording' : ''}}" 
+    <view class="arcade-controls">
+        <!-- Hint Button (Left) -->
+        <view class="control-btn-wrapper" bindtap="onShowTips">
+            <view class="control-btn-icon">
+                <text class="icon-emoji">💡</text>
+            </view>
+            <text class="control-label">HINT</text>
+        </view>
+
+        <!-- Giant Mic Button (Center) -->
+        <view class="mic-container">
+            <view class="mic-glow {{isRecording ? 'active' : ''}}"></view>
+            <button class="giant-mic-btn {{isRecording ? 'recording' : ''}} {{allTasksCompleted ? 'completed' : ''}}"
                     bindtouchstart="{{allTasksCompleted ? '' : 'onRecordStart'}}" 
                     bindtouchend="{{allTasksCompleted ? '' : 'onRecordEnd'}}" 
                     bindtouchcancel="{{allTasksCompleted ? '' : 'onRecordEnd'}}"
                     bindtap="{{allTasksCompleted ? 'onCompleteClick' : ''}}">
                 <view wx:if="{{allTasksCompleted}}" class="btn-icon icon-check"></view>
-                <view wx:else class="btn-icon icon-mic"></view>
+                <view wx:else class="btn-icon icon-mic-large"></view>
+                
+                <view wx:if="{{isRecording}}" class="mic-ping"></view>
             </button>
         </view>
+
+        <!-- Keywords Toggle Button (Right) -->
+        <view class="control-btn-wrapper {{showKeywords ? 'active' : ''}}" bindtap="toggleKeywords">
+            <view class="control-btn-icon {{showKeywords ? 'active-bg' : ''}}">
+                <text class="icon-emoji">🏷️</text>
+            </view>
+            <text class="control-label">KEYWORDS</text>
+        </view>
+    </view>
+
+    <!-- Status Text -->
+    <view class="status-text-wrapper">
+        <text class="status-text {{isRecording ? 'recording-text' : ''}}">
+            {{isRecording ? "Listening..." : "Tap to Speak"}}
+        </text>
     </view>
   </view>
 

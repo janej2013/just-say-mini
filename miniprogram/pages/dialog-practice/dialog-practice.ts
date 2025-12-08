@@ -45,7 +45,9 @@ Page({
     tasksCompletionStatus: [false, false, false], // 三个任务的完成状态
     showFeedbackModal: false, // 是否显示反馈弹窗
     modalWithOptions: false, // 弹窗是否显示操作按钮
-    language: 'zh' // 当前语言，默认中文
+    language: 'zh', // 当前语言，默认中文
+    isTaskExpanded: false, // 任务面板是否展开
+    showKeywords: false // 是否显示关键词
   },
   
   // 音频上下文
@@ -54,6 +56,26 @@ Page({
   recognizer: null,  // 语音识别实例
   tempCredentials: null,  // 临时安全凭证
   currentRecordingId: null,  // 当前录音会话 ID
+
+  toggleTaskBoard() {
+    this.setData({
+      isTaskExpanded: !this.data.isTaskExpanded
+    });
+  },
+
+  toggleKeywords() {
+    this.setData({
+      showKeywords: !this.data.showKeywords
+    });
+  },
+
+  onShowTips() {
+    // TODO: Implement Tips Modal
+    wx.showToast({
+      title: 'Tips coming soon!',
+      icon: 'none'
+    });
+  },
 
   /**
    * 页面加载
