@@ -39,7 +39,7 @@ page {
 /* Task Board */
 .task-board {
   pointer-events: auto;
-  background: rgba(255, 255, 255, 0.9);
+  background: #ffffffe6;
   backdrop-filter: blur(20px);
   padding: 20rpx;
   border-radius: 30rpx;

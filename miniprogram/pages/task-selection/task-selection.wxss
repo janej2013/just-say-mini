@@ -26,16 +26,6 @@
   overflow: hidden;
 }
 
-.control-tower-img {
-  position: absolute;
-  top: 80px;
-  right: 40px;
-  width: 180px;
-  height: 270px;
-  opacity: 0.2;
-  transform: scale(1.2);
-}
-
 .ground-hint {
   position: absolute;
   bottom: 0;
@@ -229,7 +219,7 @@
 
 /* Card Back */
 .card-back {
-  background: linear-gradient(135deg, #b0d3e7 0%, #86a1b5 100%);
+  background: linear-gradient(to bottom, #abf1fa, #fce8a7);
   color: white;
   align-items: center;
   justify-content: center;
@@ -247,7 +237,17 @@
   background-size: 20px 20px;
 }
 
-.card-icon-container {
+.card-control-tower-img {
+  /* position: absolute;
+  top: 80px;
+  right: 40px;
+  width: 180px;
+  height: 270px; */
+  opacity: 0.2;
+  transform: scale(0.8);
+}
+
+/* .card-icon-container {
   width: 80px;
   height: 80px;
   background-color: rgba(255, 255, 255, 0.2);
@@ -257,7 +257,7 @@
   justify-content: center;
   margin-bottom: 16px;
   backdrop-filter: blur(4px);
-}
+} */
 
 .card-icon {
   font-size: 40px;
@@ -278,7 +278,7 @@
 }
 
 .card-header {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #c1f7e6 0%, #73e3bf 100%);
   padding: 16px;
   display: flex;
   align-items: center;
@@ -388,7 +388,8 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #f4e5b5 0%, #f1c948 100%);
+  /* background: linear-gradient(135deg, #a5f8de 0%, #4edfb1 100%); */
   color: white;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
