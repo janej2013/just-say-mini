@@ -1,4 +1,12 @@
 <view class="container {{levelInfo.color}}">
+  <!-- Background Elements -->
+  <view class="bg-elements">
+    <!-- Control Tower -->
+    <image class="control-tower-img" src="/assets/images/level_task_map/img-control-tower.svg" mode="aspectFit"></image>
+    
+    <!-- Ground Hint -->
+    <view class="ground-hint"></view>
+  </view>
   <!-- Main Content -->
   <view class="main-content">
     <!-- Cards Container -->

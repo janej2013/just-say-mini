@@ -1,4 +1,5 @@
 {
   "navigationBarTitleText": "Task Selection",
-  "usingComponents": {}
+  "navigationBarBackgroundColor": "#E0F7FA",
+  "navigationBarTextStyle": "black"
 }

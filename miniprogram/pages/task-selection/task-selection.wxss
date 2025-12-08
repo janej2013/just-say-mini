@@ -1,11 +1,50 @@
 /* Container & Layout */
-.container {
+/* .container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+} */
+.container {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to bottom, #E0F7FA, #FFF8E1);
+  position: relative;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
+/* Background Elements */
+.bg-elements {
+  position: absolute;
+  top: -50px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.control-tower-img {
+  position: absolute;
+  top: 80px;
+  right: 40px;
+  width: 180px;
+  height: 270px;
+  opacity: 0.2;
+  transform: scale(1.2);
+}
+
+.ground-hint {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 128px;
+  background: linear-gradient(to top, #F5F5DC, transparent);
+  opacity: 0.6;
+}
 /* Colors - Mapping from Tailwind */
 .bg-sky-100 { background-color: #e0f2fe; }
 .text-sky-700 { color: #0369a1; }
@@ -190,7 +229,7 @@
 
 /* Card Back */
 .card-back {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #b0d3e7 0%, #86a1b5 100%);
   color: white;
   align-items: center;
   justify-content: center;
