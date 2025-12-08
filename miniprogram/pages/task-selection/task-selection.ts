@@ -26,6 +26,8 @@ Page({
     allTasks: [] as any[], // Store all tasks for current level
     selectedCardTasks: [] as any[], // Store the tasks from selected card
     selectedTaskGroups: [] as any[][], // Store all task groups
+    showTaskList: false, // Task List Modal visibility
+    completedTasks: [] as any[], // Completed tasks (mocked)
   },
 
   onLoad(options: any) {
@@ -47,6 +49,13 @@ Page({
       allTasks
     });
     
+    // Mock completed tasks (first 2 tasks)
+    if (allTasks.length >= 2) {
+        this.setData({
+            completedTasks: allTasks.slice(0, 2)
+        });
+    }
+
     this.generateTasks();
     // Removed auto-shuffle on init
   },
@@ -270,6 +279,18 @@ Page({
   handleShuffleClick() {
       this.generateTasks();
       this.runShuffleSequence();
+  },
+
+  toggleTaskList() {
+    this.setData({
+      showTaskList: !this.data.showTaskList
+    });
+  },
+
+  closeTaskList() {
+    this.setData({
+      showTaskList: false
+    });
   },
 
   onStartAdventure() {

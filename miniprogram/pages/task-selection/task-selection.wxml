@@ -6,6 +6,22 @@
   </view>
   <!-- Main Content -->
   <view class="main-content">
+    
+    <!-- Status Text -->
+    <view class="status-text-container {{isRevealed ? 'hidden' : ''}}">
+        <view class="status-pill">
+            <block wx:if="{{isShuffling}}">
+                <text class="status-icon spin">🔄</text>
+                <text class="status-label">Shuffling...</text>
+            </block>
+            <block wx:else>
+                <text class="status-icon">✨</text>
+                <text class="status-label">Picking Card</text>
+                <text class="status-icon">✨</text>
+            </block>
+        </view>
+    </view>
+
     <!-- Cards Container -->
     <view class="cards-container">
       <block wx:for="{{cardOptions}}" wx:key="index">
@@ -40,9 +56,7 @@
                 </block>
               </view>
               <view class="card-footer">
-                <button class="btn btn-primary btn-small" catchtap="onStartAdventure">
-                  <text>开始冒险</text>
-                </button>
+                <!-- Button removed to match design -->
               </view>
             </view>
           </view>
@@ -50,11 +64,75 @@
       </block>
     </view>
 
-    <!-- Action Buttons -->
-    <view class="actions visible">
-      <button class="btn btn-primary" bindtap="handleShuffleClick">
-        <text>{{isRevealed ? '再抽一次' : '点击抽取任务卡'}}</text>
+    <!-- Bottom Controls -->
+    <view class="bottom-controls {{isRevealed ? 'visible' : ''}}">
+      <!-- Shuffle Button -->
+      <button class="control-btn small-btn" bindtap="handleShuffleClick">
+        <text class="btn-icon">🔄</text>
       </button>
+      
+      <!-- Start Adventure Button -->
+      <button class="control-btn primary-btn" bindtap="onStartAdventure">
+        <text>Start Adventure</text>
+        <text class="btn-icon">▶</text>
+      </button>
+
+      <!-- Task List Button -->
+      <button class="control-btn small-btn" bindtap="toggleTaskList">
+        <text class="btn-icon">📋</text>
+      </button>
+    </view>
+  </view>
+
+  <!-- Task List Modal -->
+  <view class="modal-overlay" wx:if="{{showTaskList}}" bindtap="closeTaskList">
+    <view class="task-list-modal" catchtap="true">
+        <!-- Header -->
+        <view class="modal-header">
+            <view>
+                <text class="modal-title">Mission List</text>
+                <text class="modal-subtitle">Progress: {{completedTasks.length}}/{{allTasks.length}}</text>
+            </view>
+            <view class="close-btn" bindtap="closeTaskList">✕</view>
+        </view>
+
+        <!-- Content -->
+        <scroll-view scroll-y="true" class="modal-content">
+            <!-- Completed Section -->
+            <view class="section-header completed">
+                <view class="dot green"></view>
+                <text>Completed ({{completedTasks.length}})</text>
+            </view>
+            <view class="task-group">
+                <block wx:for="{{completedTasks}}" wx:key="taskId">
+                    <view class="modal-task-item completed">
+                        <view class="task-icon-circle green">✓</view>
+                        <text class="modal-task-text">{{item.en}}</text>
+                    </view>
+                </block>
+                <view wx:if="{{completedTasks.length === 0}}" class="empty-text">No missions completed yet.</view>
+            </view>
+
+            <view class="divider"></view>
+
+            <!-- To Do Section -->
+            <view class="section-header todo">
+                <view class="dot gray"></view>
+                <text>To Do</text>
+            </view>
+            <view class="task-group">
+                <block wx:for="{{allTasks}}" wx:key="taskId">
+                    <!-- Filter out completed tasks in WXML is tricky, ideally done in JS. 
+                         Here we just check if it's NOT in completedTasks list by ID if possible, 
+                         or just list all and hide completed ones via class/wx:if -->
+                     <!-- Simple check: if index >= completedTasks.length (since we sliced first 2) -->
+                    <view class="modal-task-item" wx:if="{{index >= completedTasks.length}}">
+                        <view class="task-icon-circle gray"></view>
+                        <text class="modal-task-text">{{item.en}}</text>
+                    </view>
+                </block>
+            </view>
+        </scroll-view>
     </view>
   </view>
 </view>
