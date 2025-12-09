@@ -47,6 +47,26 @@ Page({
     this.initLevel(levelId || 'airport');
   },
 
+  onShow() {
+    // 页面显示时刷新数据（从dialog-practice返回时）
+    console.log('📱 task-selection页面显示，刷新数据');
+    
+    // 重新加载已完成的卡片
+    this.loadCompletedCards();
+    
+    // 重新初始化关卡数据
+    const levelId = this.data.levelId || 'airport';
+    this.initLevel(levelId);
+    
+    // 重置抽卡状态，允许用户重新抽卡
+    this.setData({
+      isRevealed: false,
+      selectedCardIndex: null,
+      isShuffling: false,
+      selectedCardTasks: []
+    });
+  },
+
   /**
    * 从本地存储加载已完成的卡片ID
    */
@@ -231,10 +251,31 @@ Page({
       return;
     }
 
+    // 只从未完成的卡片中抽取任务
+    const completedCardIds = this.data.completedCardIds || [];
+    const incompleteTasks = allTasks.filter((task: any) => 
+      !completedCardIds.includes(task.cardId)
+    );
+    
+    if (incompleteTasks.length === 0) {
+      console.warn('⚠️ 所有卡片都已完成！');
+      // 如果所有卡片都完成了，还是显示所有任务
+      const sortedTasks = [...allTasks].sort((a, b) => {
+        return a.taskId.localeCompare(b.taskId);
+      });
+      this.generateTasksFromList(sortedTasks);
+      return;
+    }
+
     // Sort tasks by taskId to ensure consistent order
-    const sortedTasks = [...allTasks].sort((a, b) => {
+    const sortedTasks = [...incompleteTasks].sort((a, b) => {
       return a.taskId.localeCompare(b.taskId);
     });
+    
+    this.generateTasksFromList(sortedTasks);
+  },
+
+  generateTasksFromList(sortedTasks: any[]) {
 
     // Group tasks into sets of 3
     const taskGroups: any[][] = []; // Store task objects, not just text
@@ -244,7 +285,7 @@ Page({
       const group = sortedTasks.slice(i, i + 3);
       if (group.length === 3) {
         taskGroups.push(group);
-        taskGroupsText.push(group.map(task => task.desc?.en || task.en || 'Task'));
+        taskGroupsText.push(group.map(task => task.desc?.zh || task.zh || 'Task'));
       }
     }
 
@@ -258,6 +299,8 @@ Page({
         taskGroups.push(group);
         taskGroupsText.push(group.map(task => task.desc?.en || task.en || 'Task'));
     }
+    
+    console.log(`🎴 可用任务组: ${taskGroups.length}`);
 
     // Randomly select 3 groups for the 3 cards
     const options: string[][] = [];

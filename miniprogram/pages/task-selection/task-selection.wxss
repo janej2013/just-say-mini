@@ -524,6 +524,8 @@
   border: none;
   animation: none;
   background: rgba(249, 250, 251, 0.3); /* gray-50/30 */
+  height: 0; /* Allow flex to control height */
+  overflow-y: auto; /* Enable scrolling */
 }
 
 /* Group Card Styles */

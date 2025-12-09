@@ -88,7 +88,13 @@ Page({
   },
 
   onReturnToMap() {
-    wx.navigateBack();
+    // 返回task-selection页面，触发onShow刷新
+    wx.navigateBack({
+      delta: 1,
+      success: () => {
+        console.log('✅ 返回task-selection页面');
+      }
+    });
   },
 
   /**
