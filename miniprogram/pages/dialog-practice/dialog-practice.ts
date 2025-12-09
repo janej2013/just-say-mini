@@ -44,6 +44,7 @@ Page({
     tasksCompletionStatus: [false, false, false], // 三个任务的完成状态
     showFeedbackModal: false, // 是否显示反馈弹窗
     modalWithOptions: false, // 弹窗是否显示操作按钮
+    specFeedbackResult: null, // 专用反馈结果
     language: 'zh', // 当前语言，默认中文
     isTaskExpanded: false, // 任务面板是否展开
     showKeywords: false, // 是否显示关键词
@@ -1146,7 +1147,7 @@ Page({
         recordingId: recordingId,
         type: 'user',
         content: text,
-        feedbackResult: null // 每个气泡保存自己的反馈结果
+        bubbleFeedbackResult: null // 每个气泡保存自己的反馈结果
       });
       
       this.setData({
@@ -1238,11 +1239,11 @@ Page({
       if (dialog.type === 'user' && dialog.recordingId === recordingId) {
         return {
           ...dialog,
-          feedbackResult: {
+          bubbleFeedbackResult: {
             type: feedbackType,
             score: totalScore,
             details: details,
-            tips: task.tips  // Store task.tips reference for later use in feedback modal
+            tips: task.tips 
           }
         };
       }
@@ -1251,10 +1252,11 @@ Page({
     
     this.setData({
       dialogList: updatedDialogList,
-      feedbackResult: {
+      feedbackResult: {  
         type: feedbackType,
         score: totalScore,
-        details: details
+        details: details,
+        tips: task.tips  
       }
     });
 
@@ -1331,18 +1333,19 @@ Page({
    * @param feedbackResult 要显示的反馈结果
    */
   showExamplesModal(withOptions: boolean, feedbackResult: any) {
-    const task = this.data.currentTaskData;
-    if (!task || !task.tips) {
-      wx.showToast({
-        title: '暂无示例答案',
-        icon: 'none'
-      });
-      return;
-    }
+    // const task = this.data.currentTaskData;
+    // if (!task || !task.tips) {
+    //   wx.showToast({
+    //     title: '暂无示例答案',
+    //     icon: 'none'
+    //   });
+    //   return;
+    // }
 
     this.setData({
       showFeedbackModal: true,
-      modalWithOptions: withOptions
+      modalWithOptions: withOptions,
+      specFeedbackResult: feedbackResult
     });
   },
 
@@ -1526,7 +1529,6 @@ Page({
       duration: 1500
     });
   },
-
 
   /**
    * 处理Mock录音（模拟用户回答）

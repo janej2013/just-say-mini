@@ -84,9 +84,9 @@
             </view>
             
             <!-- Feedback Badge -->
-            <view wx:if="{{item.feedbackResult}}" class="feedback-badge {{item.feedbackResult.type}}" bindtap="onShowExamples" data-result="{{item.feedbackResult}}">
-              <view class="check-icon" wx:if="{{item.feedbackResult.type == 'perfect'}}">✓</view>
-              <text>{{item.feedbackResult.type == 'perfect' ? 'Perfect' : 'Tips'}}</text>
+            <view wx:if="{{item.bubbleFeedbackResult}}" class="feedback-badge {{item.bubbleFeedbackResult.type}}" bindtap="onShowExamples" data-result="{{item.bubbleFeedbackResult}}">
+              <view class="check-icon" wx:if="{{item.bubbleFeedbackResult.type == 'perfect'}}">✓</view>
+              <text>{{item.bubbleFeedbackResult.type == 'perfect' ? 'Perfect' : 'Tips'}}</text>
             </view>
           </view>
 
@@ -168,18 +168,18 @@
       <view class="suggestions-list">
         <!-- Concise -->
         <view class="suggestion-card concise">
-          <text class="card-text">☂️ {{currentTaskData.tips.simple}}</text>
+          <text class="card-text">☂️ {{specFeedbackResult.tips.simple}}</text>
         </view>
 
         <!-- Natural -->
         <view class="suggestion-card natural">
-          <text class="card-text">🌱 {{currentTaskData.tips.natural}}</text>
+          <text class="card-text">🌱 {{specFeedbackResult.tips.natural}}</text>
         </view>
 
         <!-- Slang/Native -->
         <view class="suggestion-card slang">
           <view class="active-indicator"></view>
-          <text class="card-text">🔥 {{currentTaskData.tips.native}}</text>
+          <text class="card-text">🔥 {{specFeedbackResult.tips.native}}</text>
         </view>
       </view>
 
