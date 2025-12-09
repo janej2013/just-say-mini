@@ -314,6 +314,383 @@ export const cards = [
         keywords: ["immigration officer"]
       }
     ]
+  },
+  /* ---------------------------------------------------------
+    Card 6 — 取行李（Baggage Claim）
+  --------------------------------------------------------- */
+  {
+    cardId: "airport_c6",
+    botHello: "Hi there, looking for your baggage?",
+    botBye: "Alright, hope your bags show up soon.",
+    npc: {
+      animal: "Bear",
+      role: "Baggage Staff"
+    },
+    tasks: [
+      {
+        taskId: "airport_c6_t1",
+        desc: {
+          en: "Ask where the baggage claim area is.",
+          zh: "询问行李提取处在哪里。"
+        },
+        bot: "It’s downstairs, just follow the signs.",
+        user: "Where can I find the baggage claim area?",
+        tips: {
+          simple: "Where is baggage claim?",
+          natural: "Where can I find baggage claim?",
+          native: "Where's the baggage claim area located?"
+        },
+        pattern: "Where can I find ...?",
+        keywords: ["baggage claim", "find"]
+      },
+      {
+        taskId: "airport_c6_t2",
+        desc: {
+          en: "Ask which carousel your luggage is on.",
+          zh: "询问你的行李在哪个转盘。"
+        },
+        bot: "Check the screen—your flight should be on carousel 8.",
+        user: "Which carousel is my luggage on?",
+        tips: {
+          simple: "Which carousel is my bag?",
+          natural: "Which carousel is my luggage on?",
+          native: "Do you know which belt my luggage is on?"
+        },
+        pattern: "Which carousel ...?",
+        keywords: ["carousel", "luggage"]
+      },
+      {
+        taskId: "airport_c6_t3",
+        desc: {
+          en: "Ask what to do if your luggage hasn’t arrived.",
+          zh: "询问如果行李没到该怎么办。"
+        },
+        bot: "Go to the lost baggage counter over there.",
+        user: "What should I do if my luggage hasn't arrived?",
+        tips: {
+          simple: "What do I do if my bag isn’t here?",
+          natural: "What should I do if my luggage hasn't arrived?",
+          native: "What’s the process if my luggage doesn’t show up?"
+        },
+        pattern: "What should I do if ...?",
+        keywords: ["luggage", "hasn't arrived"]
+      }
+    ]
+  },
+
+  /* ---------------------------------------------------------
+    Card 7 — 海关申报（Customs Declaration）
+  --------------------------------------------------------- */
+  {
+    cardId: "airport_c7",
+    botHello: "Hello, need help with customs?",
+    botBye: "Alright, safe travels.",
+    npc: {
+      animal: "Owl",
+      role: "Customs Officer"
+    },
+    tasks: [
+      {
+        taskId: "airport_c7_t1",
+        desc: {
+          en: "Ask which line is for customs declaration.",
+          zh: "询问哪个队伍是海关申报。"
+        },
+        bot: "The declaration line is to your right.",
+        user: "Which line is for customs declaration?",
+        tips: {
+          simple: "Which line is for customs?",
+          natural: "Which line is for customs declaration?",
+          native: "Where’s the line for customs declaration?"
+        },
+        pattern: "Which line is for ...?",
+        keywords: ["customs", "declaration"]
+      },
+      {
+        taskId: "airport_c7_t2",
+        desc: {
+          en: "Ask if you need to declare your items.",
+          zh: "询问是否需要申报物品。"
+        },
+        bot: "If you have over the limit or restricted items, yes.",
+        user: "Do I need to declare these items?",
+        tips: {
+          simple: "Do I need to declare this?",
+          natural: "Do I need to declare these items?",
+          native: "Do these items need to be declared?"
+        },
+        pattern: "Do I need to ...?",
+        keywords: ["declare", "items"]
+      },
+      {
+        taskId: "airport_c7_t3",
+        desc: {
+          en: "Ask where to submit the customs form.",
+          zh: "询问海关表格应该提交到哪里。"
+        },
+        bot: "Give it to the officer at the counter ahead.",
+        user: "Where do I submit the customs form?",
+        tips: {
+          simple: "Where do I give the customs form?",
+          natural: "Where do I submit the customs form?",
+          native: "Where am I supposed to hand in the customs form?"
+        },
+        pattern: "Where do I ...?",
+        keywords: ["submit", "customs form"]
+      }
+    ]
+  },
+
+  /* ---------------------------------------------------------
+    Card 8 — 安检/检查问题（Security / Inspection Questions）
+  --------------------------------------------------------- */
+  {
+    cardId: "airport_c8",
+    botHello: "Hi, do you have any questions about security?",
+    botBye: "You're clear. Take care.",
+    npc: {
+      animal: "Hawk",
+      role: "Security Staff"
+    },
+    tasks: [
+      {
+        taskId: "airport_c8_t1",
+        desc: {
+          en: "Ask what items need to be taken out for inspection.",
+          zh: "询问哪些物品需要拿出来检查。"
+        },
+        bot: "Laptops and liquids should be taken out.",
+        user: "What items do I need to take out for inspection?",
+        tips: {
+          simple: "What should I take out?",
+          natural: "What items do I need to take out?",
+          native: "What needs to be taken out for screening?"
+        },
+        pattern: "What items do I need to ...?",
+        keywords: ["take out", "inspection"]
+      },
+      {
+        taskId: "airport_c8_t2",
+        desc: {
+          en: "Ask if your bag needs to be checked again.",
+          zh: "询问你的包是否需要重新检查。"
+        },
+        bot: "Yes, please place it on the belt again.",
+        user: "Does my bag need to be checked again?",
+        tips: {
+          simple: "Check my bag again?",
+          natural: "Does my bag need to be checked again?",
+          native: "Do you need to run my bag through again?"
+        },
+        pattern: "Does my bag need to ...?",
+        keywords: ["checked again", "bag"]
+      },
+      {
+        taskId: "airport_c8_t3",
+        desc: {
+          en: "Ask what the officer needs you to do.",
+          zh: "询问工作人员希望你做什么。"
+        },
+        bot: "Just step aside for a moment while we inspect.",
+        user: "What do you need me to do?",
+        tips: {
+          simple: "What should I do?",
+          natural: "What do you need me to do?",
+          native: "What would you like me to do?"
+        },
+        pattern: "What do you need me to ...?",
+        keywords: ["do"]
+      }
+    ]
+  },
+
+  /* ---------------------------------------------------------
+    Card 9 — 购买 SIM 卡 / WiFi（Buy SIM / WiFi）
+  --------------------------------------------------------- */
+  {
+    cardId: "airport_c9",
+    botHello: "Hi, looking for SIM cards or WiFi?",
+    botBye: "Great, enjoy your stay.",
+    npc: {
+      animal: "Squirrel",
+      role: "Store Clerk"
+    },
+    tasks: [
+      {
+        taskId: "airport_c9_t1",
+        desc: {
+          en: "Ask where to buy a SIM card.",
+          zh: "询问哪里可以买到 SIM 卡。"
+        },
+        bot: "You can buy one at the shop over there.",
+        user: "Where can I buy a SIM card?",
+        tips: {
+          simple: "Where can I buy SIM?",
+          natural: "Where can I buy a SIM card?",
+          native: "Where’s the best place to get a SIM card?"
+        },
+        pattern: "Where can I buy ...?",
+        keywords: ["SIM card", "buy"]
+      },
+      {
+        taskId: "airport_c9_t2",
+        desc: {
+          en: "Ask which mobile plan is best for short trips.",
+          zh: "询问哪个套餐适合短期旅行。"
+        },
+        bot: "The 7-day plan is the most popular.",
+        user: "Which plan is good for a short trip?",
+        tips: {
+          simple: "Which plan is good?",
+          natural: "Which plan is good for a short trip?",
+          native: "Which plan would you recommend for a short stay?"
+        },
+        pattern: "Which plan ...?",
+        keywords: ["plan", "short trip"]
+      },
+      {
+        taskId: "airport_c9_t3",
+        desc: {
+          en: "Ask if the SIM card includes mobile data.",
+          zh: "询问 SIM 卡是否包含流量。"
+        },
+        bot: "Yes, it comes with data included.",
+        user: "Does this SIM card include mobile data?",
+        tips: {
+          simple: "Does this have data?",
+          natural: "Does this SIM card include mobile data?",
+          native: "Does this SIM come with data included?"
+        },
+        pattern: "Does this ... include ...?",
+        keywords: ["SIM card", "data"]
+      }
+    ]
+  },
+
+  /* ---------------------------------------------------------
+    Card 10 — 货币兑换（Currency Exchange）
+  --------------------------------------------------------- */
+  {
+    cardId: "airport_c10",
+    botHello: "Hi there, looking to exchange money?",
+    botBye: "No problem, have a great day.",
+    npc: {
+      animal: "Koala",
+      role: "Exchange Teller"
+    },
+    tasks: [
+      {
+        taskId: "airport_c10_t1",
+        desc: {
+          en: "Ask where to exchange currency.",
+          zh: "询问哪里可以兑换货币。"
+        },
+        bot: "The exchange counter is right behind you.",
+        user: "Where can I exchange money?",
+        tips: {
+          simple: "Where can I exchange money?",
+          natural: "Where can I change money?",
+          native: "Where's the currency exchange counter?"
+        },
+        pattern: "Where can I ...?",
+        keywords: ["exchange", "money"]
+      },
+      {
+        taskId: "airport_c10_t2",
+        desc: {
+          en: "Ask about the exchange rate.",
+          zh: "询问汇率是多少。"
+        },
+        bot: "Today's rate is shown on the board.",
+        user: "What's the exchange rate today?",
+        tips: {
+          simple: "What's the rate?",
+          natural: "What's the exchange rate today?",
+          native: "What rate are you offering today?"
+        },
+        pattern: "What's the ...?",
+        keywords: ["exchange rate"]
+      },
+      {
+        taskId: "airport_c10_t3",
+        desc: {
+          en: "Ask if there is a service fee.",
+          zh: "询问是否有手续费。"
+        },
+        bot: "Yes, there's a small service fee.",
+        user: "Is there a service fee?",
+        tips: {
+          simple: "Any fee?",
+          natural: "Is there a service fee?",
+          native: "Do you charge any service fee?"
+        },
+        pattern: "Is there ...?",
+        keywords: ["service fee"]
+      }
+    ]
+  },
+
+  /* ---------------------------------------------------------
+    Card 11 — 寻找交通工具（Find Transportation）
+  --------------------------------------------------------- */
+  {
+    cardId: "airport_c11",
+    botHello: "Hi, are you trying to find transportation?",
+    botBye: "Sure, travel safe.",
+    npc: {
+      animal: "Horse",
+      role: "Transport Guide"
+    },
+    tasks: [
+      {
+        taskId: "airport_c11_t1",
+        desc: {
+          en: "Ask where the taxi stand is.",
+          zh: "询问出租车站在哪里。"
+        },
+        bot: "The taxi stand is right outside the main exit.",
+        user: "Where can I find the taxi stand?",
+        tips: {
+          simple: "Where is taxi?",
+          natural: "Where can I find the taxi stand?",
+          native: "Where’s the taxi stand located?"
+        },
+        pattern: "Where can I find ...?",
+        keywords: ["taxi stand"]
+      },
+      {
+        taskId: "airport_c11_t2",
+        desc: {
+          en: "Ask where the bus or shuttle stop is.",
+          zh: "询问机场巴士或接驳车在哪里搭乘。"
+        },
+        bot: "The shuttle stop is on the first floor.",
+        user: "Where can I catch the airport bus?",
+        tips: {
+          simple: "Where is the bus?",
+          natural: "Where can I catch the airport bus?",
+          native: "Where do the airport shuttles pick up passengers?"
+        },
+        pattern: "Where can I ...?",
+        keywords: ["catch", "bus"]
+      },
+      {
+        taskId: "airport_c11_t3",
+        desc: {
+          en: "Ask how to get to the train station.",
+          zh: "询问如何前往机场火车站。"
+        },
+        bot: "Follow the signs to the train station downstairs.",
+        user: "How do I get to the train station from here?",
+        tips: {
+          simple: "How to get to the train?",
+          natural: "How do I get to the train station?",
+          native: "What's the best way to get to the train station from here?"
+        },
+        pattern: "How do I get to ...?",
+        keywords: ["get to", "train station"]
+      }
+    ]
   }
 ];
 
