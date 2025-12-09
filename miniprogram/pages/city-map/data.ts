@@ -45,17 +45,17 @@ export const cityMapLevels: LevelData[] = [
   },
   {
     id: 5,
-    name: '公寓',
-    icon: '/assets/images/city-map/icon-apartment.svg',
-    description: '租下你的公寓',
+    name: '物业',
+    icon: '/assets/images/city-map/icon-property.svg',
+    description: '了解物业服务',
     isUnlocked: false,
     isCompleted: false
   },
   {
     id: 6,
-    name: '物业',
-    icon: '/assets/images/city-map/icon-property.svg',
-    description: '了解物业服务',
+    name: '公寓',
+    icon: '/assets/images/city-map/icon-apartment.svg',
+    description: '租下你的公寓',
     isUnlocked: false,
     isCompleted: false
   },

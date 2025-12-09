@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/city-map/city-map",
     "pages/task-selection/task-selection",
     "pages/logs/logs",
