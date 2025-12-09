@@ -30,6 +30,7 @@ Page({
     selectedCards: [] as any[], // Store the selected cards
     showTaskList: false, // Task List Modal visibility
     completedTasks: [] as any[], // Completed tasks (mocked)
+    completedCardIds: [] as string[], // Completed card IDs from local storage
   },
 
   onLoad(options: any) {
@@ -40,7 +41,24 @@ Page({
         statusBarHeight: sysInfo.statusBarHeight
     });
     
+    // 加载已完成的卡片ID
+    this.loadCompletedCards();
+    
     this.initLevel(levelId || 'airport');
+  },
+
+  /**
+   * 从本地存储加载已完成的卡片ID
+   */
+  loadCompletedCards() {
+    try {
+      const completedCardIds = wx.getStorageSync('completedCardIds') || [];
+      this.setData({ completedCardIds });
+      console.log('📋 已加载完成的卡片:', completedCardIds);
+    } catch (e) {
+      console.error('❌ 加载完成卡片失败:', e);
+      this.setData({ completedCardIds: [] });
+    }
   },
 
   initLevel(levelId: string) {
@@ -62,9 +80,16 @@ Page({
       }
     });
     
+    // 标记已完成的卡片
+    const completedCardIds = this.data.completedCardIds || [];
+    const cardsWithStatus = allCards.map((card: any) => ({
+      ...card,
+      isCompleted: completedCardIds.includes(card.cardId)
+    }));
+    
     this.setData({ 
       levelInfo,
-      allCards,
+      allCards: cardsWithStatus,
       allTasks
     });
     

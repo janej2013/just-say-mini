@@ -52,7 +52,8 @@ Page({
     showWinModal: false, // 是否显示胜利弹窗
     levelHints: ["I'd like ...", "Can you help ...?", "Thank you!"], // 关卡提示句型
     botHello: '', // bot开场白
-    botBye: '' // bot结束语
+    botBye: '', // bot结束语
+    currentCardId: '' // 当前卡片ID
   },
   
   // 音频上下文
@@ -190,6 +191,9 @@ Page({
     }
     
     // 保存所有任务、当前索引和level的NPC信息，以及botHello和botBye
+    // 从tasks中获取cardId（所有tasks应该来自同一个card）
+    const cardId = tasks[0]?.cardId || '';
+    
     this.setData({
       allTasks: tasks,
       currentTaskIdx: currentTaskIdx,
@@ -199,8 +203,11 @@ Page({
       allTasksCompleted: false, // 重置完成状态
       levelHints: this.getLevelHints(levelData.levelId || ''),
       botHello: levelData.botHello || 'Hi there, need any help?',
-      botBye: levelData.botBye || 'Alright, have a good one.'
+      botBye: levelData.botBye || 'Alright, have a good one.',
+      currentCardId: cardId
     });
+    
+    console.log('📇 当前卡片ID:', cardId);
     
     console.log('✅ Level数据已设置:', {
       allTasksLength: this.data.allTasks.length,
@@ -1304,7 +1311,10 @@ Page({
       const allCompleted = this.data.tasksCompletionStatus.every(status => status === true);
       
       if (allCompleted) {
-        // 所有任务都已完成，先添加botBye对话
+        // 所有任务都已完成，保存cardId到本地存储
+        this.saveCompletedCard();
+        
+        // 先添加botBye对话
         const botByeDialogId = this.data.dialogIdCounter + 1;
         const currentDialogList = [...this.data.dialogList];
         const levelNpc = this.data.levelNpc || { animal: 'Panda', role: 'Staff' };
@@ -1366,6 +1376,34 @@ Page({
     this.setData({
       progress: progress
     });
+  },
+
+  /**
+   * 保存已完成的卡片ID到本地存储
+   */
+  saveCompletedCard() {
+    const cardId = this.data.currentCardId;
+    if (!cardId) {
+      console.warn('⚠️ 当前卡片ID为空，无法保存');
+      return;
+    }
+    
+    try {
+      // 获取已完成的卡片ID列表
+      const completedCards = wx.getStorageSync('completedCardIds') || [];
+      
+      // 检查是否已经完成过
+      if (!completedCards.includes(cardId)) {
+        completedCards.push(cardId);
+        wx.setStorageSync('completedCardIds', completedCards);
+        console.log('💾 已保存完成的卡片:', cardId);
+        console.log('📋 所有已完成卡片:', completedCards);
+      } else {
+        console.log('ℹ️ 卡片已在完成列表中:', cardId);
+      }
+    } catch (e) {
+      console.error('❌ 保存完成卡片失败:', e);
+    }
   },
 
   /**

@@ -536,12 +536,21 @@
   margin-bottom: 32rpx;
 }
 
+.group-card.completed {
+  background: #F0FDF4; /* green-50 */
+  border-color: #86EFAC; /* green-300 */
+}
+
 .group-header {
   padding: 24rpx 32rpx;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: white;
+}
+
+.group-card.completed .group-header {
+  background: #F0FDF4; /* green-50 */
 }
 
 .group-title-row {
@@ -561,6 +570,11 @@
   justify-content: center;
   font-size: 24rpx;
   font-weight: 700;
+}
+
+.group-badge.completed {
+  background: #22C55E; /* green-500 */
+  color: white;
 }
 
 .group-title {
@@ -595,6 +609,11 @@
   line-height: 1.4;
 }
 
+.group-task-text.completed-text {
+  color: #16A34A; /* green-600 */
+  text-decoration: line-through;
+}
+
 /* Reuse existing task-icon-circle */
 .task-icon-circle {
   width: 32rpx;
@@ -609,6 +628,17 @@
 
 .task-icon-circle.gray {
   border: 4rpx solid #E5E7EB;
+}
+
+.task-icon-circle.completed {
+  background: #22C55E; /* green-500 */
+  border: none;
+}
+
+.task-icon-circle .check-icon {
+  color: white;
+  font-size: 20rpx;
+  font-weight: 700;
 }
 
 

@@ -90,37 +90,36 @@
         <!-- Header -->
         <view class="modal-header">
             <view>
-                <text class="modal-title">Mission Groups</text>
-                <text class="modal-subtitle">Progress: {{completedTasks.length}}/{{allTasks.length}}</text>
+                <text class="modal-title">任务卡列表</text>
+                <text class="modal-subtitle">进度: {{completedCardIds.length}}/{{allCards.length}}</text>
             </view>
             <view class="close-btn" bindtap="closeTaskList">✕</view>
         </view>
 
         <!-- Content -->
         <scroll-view scroll-y="true" class="modal-content">
-            <block wx:for="{{selectedTaskGroups}}" wx:for-item="groupTasks" wx:for-index="idx" wx:key="idx">
-                <!-- Logic to check if group is complete -->
-                <!-- Since WXML logic is limited, we might need to pre-calculate this in JS or use wxs -->
-                <!-- For now, let's assume we can check completion simply -->
-                
-                <view class="group-card">
+            <block wx:for="{{allCards}}" wx:for-item="card" wx:for-index="idx" wx:key="cardId">
+                <view class="group-card {{card.isCompleted ? 'completed' : ''}}">
                     <!-- Card Header -->
                     <view class="group-header">
                         <view class="group-title-row">
-                            <view class="group-badge">
-                                <text>{{idx + 1}}</text>
+                            <view class="group-badge {{card.isCompleted ? 'completed' : ''}}">
+                                <text wx:if="{{card.isCompleted}}">✓</text>
+                                <text wx:else>{{idx + 1}}</text>
                             </view>
-                            <text class="group-title">Mission Set {{idx + 1}}</text>
+                            <text class="group-title">{{card.cardId}}</text>
                         </view>
-                        <!-- <text class="group-progress">0/3 Done</text> -->
+                        <text class="group-progress">{{card.isCompleted ? '3/3' : '0/3'}} Done</text>
                     </view>
                     
                     <!-- Tasks -->
                     <view class="group-tasks">
-                        <block wx:for="{{groupTasks}}" wx:for-item="task" wx:for-index="tIdx" wx:key="tIdx">
+                        <block wx:for="{{card.tasks}}" wx:for-item="task" wx:for-index="tIdx" wx:key="taskId">
                             <view class="group-task-item">
-                                <view class="task-icon-circle gray"></view>
-                                <text class="group-task-text">{{task.en || task}}</text>
+                                <view class="task-icon-circle {{card.isCompleted ? 'completed' : 'gray'}}">
+                                    <text wx:if="{{card.isCompleted}}" class="check-icon">✓</text>
+                                </view>
+                                <text class="group-task-text {{card.isCompleted ? 'completed-text' : ''}}">{{task.desc.zh}}</text>
                             </view>
                         </block>
                     </view>
