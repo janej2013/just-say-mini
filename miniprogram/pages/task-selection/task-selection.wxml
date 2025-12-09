@@ -35,7 +35,7 @@
             <!-- Card Back -->
             <view class="card-face card-back">
               <view class="pattern"></view>
-              <image class="card-control-tower-img" src="/assets/images/level_task_map/img-control-tower.svg" mode="aspectFit"></image>
+              <image class="card-control-tower-img" src="/assets/images/card-back/img-control-tower.svg" mode="aspectFit"></image>
             </view>
 
             <!-- Card Front -->

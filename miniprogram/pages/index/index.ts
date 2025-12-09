@@ -72,16 +72,6 @@ Component({
         }
       })
     },
-    goToMap() {
-      wx.navigateTo({
-        url: '../map/map',
-      })
-    },
-    goToAirportMap() {
-      wx.navigateTo({
-        url: '../airport-map/airport-map',
-      })
-    },
     goToCityMap() {
       wx.navigateTo({
         url: '../city-map/city-map',
