@@ -637,8 +637,91 @@ Page({
   },
 
   /**
+   * 麦克风按钮点击事件（点击切换录音状态）
+   */
+  onMicClick() {
+    console.log('========== 点击麦克风按钮 ==========');
+    console.log('当前 isRecording 状态:', this.data.isRecording);
+    console.log('当前 allTasksCompleted 状态:', this.data.allTasksCompleted);
+    
+    // 如果所有任务已完成，点击显示胜利弹窗
+    if (this.data.allTasksCompleted) {
+      console.log('🏆 所有任务已完成，显示胜利弹窗');
+      this.setData({
+        showWinModal: true
+      });
+      return;
+    }
+    
+    // 切换录音状态
+    if (this.data.isRecording) {
+      // 当前正在录音，点击停止
+      console.log('⏹ 停止录音');
+      this.stopRecording();
+    } else {
+      // 当前未录音，点击开始
+      console.log('▶ 开始录音');
+      this.startRecordingWithPermission();
+    }
+  },
+
+  /**
+   * 检查权限并开始录音
+   */
+  startRecordingWithPermission() {
+    // Mock模式直接开始
+    if (MOCK_MODE_ENABLED) {
+      console.log('🎭 Mock模式：开始录音');
+      this.startRecording();
+      return;
+    }
+    
+    // 非Mock模式，检查录音权限
+    wx.getSetting({
+      success: (res) => {
+        console.log('录音权限检查:', res.authSetting['scope.record']);
+        
+        if (!res.authSetting['scope.record']) {
+          console.log('需要请求录音权限');
+          wx.authorize({
+            scope: 'scope.record',
+            success: () => {
+              console.log('录音权限授权成功');
+              this.startRecording();
+            },
+            fail: () => {
+              console.log('录音权限授权失败');
+              wx.showModal({
+                title: '提示',
+                content: '需要录音权限才能进行对话练习',
+                showCancel: false,
+                success: (modalRes) => {
+                  if (modalRes.confirm) {
+                    wx.openSetting({
+                      success: (settingRes) => {
+                        if (settingRes.authSetting['scope.record']) {
+                          // 权限授予后不自动开始，需要用户再次点击
+                        }
+                      }
+                    });
+                  }
+                }
+              });
+            }
+          });
+        } else {
+          console.log('已有录音权限，开始录音');
+          this.startRecording();
+        }
+      }
+    });
+  },
+
+  /* ==================== 原按住录音方式（已注释） ====================
+  /**
    * 按下开始录音
    */
+  /*
   onRecordStart() {
     console.log('========== 按下麦克风按钮 ==========');
     console.log('当前 isRecording 状态:', this.data.isRecording);
@@ -698,10 +781,79 @@ Page({
       }
     });
   },
+  */
 
+  /* ==================== 原按住录音方式（已注释） ====================
   /**
    * 松开结束录音
    */
+  /*
+  onRecordStart() {
+    console.log('========== 按下麦克风按钮 ==========');
+    console.log('当前 isRecording 状态:', this.data.isRecording);
+    
+    // 如果已经在录音中，忽略
+    if (this.data.isRecording) {
+      console.log('已在录音中，忽略');
+      return;
+    }
+    
+    // Mock模式和常规模式都调用startRecording
+    if (MOCK_MODE_ENABLED) {
+      console.log('🎭 Mock模式：开始录音');
+      this.startRecording();
+      return;
+    }
+    
+    // 检查录音权限
+    wx.getSetting({
+      success: (res) => {
+        console.log('录音权限检查:', res.authSetting['scope.record']);
+        
+        if (!res.authSetting['scope.record']) {
+          console.log('需要请求录音权限');
+          // 请求录音权限
+          wx.authorize({
+            scope: 'scope.record',
+            success: () => {
+              console.log('录音权限授权成功');
+              this.startRecording();
+            },
+            fail: () => {
+              console.log('录音权限授权失败');
+              wx.showModal({
+                title: '提示',
+                content: '需要录音权限才能进行对话练习',
+                showCancel: false,
+                success: (modalRes) => {
+                  if (modalRes.confirm) {
+                    // 跳转到设置页面
+                    wx.openSetting({
+                      success: (settingRes) => {
+                        if (settingRes.authSetting['scope.record']) {
+                          // 权限授予后不自动开始，需要用户再次按下
+                        }
+                      }
+                    });
+                  }
+                }
+              });
+            }
+          });
+        } else {
+          console.log('已有录音权限，开始录音');
+          this.startRecording();
+        }
+      }
+    });
+  },
+  */
+
+  /* ==================== 原按住录音方式（已注释） ====================
+  /**
+   * 松开结束录音
+   */
+  /*
   onRecordEnd() {
     console.log('========== 松开麦克风按钮 ==========');
     console.log('当前 isRecording 状态:', this.data.isRecording);
@@ -1361,12 +1513,8 @@ Page({
           }, 100);
         }
         
-        // 延迟显示胜利弹窗
-        setTimeout(() => {
-            this.setData({
-                showWinModal: true
-            });
-        }, 2000);
+        // 不自动显示胜利弹窗，等待用户点击麦克风按钮
+        console.log('🎯 所有任务已完成，点击麦克风按钮显示胜利弹窗');
       } else {
         console.log('⚠️ 还有任务未完成，请完成所有任务');
         wx.showToast({

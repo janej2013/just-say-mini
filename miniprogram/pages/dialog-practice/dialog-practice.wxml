@@ -127,11 +127,8 @@
         <view class="mic-container">
             <view class="mic-glow {{isRecording ? 'active' : ''}}"></view>
             <button class="giant-mic-btn {{isRecording ? 'recording' : ''}}"
-                    bindtouchstart="{{allTasksCompleted ? '' : 'onRecordStart'}}" 
-                    bindtouchend="{{allTasksCompleted ? '' : 'onRecordEnd'}}" 
-                    bindtouchcancel="{{allTasksCompleted ? '' : 'onRecordEnd'}}"
-                    bindtap="{{allTasksCompleted ? 'onCompleteClick' : ''}}">
-                <view wx:if="{{allTasksCompleted}}" class="btn-icon icon-check"></view>
+                    bindtap="onMicClick">
+                <view wx:if="{{allTasksCompleted}}" class="btn-icon icon-check">🏆</view>
                 <view wx:else class="btn-icon icon-mic-large"></view>
                 
                 <view wx:if="{{isRecording}}" class="mic-ping"></view>
@@ -171,30 +168,18 @@
       <view class="suggestions-list">
         <!-- Concise -->
         <view class="suggestion-card concise">
-          <view class="card-header">
-            <text class="card-icon">☂️</text>
-            <text class="card-label">{{language === 'zh' ? '简洁' : 'CONCISE'}}</text>
-          </view>
-          <text class="card-text">{{currentTaskData.tips.simple}}</text>
+          <text class="card-text">☂️ {{currentTaskData.tips.simple}}</text>
         </view>
 
         <!-- Natural -->
         <view class="suggestion-card natural">
-          <view class="active-indicator"></view>
-          <view class="card-header">
-            <text class="card-icon">🌱</text>
-            <text class="card-label">{{language === 'zh' ? '自然' : 'NATURAL'}}</text>
-          </view>
-          <text class="card-text">{{currentTaskData.tips.natural}}</text>
+          <text class="card-text">🌱 {{currentTaskData.tips.natural}}</text>
         </view>
 
         <!-- Slang/Native -->
         <view class="suggestion-card slang">
-          <view class="card-header">
-            <text class="card-icon">🔥</text>
-            <text class="card-label">{{language === 'zh' ? '地道' : 'SLANG'}}</text>
-          </view>
-          <text class="card-text">{{currentTaskData.tips.native}}</text>
+          <view class="active-indicator"></view>
+          <text class="card-text">🔥 {{currentTaskData.tips.native}}</text>
         </view>
       </view>
 

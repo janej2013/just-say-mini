@@ -958,7 +958,7 @@ page {
 /* Natural Card */
 .suggestion-card.natural {
   background: rgba(193, 225, 193, 0.2); /* soft-mint/20 */
-  border: 4rpx solid #C1E1C1; /* soft-mint */
+  /* border: 2rpx solid #C1E1C1; soft-mint */
 }
 
 .suggestion-card.natural .card-label,
@@ -967,9 +967,8 @@ page {
 }
 
 .suggestion-card.natural .card-text {
-  font-size: 32rpx;
-  font-weight: 700;
-  color: #5D4037;
+  /* color: #5D4037; */
+  color: rgba(93, 64, 55, 0.8);
 }
 
 .active-indicator {
@@ -979,14 +978,15 @@ page {
   transform: translateY(-50%);
   width: 12rpx;
   height: 80rpx;
-  background: #16A34A; /* mint-dark/green-600 */
+  /* background: #16A34A; mint-dark/green-600 */
+  background: #C084FC;
   border-radius: 0 100rpx 100rpx 0;
 }
 
 /* Slang Card */
 .suggestion-card.slang {
   background: #FAF5FF; /* purple-50 */
-  border: 2rpx solid #F3E8FF; /* purple-100 */
+  border: 5rpx solid #F3E8FF; /* purple-100 */
 }
 
 .suggestion-card.slang .card-label,
@@ -995,6 +995,8 @@ page {
 }
 
 .suggestion-card.slang .card-text {
+  font-size: 32rpx;
+  font-weight: 700;
   color: rgba(93, 64, 55, 0.8);
 }
 
