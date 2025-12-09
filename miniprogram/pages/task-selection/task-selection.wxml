@@ -107,7 +107,7 @@
                                 <text wx:if="{{card.isCompleted}}">✓</text>
                                 <text wx:else>{{idx + 1}}</text>
                             </view>
-                            <text class="group-title">{{card.cardId}}</text>
+                            <text class="group-title">{{card.title.zh}}</text>
                         </view>
                         <text class="group-progress">{{card.isCompleted ? '3/3' : '0/3'}} Done</text>
                     </view>
