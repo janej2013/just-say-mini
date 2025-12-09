@@ -11,10 +11,13 @@
     <view class="status-text-container {{isRevealed ? 'hidden' : ''}}">
         <view class="status-pill">
             <block wx:if="{{isShuffling}}">
-                <text class="status-label">🔄抽卡中🔄</text>
+                <text class="status-icon spin">🔄</text>
+                <text class="status-label">Shuffling...</text>
             </block>
             <block wx:else>
-                <text class="status-label">✨点击抽卡✨</text>
+                <text class="status-icon">✨</text>
+                <text class="status-label">Picking Card</text>
+                <text class="status-icon">✨</text>
             </block>
         </view>
     </view>
@@ -82,12 +85,12 @@
   </view>
 
   <!-- Task List Modal -->
-  <view class="modal-overlay" wx:if="{{showTaskList}}" bindtap="closeTaskList">
+  <view class="modal-overlay task-list-overlay" wx:if="{{showTaskList}}" bindtap="closeTaskList">
     <view class="task-list-modal" catchtap="true">
         <!-- Header -->
         <view class="modal-header">
             <view>
-                <text class="modal-title">Mission List</text>
+                <text class="modal-title">Mission Groups</text>
                 <text class="modal-subtitle">Progress: {{completedTasks.length}}/{{allTasks.length}}</text>
             </view>
             <view class="close-btn" bindtap="closeTaskList">✕</view>
@@ -95,40 +98,34 @@
 
         <!-- Content -->
         <scroll-view scroll-y="true" class="modal-content">
-            <!-- Completed Section -->
-            <view class="section-header completed">
-                <view class="dot green"></view>
-                <text>Completed ({{completedTasks.length}})</text>
-            </view>
-            <view class="task-group">
-                <block wx:for="{{completedTasks}}" wx:key="taskId">
-                    <view class="modal-task-item completed">
-                        <view class="task-icon-circle green">✓</view>
-                        <text class="modal-task-text">{{item.en}}</text>
+            <block wx:for="{{selectedTaskGroups}}" wx:for-item="groupTasks" wx:for-index="idx" wx:key="idx">
+                <!-- Logic to check if group is complete -->
+                <!-- Since WXML logic is limited, we might need to pre-calculate this in JS or use wxs -->
+                <!-- For now, let's assume we can check completion simply -->
+                
+                <view class="group-card">
+                    <!-- Card Header -->
+                    <view class="group-header">
+                        <view class="group-title-row">
+                            <view class="group-badge">
+                                <text>{{idx + 1}}</text>
+                            </view>
+                            <text class="group-title">Mission Set {{idx + 1}}</text>
+                        </view>
+                        <!-- <text class="group-progress">0/3 Done</text> -->
                     </view>
-                </block>
-                <view wx:if="{{completedTasks.length === 0}}" class="empty-text">No missions completed yet.</view>
-            </view>
-
-            <view class="divider"></view>
-
-            <!-- To Do Section -->
-            <view class="section-header todo">
-                <view class="dot gray"></view>
-                <text>To Do</text>
-            </view>
-            <view class="task-group">
-                <block wx:for="{{allTasks}}" wx:key="taskId">
-                    <!-- Filter out completed tasks in WXML is tricky, ideally done in JS. 
-                         Here we just check if it's NOT in completedTasks list by ID if possible, 
-                         or just list all and hide completed ones via class/wx:if -->
-                     <!-- Simple check: if index >= completedTasks.length (since we sliced first 2) -->
-                    <view class="modal-task-item" wx:if="{{index >= completedTasks.length}}">
-                        <view class="task-icon-circle gray"></view>
-                        <text class="modal-task-text">{{item.en}}</text>
+                    
+                    <!-- Tasks -->
+                    <view class="group-tasks">
+                        <block wx:for="{{groupTasks}}" wx:for-item="task" wx:for-index="tIdx" wx:key="tIdx">
+                            <view class="group-task-item">
+                                <view class="task-icon-circle gray"></view>
+                                <text class="group-task-text">{{task.en || task}}</text>
+                            </view>
+                        </block>
                     </view>
-                </block>
-            </view>
+                </view>
+            </block>
         </scroll-view>
     </view>
   </view>

@@ -476,16 +476,17 @@
   to { transform: translateX(0); }
 }
 
-.modal-header {
+.task-list-modal .modal-header {
   padding: 40rpx;
   border-bottom: 2rpx solid #F3F4F6;
   background: #F9FAFB;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 0;
 }
 
-.modal-title {
+.task-list-modal .modal-title {
   display: block;
   font-size: 36rpx;
   font-weight: 700;
@@ -493,13 +494,13 @@
   margin-bottom: 8rpx;
 }
 
-.modal-subtitle {
+.task-list-modal .modal-subtitle {
   font-size: 24rpx;
   color: #9CA3AF;
   font-weight: 500;
 }
 
-.close-btn {
+.task-list-modal .close-btn {
   width: 64rpx;
   height: 64rpx;
   border-radius: 50%;
@@ -512,96 +513,104 @@
   font-size: 32rpx;
 }
 
-.modal-content {
+.task-list-modal .modal-content {
   flex: 1;
   padding: 40rpx;
   box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+  animation: none;
+  background: rgba(249, 250, 251, 0.3); /* gray-50/30 */
 }
 
-.section-header {
+/* Group Card Styles */
+.group-card {
+  background: white;
+  border-radius: 32rpx;
+  border: 2rpx solid #F3F4F6; /* gray-100 */
+  box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.05);
+  overflow: hidden;
+  margin-bottom: 32rpx;
+}
+
+.group-header {
+  padding: 24rpx 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+}
+
+.group-title-row {
   display: flex;
   align-items: center;
   gap: 16rpx;
+}
+
+.group-badge {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 16rpx;
+  background: #F0FDFA; /* teal-50 */
+  color: #0F766E; /* teal-700 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 24rpx;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2rpx;
-  margin-bottom: 24rpx;
 }
 
-.section-header.completed { color: #16A34A; }
-.section-header.todo { color: #9CA3AF; }
-
-.dot {
-  width: 16rpx;
-  height: 16rpx;
-  border-radius: 50%;
+.group-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #5D4037;
 }
 
-.dot.green { background: #22C55E; }
-.dot.gray { background: #D1D5DB; }
+.group-progress {
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #9CA3AF;
+}
 
-.task-group {
+.group-tasks {
+  padding: 8rpx 32rpx 32rpx;
   display: flex;
   flex-direction: column;
-  gap: 24rpx;
+  gap: 16rpx;
 }
 
-.modal-task-item {
+.group-task-item {
   display: flex;
   align-items: flex-start;
   gap: 24rpx;
 }
 
-.modal-task-item.completed {
-  opacity: 0.7;
+.group-task-text {
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #4B5563; /* gray-600 */
+  line-height: 1.4;
 }
 
+/* Reuse existing task-icon-circle */
 .task-icon-circle {
-  width: 40rpx;
-  height: 40rpx;
+  width: 32rpx;
+  height: 32rpx;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  margin-top: 4rpx;
-}
-
-.task-icon-circle.green {
-  background: #DCFCE7;
-  color: #16A34A;
-  font-size: 24rpx;
-  font-weight: bold;
+  margin-top: 2rpx;
 }
 
 .task-icon-circle.gray {
   border: 4rpx solid #E5E7EB;
 }
 
-.modal-task-text {
-  font-size: 28rpx;
-  color: #5D4037;
-  line-height: 1.5;
-  font-weight: 500;
-}
-
-.modal-task-item.completed .modal-task-text {
-  text-decoration: line-through;
-  color: #9CA3AF;
-}
-
-.divider {
-  height: 2rpx;
-  background: #F3F4F6;
-  margin: 48rpx 0;
-}
-
-.empty-text {
-  font-size: 24rpx;
-  color: #9CA3AF;
-  font-style: italic;
-}
 
 
 .btn:active {
