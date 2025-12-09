@@ -175,7 +175,7 @@
             <text class="card-icon">☂️</text>
             <text class="card-label">{{language === 'zh' ? '简洁' : 'CONCISE'}}</text>
           </view>
-          <text class="card-text">{{currentTaskData.userAnswers.simple}}</text>
+          <text class="card-text">{{currentTaskData.tips.simple || currentTaskData.userAnswers.simple}}</text>
         </view>
 
         <!-- Natural -->
@@ -185,7 +185,7 @@
             <text class="card-icon">🌱</text>
             <text class="card-label">{{language === 'zh' ? '自然' : 'NATURAL'}}</text>
           </view>
-          <text class="card-text">{{currentTaskData.userAnswers.natural}}</text>
+          <text class="card-text">{{currentTaskData.tips.natural || currentTaskData.userAnswers.natural}}</text>
         </view>
 
         <!-- Slang/Native -->
@@ -194,7 +194,7 @@
             <text class="card-icon">🔥</text>
             <text class="card-label">{{language === 'zh' ? '地道' : 'SLANG'}}</text>
           </view>
-          <text class="card-text">{{currentTaskData.userAnswers.native}}</text>
+          <text class="card-text">{{currentTaskData.tips.native || currentTaskData.userAnswers.native}}</text>
         </view>
       </view>
 

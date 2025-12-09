@@ -1,103 +1,124 @@
 // 超市关卡任务数据
 
-export interface TaskDialog {
-  taskId: string;
-  botQuestions: {
-    simple: string;
-    natural: string;
-    native: string;
-  };
-  userAnswers: {
-    simple: string;
-    natural: string;
-    native: string;
-  };
-  keywordsHint: string[];
-  en: string;
-  zh: string;
-}
-
-export const supermarketTasks: TaskDialog[] = [
+export const cards = [
   {
-    taskId: "supermarket_task_1",
-    botQuestions: {
-      simple: "Looking for something?",
-      natural: "Can I help you find something?",
-      native: "Need help finding anything?"
+    cardId: "supermarket_c1",
+    botHello: "Hello! Need help finding anything?",
+    botBye: "Thank you for shopping with us!",
+    npc: { 
+      animal: 'Rabbit', 
+      role: 'Store Associate' 
     },
-    userAnswers: {
-      simple: "Where is the milk?",
-      natural: "Could you tell me where the milk is?",
-      native: "Where's the milk at?"
-    },
-    keywordsHint: ["milk", "where", "find"],
-    en: "Ask where the milk is.",
-    zh: "询问牛奶在哪里。"
+    tasks: [
+      {
+        taskId: "supermarket_c1_t1",
+        desc: {
+          en: "Ask where the dairy section is.",
+          zh: "询问乳制品区在哪里。"
+        },
+        bot: "The dairy section is in aisle 5, on the left.",
+        user: "Where is the dairy section?",
+        tips: {
+          simple: "Where is dairy?",
+          natural: "Could you tell me where the dairy section is?",
+          native: "Where's the dairy at?"
+        },
+        pattern: "Where is ...?",
+        keywords: ["dairy", "milk", "section"]
+      },
+      {
+        taskId: "supermarket_c1_t2",
+        desc: {
+          en: "Ask if they have organic produce.",
+          zh: "询问是否有有机农产品。"
+        },
+        bot: "Yes, our organic produce is near the entrance.",
+        user: "Do you have organic produce?",
+        tips: {
+          simple: "Do you have organic food?",
+          natural: "Is there an organic section?",
+          native: "You guys carry organic stuff?"
+        },
+        pattern: "Do you have ...?",
+        keywords: ["organic", "produce", "vegetables"]
+      },
+      {
+        taskId: "supermarket_c1_t3",
+        desc: {
+          en: "Ask about loyalty card benefits.",
+          zh: "询问会员卡优惠。"
+        },
+        bot: "With a loyalty card, you get 5% off all purchases.",
+        user: "What are the loyalty card benefits?",
+        tips: {
+          simple: "What are card benefits?",
+          natural: "Could you tell me about the loyalty card?",
+          native: "What do I get with the card?"
+        },
+        pattern: "What are ...?",
+        keywords: ["loyalty card", "benefits", "discount"]
+      }
+    ]
   },
   {
-    taskId: "supermarket_task_2",
-    botQuestions: {
-      simple: "Are you checking dates?",
-      natural: "Looking at the expiry date?",
-      native: "Checking if it's fresh?"
+    cardId: "supermarket_c2",
+    botHello: "Hi there! Shopping today?",
+    botBye: "Have a wonderful day!",
+    npc: { 
+      animal: 'Dog', 
+      role: 'Cashier' 
     },
-    userAnswers: {
-      simple: "What's the expiry date?",
-      natural: "Could you help me check the expiry date?",
-      native: "When does this expire?"
-    },
-    keywordsHint: ["expiry", "date", "check"],
-    en: "Check the expiry date.",
-    zh: "检查保质期。"
-  },
-  {
-    taskId: "supermarket_task_3",
-    botQuestions: {
-      simple: "Need to weigh something?",
-      natural: "Are you weighing vegetables?",
-      native: "Weighing that?"
-    },
-    userAnswers: {
-      simple: "How do I weigh the vegetables?",
-      natural: "Could you show me how to weigh the vegetables?",
-      native: "Where do I weigh these?"
-    },
-    keywordsHint: ["weigh", "vegetables", "scale"],
-    en: "Weigh the vegetables.",
-    zh: "称重蔬菜。"
-  },
-  {
-    taskId: "supermarket_task_4",
-    botQuestions: {
-      simple: "Do you need a bag?",
-      natural: "Would you like a plastic bag?",
-      native: "Need a bag?"
-    },
-    userAnswers: {
-      simple: "Can I get a plastic bag?",
-      natural: "Could I have a plastic bag, please?",
-      native: "Can I get a bag?"
-    },
-    keywordsHint: ["plastic", "bag", "get"],
-    en: "Ask for a plastic bag.",
-    zh: "索要塑料袋。"
-  },
-  {
-    taskId: "supermarket_task_5",
-    botQuestions: {
-      simple: "How will you pay?",
-      natural: "How would you like to pay?",
-      native: "Cash or card?"
-    },
-    userAnswers: {
-      simple: "I'll pay with credit card.",
-      natural: "I'd like to pay with a credit card, please.",
-      native: "Card, please."
-    },
-    keywordsHint: ["credit card", "pay", "card"],
-    en: "Pay with credit card.",
-    zh: "用信用卡支付。"
+    tasks: [
+      {
+        taskId: "supermarket_c2_t1",
+        desc: {
+          en: "Ask if they accept coupons.",
+          zh: "询问是否接受优惠券。"
+        },
+        bot: "Yes, we accept both paper and digital coupons.",
+        user: "Do you accept coupons?",
+        tips: {
+          simple: "Do you take coupons?",
+          natural: "Can I use coupons here?",
+          native: "You guys take coupons?"
+        },
+        pattern: "Do you accept ...?",
+        keywords: ["coupons", "accept", "discount"]
+      },
+      {
+        taskId: "supermarket_c2_t2",
+        desc: {
+          en: "Ask for plastic bags.",
+          zh: "要求塑料袋。"
+        },
+        bot: "Sure, plastic bags are 10 cents each.",
+        user: "Can I get plastic bags?",
+        tips: {
+          simple: "Can I have bags?",
+          natural: "Could I get some plastic bags?",
+          native: "Need some bags, please."
+        },
+        pattern: "Can I get ...?",
+        keywords: ["plastic bags", "bags", "shopping"]
+      },
+      {
+        taskId: "supermarket_c2_t3",
+        desc: {
+          en: "Ask about return policy.",
+          zh: "询问退货政策。"
+        },
+        bot: "You can return items within 30 days with a receipt.",
+        user: "What's your return policy?",
+        tips: {
+          simple: "What is return policy?",
+          natural: "Could you explain the return policy?",
+          native: "What's the deal with returns?"
+        },
+        pattern: "What's ...?",
+        keywords: ["return", "policy", "refund"]
+      }
+    ]
   }
 ];
 
-export default supermarketTasks;
+export default cards;

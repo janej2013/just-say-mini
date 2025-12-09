@@ -1,18 +1,18 @@
-import airportTasks from '../data/airport';
-import taxiTasks from '../data/taxi';
-import hotelTasks from '../data/hotel';
-import rentalTasks from '../data/rental';
-import apartmentTasks from '../data/apartment';
-import propertyTasks from '../data/property';
-import cafeTasks from '../data/cafe';
-import fastfoodTasks from '../data/fastfood';
-import supermarketTasks from '../data/supermarket';
-import marketTasks from '../data/market';
-import bakeryTasks from '../data/bakery';
-import milkteaTasks from '../data/milktea';
-import gymTasks from '../data/gym';
-import poolTasks from '../data/pool';
-import parkTasks from '../data/park';
+import airportCards from '../data/airport';
+import taxiCards from '../data/taxi';
+import hotelCards from '../data/hotel';
+import rentalCards from '../data/rental';
+import apartmentCards from '../data/apartment';
+import propertyCards from '../data/property';
+import cafeCards from '../data/cafe';
+import fastfoodCards from '../data/fastfood';
+import supermarketCards from '../data/supermarket';
+import marketCards from '../data/market';
+import bakeryCards from '../data/bakery';
+import milkteaCards from '../data/milktea';
+import gymCards from '../data/gym';
+import poolCards from '../data/pool';
+import parkCards from '../data/park';
 
 Page({
   data: {
@@ -24,8 +24,10 @@ Page({
     isShuffling: false,
     statusBarHeight: 20,
     allTasks: [] as any[], // Store all tasks for current level
+    allCards: [] as any[], // Store all cards for current level
     selectedCardTasks: [] as any[], // Store the tasks from selected card
     selectedTaskGroups: [] as any[][], // Store all task groups
+    selectedCards: [] as any[], // Store the selected cards
     showTaskList: false, // Task List Modal visibility
     completedTasks: [] as any[], // Completed tasks (mocked)
   },
@@ -43,9 +45,26 @@ Page({
 
   initLevel(levelId: string) {
     const levelInfo = this.getLevelInfo(levelId);
-    const allTasks = this.loadLevelTasks(levelId);
+    const allCards = this.loadLevelCards(levelId);
+    // Flatten cards into tasks for backward compatibility
+    const allTasks: any[] = [];
+    allCards.forEach((card: any) => {
+      if (card.tasks) {
+        card.tasks.forEach((task: any) => {
+          allTasks.push({
+            ...task,
+            cardId: card.cardId,
+            npc: card.npc,
+            botHello: card.botHello,
+            botBye: card.botBye
+          });
+        });
+      }
+    });
+    
     this.setData({ 
       levelInfo,
+      allCards,
       allTasks
     });
     
@@ -60,26 +79,26 @@ Page({
     // Removed auto-shuffle on init
   },
 
-  loadLevelTasks(levelId: string) {
-    const taskMap: Record<string, any[]> = {
-      airport: airportTasks,
-      taxi: taxiTasks,
-      hotel: hotelTasks,
-      rental: rentalTasks,
-      apartment: apartmentTasks,
-      property: propertyTasks,
-      cafe: cafeTasks,
-      fastfood: fastfoodTasks,
-      supermarket: supermarketTasks,
-      market: marketTasks,
-      bakery: bakeryTasks,
-      milktea: milkteaTasks,
-      gym: gymTasks,
-      pool: poolTasks,
-      park: parkTasks
+  loadLevelCards(levelId: string) {
+    const cardsMap: Record<string, any[]> = {
+      airport: airportCards,
+      taxi: taxiCards,
+      hotel: hotelCards,
+      rental: rentalCards,
+      apartment: apartmentCards,
+      property: propertyCards,
+      cafe: cafeCards,
+      fastfood: fastfoodCards,
+      supermarket: supermarketCards,
+      market: marketCards,
+      bakery: bakeryCards,
+      milktea: milkteaCards,
+      gym: gymCards,
+      pool: poolCards,
+      park: parkCards
     };
     
-    return taskMap[levelId] || [];
+    return cardsMap[levelId] || [];
   },
 
   onCardTap(e: any) {
@@ -200,7 +219,7 @@ Page({
       const group = sortedTasks.slice(i, i + 3);
       if (group.length === 3) {
         taskGroups.push(group);
-        taskGroupsText.push(group.map(task => task.en));
+        taskGroupsText.push(group.map(task => task.desc?.en || task.en || 'Task'));
       }
     }
 
@@ -212,7 +231,7 @@ Page({
             group.push(sortedTasks[k % sortedTasks.length]);
         }
         taskGroups.push(group);
-        taskGroupsText.push(group.map(task => task.en));
+        taskGroupsText.push(group.map(task => task.desc?.en || task.en || 'Task'));
     }
 
     // Randomly select 3 groups for the 3 cards

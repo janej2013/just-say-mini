@@ -373,9 +373,9 @@
   color: #5D4037;
 }
 
-.status-icon {
+/* .status-icon {
   font-size: 32rpx;
-}
+} */
 
 .status-icon.spin {
   display: inline-block;

@@ -1,103 +1,124 @@
-// 物业关卡任务数据
+// 物业管理关卡任务数据
 
-export interface TaskDialog {
-  taskId: string;
-  botQuestions: {
-    simple: string;
-    natural: string;
-    native: string;
-  };
-  userAnswers: {
-    simple: string;
-    natural: string;
-    native: string;
-  };
-  keywordsHint: string[];
-  en: string;
-  zh: string;
-}
-
-export const propertyTasks: TaskDialog[] = [
+export const cards = [
   {
-    taskId: "property_task_1",
-    botQuestions: {
-      simple: "Is something broken?",
-      natural: "Do you need to report damage?",
-      native: "Something need fixing?"
+    cardId: "property_c1",
+    botHello: "Hello! What can I help you with today?",
+    botBye: "Have a great day!",
+    npc: { 
+      animal: 'Hippo', 
+      role: 'Manager' 
     },
-    userAnswers: {
-      simple: "The window is broken.",
-      natural: "I need to report a broken window.",
-      native: "Yeah, my window's cracked."
-    },
-    keywordsHint: ["broken", "window", "report"],
-    en: "Report a broken window.",
-    zh: "报告窗户破损。"
+    tasks: [
+      {
+        taskId: "property_c1_t1",
+        desc: {
+          en: "Request a maintenance check.",
+          zh: "要求进行维修检查。"
+        },
+        bot: "I'll schedule a technician to come by this week.",
+        user: "I need a maintenance check for my apartment.",
+        tips: {
+          simple: "I need maintenance check.",
+          natural: "Could I request a maintenance check?",
+          native: "Need someone to check out my unit."
+        },
+        pattern: "I need ...",
+        keywords: ["maintenance", "check", "repair"]
+      },
+      {
+        taskId: "property_c1_t2",
+        desc: {
+          en: "Report a leaky faucet.",
+          zh: "报告水龙头漏水。"
+        },
+        bot: "I'll send a plumber over as soon as possible.",
+        user: "My kitchen faucet is leaking.",
+        tips: {
+          simple: "Faucet is leaking.",
+          natural: "I have a leaky faucet in my kitchen.",
+          native: "My faucet's dripping."
+        },
+        pattern: "... is leaking",
+        keywords: ["faucet", "leaking", "leak"]
+      },
+      {
+        taskId: "property_c1_t3",
+        desc: {
+          en: "Ask about pool maintenance schedule.",
+          zh: "询问泳池维护时间表。"
+        },
+        bot: "Pool maintenance is every Monday from 9 to 11 AM.",
+        user: "When is the pool cleaned?",
+        tips: {
+          simple: "When is pool cleaned?",
+          natural: "What's the pool maintenance schedule?",
+          native: "When do you guys clean the pool?"
+        },
+        pattern: "When is ...?",
+        keywords: ["pool", "maintenance", "cleaned"]
+      }
+    ]
   },
   {
-    taskId: "property_task_2",
-    botQuestions: {
-      simple: "Did you lose your key?",
-      natural: "Do you need a spare key?",
-      native: "Locked out?"
+    cardId: "property_c2",
+    botHello: "Good afternoon! How may I assist?",
+    botBye: "You're all set!",
+    npc: { 
+      animal: 'Parrot', 
+      role: 'Assistant' 
     },
-    userAnswers: {
-      simple: "Can I get a spare key?",
-      natural: "I'd like to request a spare key, please.",
-      native: "Can I get an extra key?"
-    },
-    keywordsHint: ["spare key", "key", "request"],
-    en: "Ask for a spare key.",
-    zh: "索要备用钥匙。"
-  },
-  {
-    taskId: "property_task_3",
-    botQuestions: {
-      simple: "Is it time for the maintenance fee?",
-      natural: "Are you here to pay the maintenance fee?",
-      native: "Here to pay the fee?"
-    },
-    userAnswers: {
-      simple: "I'm here to pay the maintenance fee.",
-      natural: "I'd like to pay the maintenance fee.",
-      native: "Yeah, paying the maintenance fee."
-    },
-    keywordsHint: ["maintenance", "fee", "pay"],
-    en: "Pay the maintenance fee.",
-    zh: "缴纳物业费。"
-  },
-  {
-    taskId: "property_task_4",
-    botQuestions: {
-      simple: "Is there a problem?",
-      natural: "Do you have a complaint?",
-      native: "Something bothering you?"
-    },
-    userAnswers: {
-      simple: "The neighbors are too noisy.",
-      natural: "I'd like to complain about the noise.",
-      native: "Yeah, the neighbors are way too loud."
-    },
-    keywordsHint: ["noise", "complaint", "neighbors"],
-    en: "Complaint about noise.",
-    zh: "投诉噪音问题。"
-  },
-  {
-    taskId: "property_task_5",
-    botQuestions: {
-      simple: "Do you have a car?",
-      natural: "Are you interested in parking information?",
-      native: "Got a car?"
-    },
-    userAnswers: {
-      simple: "What are the parking rules?",
-      natural: "Could you tell me about the parking rules?",
-      native: "What's the deal with parking?"
-    },
-    keywordsHint: ["parking", "rules", "car"],
-    en: "Ask about parking rules.",
-    zh: "询问停车规则。"
+    tasks: [
+      {
+        taskId: "property_c2_t1",
+        desc: {
+          en: "Request a new parking pass.",
+          zh: "要求新的停车证。"
+        },
+        bot: "Sure, I'll issue you a new pass right away.",
+        user: "Can I get a new parking pass?",
+        tips: {
+          simple: "I need parking pass.",
+          natural: "Could I request a new parking pass?",
+          native: "Need a new parking pass."
+        },
+        pattern: "Can I get ...?",
+        keywords: ["parking pass", "new", "request"]
+      },
+      {
+        taskId: "property_c2_t2",
+        desc: {
+          en: "Ask about package delivery.",
+          zh: "询问包裹投递。"
+        },
+        bot: "Packages are held at the front desk for pickup.",
+        user: "Where do I pick up packages?",
+        tips: {
+          simple: "Where to pick up packages?",
+          natural: "Where should I pick up my packages?",
+          native: "Where do I grab my packages?"
+        },
+        pattern: "Where do I ...?",
+        keywords: ["packages", "pick up", "delivery"]
+      },
+      {
+        taskId: "property_c2_t3",
+        desc: {
+          en: "Report a noise complaint.",
+          zh: "报告噪音投诉。"
+        },
+        bot: "I'll look into it and contact your neighbor about the noise.",
+        user: "I'd like to report a noise issue.",
+        tips: {
+          simple: "I have noise complaint.",
+          natural: "I'd like to file a noise complaint.",
+          native: "Need to report some noise issues."
+        },
+        pattern: "I'd like to report ...",
+        keywords: ["noise", "complaint", "loud"]
+      }
+    ]
   }
 ];
 
-export default propertyTasks;
+export default cards;

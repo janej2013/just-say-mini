@@ -143,7 +143,8 @@ Page({
       mockData.mockAnswers = {};
       tasks.forEach((task, index) => {
         const taskId = task.taskId;
-        let mockAnswer = task.userAnswers?.simple || '';
+        // 支持新旧两种结构
+        let mockAnswer = task.user || task.userAnswers?.simple || task.tips?.simple || '';
         
         // 对第三个任务（index === 2）截断答案，只取前半部分
         if (index === 2 && mockAnswer) {
@@ -196,12 +197,20 @@ Page({
   initDialogData(task, isAppend = false) {
     console.log('初始化对话数据:', task, '追加模式:', isAppend);
     
-    // 提取数据
-    const botQuestion = (task.botQuestions && task.botQuestions.simple) || (task.botQuestions && task.botQuestions.natural) || 'Hello!';
-    const userAnswer = (task.userAnswers && task.userAnswers.simple) || (task.userAnswers && task.userAnswers.natural) || 'Hi there!';
-    const keywordsHint = task.keywordsHint || [];
-    // 仏level层级获取NPC信息
-    const levelNpc = this.data.levelNpc || { animal: 'Panda', role: 'Staff' };
+    // 提取数据 - 支持新旧两种数据结构
+    // 新结构: task.bot, task.user, task.tips, task.keywords
+    // 旧结构: task.botQuestions, task.userAnswers, task.keywordsHint
+    const botQuestion = task.bot || 
+                       (task.botQuestions && task.botQuestions.simple) || 
+                       (task.botQuestions && task.botQuestions.natural) || 
+                       'Hello!';
+    const userAnswer = task.user || 
+                      (task.userAnswers && task.userAnswers.simple) || 
+                      (task.userAnswers && task.userAnswers.natural) || 
+                      'Hi there!';
+    const keywordsHint = task.keywords || task.keywordsHint || [];
+    // 从level层级获取NPC信息
+    const levelNpc = this.data.levelNpc || task.npc || { animal: 'Panda', role: 'Staff' };
     const npcAnimal = levelNpc.animal || 'Panda';
     
     // 保存完整任务数据供后续评分使用
@@ -281,18 +290,24 @@ Page({
    */
   loadDefaultData() {
     const defaultData = {
-      botQuestions: {
-        simple: "Hello! Do you need help finding the baggage claim?"
+      taskId: "default_task",
+      desc: {
+        en: "Ask where the baggage claim is.",
+        zh: "询问行李提取处在哪里。"
       },
-      userAnswers: {
-        simple: "Yes, where is the baggage claim?"
+      bot: "Hello! Do you need help finding the baggage claim?",
+      user: "Yes, where is the baggage claim?",
+      tips: {
+        simple: "Where is baggage claim?",
+        natural: "Yes, where is the baggage claim?",
+        native: "Where can I pick up my luggage?"
       },
-      keywordsHint: ["baggage", "claim", "luggage", "where", "find"],
+      pattern: "Where is ...?",
+      keywords: ["baggage", "claim", "luggage", "where", "find"],
       npc: {
         animal: "Panda",
         role: "Airport Information Desk Staff"
-      },
-      taskId: "default_task"
+      }
     };
     
     this.initDialogData(defaultData);
@@ -1042,8 +1057,14 @@ Page({
     details.totalKeywords = keywords.length;
 
     // 2. 句式相似度评分（40分）
+    // 支持新旧两种结构
     const userAnswers = task.userAnswers || {};
+    const tips = task.tips || {};
     const templates = [
+      task.user,
+      tips.simple,
+      tips.natural,
+      tips.native,
       userAnswers.simple,
       userAnswers.natural,
       userAnswers.native
@@ -1181,7 +1202,8 @@ Page({
    * @param feedbackResult 要显示的反馈结果
    */
   showExamplesModal(withOptions: boolean, feedbackResult: any) {
-    if (!this.data.currentTaskData || !this.data.currentTaskData.userAnswers) {
+    const task = this.data.currentTaskData;
+    if (!task || (!task.userAnswers && !task.tips && !task.user)) {
       wx.showToast({
         title: '暂无示例答案',
         icon: 'none'

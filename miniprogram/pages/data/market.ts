@@ -1,103 +1,124 @@
-// 菜市场关卡任务数据
+// 农贸市场关卡任务数据
 
-export interface TaskDialog {
-  taskId: string;
-  botQuestions: {
-    simple: string;
-    natural: string;
-    native: string;
-  };
-  userAnswers: {
-    simple: string;
-    natural: string;
-    native: string;
-  };
-  keywordsHint: string[];
-  en: string;
-  zh: string;
-}
-
-export const marketTasks: TaskDialog[] = [
+export const cards = [
   {
-    taskId: "market_task_1",
-    botQuestions: {
-      simple: "Do you want a discount?",
-      natural: "Looking to negotiate the price?",
-      native: "Want to haggle?"
+    cardId: "market_c1",
+    botHello: "Good morning! Fresh produce today!",
+    botBye: "Thanks for stopping by!",
+    npc: { 
+      animal: 'Owl', 
+      role: 'Vendor' 
     },
-    userAnswers: {
-      simple: "Can you make it cheaper?",
-      natural: "Could you give me a better price?",
-      native: "How about a discount?"
-    },
-    keywordsHint: ["cheaper", "discount", "bargain"],
-    en: "Bargain for cheaper fruit.",
-    zh: "讨价还价买便宜的水果。"
+    tasks: [
+      {
+        taskId: "market_c1_t1",
+        desc: {
+          en: "Ask about fresh strawberries.",
+          zh: "询问新鲜草莓。"
+        },
+        bot: "These strawberries were picked this morning!",
+        user: "Are these strawberries fresh?",
+        tips: {
+          simple: "Are strawberries fresh?",
+          natural: "How fresh are these strawberries?",
+          native: "These strawberries fresh?"
+        },
+        pattern: "Are ... fresh?",
+        keywords: ["strawberries", "fresh", "fruit"]
+      },
+      {
+        taskId: "market_c1_t2",
+        desc: {
+          en: "Ask for a price on tomatoes.",
+          zh: "询问西红柿的价格。"
+        },
+        bot: "Tomatoes are $3 per pound today.",
+        user: "How much are the tomatoes?",
+        tips: {
+          simple: "How much are tomatoes?",
+          natural: "What's the price for tomatoes?",
+          native: "What do tomatoes run?"
+        },
+        pattern: "How much are ...?",
+        keywords: ["tomatoes", "price", "cost"]
+      },
+      {
+        taskId: "market_c1_t3",
+        desc: {
+          en: "Ask if they have organic options.",
+          zh: "询问是否有有机选择。"
+        },
+        bot: "Yes, everything on this table is organic.",
+        user: "Do you have organic vegetables?",
+        tips: {
+          simple: "Do you have organic?",
+          natural: "Are there any organic options?",
+          native: "Got any organic stuff?"
+        },
+        pattern: "Do you have ...?",
+        keywords: ["organic", "vegetables", "natural"]
+      }
+    ]
   },
   {
-    taskId: "market_task_2",
-    botQuestions: {
-      simple: "Are these fresh?",
-      natural: "Wondering if the apples are fresh?",
-      native: "These fresh?"
+    cardId: "market_c2",
+    botHello: "Welcome to the market!",
+    botBye: "See you next week!",
+    npc: { 
+      animal: 'Koala', 
+      role: 'Vendor' 
     },
-    userAnswers: {
-      simple: "Are the apples fresh?",
-      natural: "Could you tell me if these apples are fresh?",
-      native: "Are these apples fresh?"
-    },
-    keywordsHint: ["fresh", "apples", "check"],
-    en: "Ask if apples are fresh.",
-    zh: "询问苹果是否新鲜。"
-  },
-  {
-    taskId: "market_task_3",
-    botQuestions: {
-      simple: "How much do you want?",
-      natural: "How many kilos would you like?",
-      native: "How much?"
-    },
-    userAnswers: {
-      simple: "I'll buy 1kg of potatoes.",
-      natural: "I'd like 1 kilogram of potatoes, please.",
-      native: "Gimme a kilo of potatoes."
-    },
-    keywordsHint: ["1kg", "potatoes", "buy"],
-    en: "Buy 1kg of potatoes.",
-    zh: "买1公斤土豆。"
-  },
-  {
-    taskId: "market_task_4",
-    botQuestions: {
-      simple: "Do you want a discount?",
-      natural: "Would you like to ask for a lower price?",
-      native: "Want a deal?"
-    },
-    userAnswers: {
-      simple: "Can I get a discount?",
-      natural: "Could I get a discount, please?",
-      native: "Any discount?"
-    },
-    keywordsHint: ["discount", "lower", "deal"],
-    en: "Ask for a discount.",
-    zh: "要求打折。"
-  },
-  {
-    taskId: "market_task_5",
-    botQuestions: {
-      simple: "Want to try before buying?",
-      natural: "Would you like a sample?",
-      native: "Want to taste it?"
-    },
-    userAnswers: {
-      simple: "Can I taste a sample?",
-      natural: "Could I try a sample, please?",
-      native: "Can I get a taste?"
-    },
-    keywordsHint: ["taste", "sample", "try"],
-    en: "Taste a sample.",
-    zh: "品尝样品。"
+    tasks: [
+      {
+        taskId: "market_c2_t1",
+        desc: {
+          en: "Ask about bulk discounts.",
+          zh: "询问批量折扣。"
+        },
+        bot: "If you buy 5 pounds or more, I'll give you 10% off.",
+        user: "Do you offer bulk discounts?",
+        tips: {
+          simple: "Do you have bulk discount?",
+          natural: "Are there discounts for buying in bulk?",
+          native: "Any deals for buying more?"
+        },
+        pattern: "Do you offer ...?",
+        keywords: ["bulk", "discount", "deal"]
+      },
+      {
+        taskId: "market_c2_t2",
+        desc: {
+          en: "Ask what's in season.",
+          zh: "询问什么是当季的。"
+        },
+        bot: "Right now, apples and pumpkins are in season.",
+        user: "What's in season right now?",
+        tips: {
+          simple: "What is in season?",
+          natural: "What produce is in season?",
+          native: "What's seasonal now?"
+        },
+        pattern: "What's in season?",
+        keywords: ["season", "seasonal", "fresh"]
+      },
+      {
+        taskId: "market_c2_t3",
+        desc: {
+          en: "Request a sample.",
+          zh: "要求试吃。"
+        },
+        bot: "Of course, try this peach!",
+        user: "Can I try a sample?",
+        tips: {
+          simple: "Can I try sample?",
+          natural: "Could I have a sample?",
+          native: "Mind if I try one?"
+        },
+        pattern: "Can I try ...?",
+        keywords: ["sample", "try", "taste"]
+      }
+    ]
   }
 ];
 
-export default marketTasks;
+export default cards;

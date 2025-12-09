@@ -1,103 +1,124 @@
 // 健身房关卡任务数据
 
-export interface TaskDialog {
-  taskId: string;
-  botQuestions: {
-    simple: string;
-    natural: string;
-    native: string;
-  };
-  userAnswers: {
-    simple: string;
-    natural: string;
-    native: string;
-  };
-  keywordsHint: string[];
-  en: string;
-  zh: string;
-}
-
-export const gymTasks: TaskDialog[] = [
+export const cards = [
   {
-    taskId: "gym_task_1",
-    botQuestions: {
-      simple: "Are you new here?",
-      natural: "Would you like to sign up for membership?",
-      native: "Joining today?"
+    cardId: "gym_c1",
+    botHello: "Welcome to City Gym!",
+    botBye: "Have a great workout!",
+    npc: { 
+      animal: 'Squirrel', 
+      role: 'Trainer' 
     },
-    userAnswers: {
-      simple: "I want to sign up for membership.",
-      natural: "I'd like to sign up for a membership, please.",
-      native: "Yeah, I'm signing up."
-    },
-    keywordsHint: ["sign up", "membership", "join"],
-    en: "Sign up for membership.",
-    zh: "办理会员卡。"
+    tasks: [
+      {
+        taskId: "gym_c1_t1",
+        desc: {
+          en: "Ask about membership options.",
+          zh: "询问会员选项。"
+        },
+        bot: "We have monthly, quarterly, and annual memberships.",
+        user: "What membership options do you have?",
+        tips: {
+          simple: "What memberships do you have?",
+          natural: "Could you tell me about membership options?",
+          native: "What kind of memberships you got?"
+        },
+        pattern: "What ... do you have?",
+        keywords: ["membership", "options", "join"]
+      },
+      {
+        taskId: "gym_c1_t2",
+        desc: {
+          en: "Ask where the locker room is.",
+          zh: "询问更衣室在哪里。"
+        },
+        bot: "The locker rooms are down the hall to your right.",
+        user: "Where is the locker room?",
+        tips: {
+          simple: "Where is locker room?",
+          natural: "Could you tell me where the locker room is?",
+          native: "Where's the locker room at?"
+        },
+        pattern: "Where is ...?",
+        keywords: ["locker room", "changing", "location"]
+      },
+      {
+        taskId: "gym_c1_t3",
+        desc: {
+          en: "Request a towel.",
+          zh: "要求毛巾。"
+        },
+        bot: "Here you go, enjoy your workout!",
+        user: "Can I get a towel?",
+        tips: {
+          simple: "Can I have towel?",
+          natural: "Could I get a towel, please?",
+          native: "Need a towel."
+        },
+        pattern: "Can I get ...?",
+        keywords: ["towel", "get", "need"]
+      }
+    ]
   },
   {
-    taskId: "gym_task_2",
-    botQuestions: {
-      simple: "Do you need help with equipment?",
-      natural: "Need help learning the equipment?",
-      native: "Need a demo?"
+    cardId: "gym_c2",
+    botHello: "Hi! Need any help today?",
+    botBye: "See you next time!",
+    npc: { 
+      animal: 'Panda', 
+      role: 'Front Desk' 
     },
-    userAnswers: {
-      simple: "How do I use the treadmill?",
-      natural: "Could you show me how to use the treadmill?",
-      native: "How does this treadmill work?"
-    },
-    keywordsHint: ["treadmill", "use", "how"],
-    en: "Ask how to use the treadmill.",
-    zh: "询问如何使用跑步机。"
-  },
-  {
-    taskId: "gym_task_3",
-    botQuestions: {
-      simple: "Looking for something?",
-      natural: "Are you trying to find the locker room?",
-      native: "Need the locker room?"
-    },
-    userAnswers: {
-      simple: "Where's the locker room?",
-      natural: "Could you tell me where the locker room is?",
-      native: "Where are the lockers?"
-    },
-    keywordsHint: ["locker room", "find", "where"],
-    en: "Find the locker room.",
-    zh: "找到更衣室。"
-  },
-  {
-    taskId: "gym_task_4",
-    botQuestions: {
-      simple: "Do you want to join a class?",
-      natural: "Interested in any classes?",
-      native: "Wanna join a class?"
-    },
-    userAnswers: {
-      simple: "I want to join a yoga class.",
-      natural: "I'd like to join a yoga class, please.",
-      native: "Can I join the yoga class?"
-    },
-    keywordsHint: ["yoga", "class", "join"],
-    en: "Join a yoga class.",
-    zh: "参加瑜伽课。"
-  },
-  {
-    taskId: "gym_task_5",
-    botQuestions: {
-      simple: "Do you need a towel?",
-      natural: "Would you like a towel?",
-      native: "Need a towel?"
-    },
-    userAnswers: {
-      simple: "Can I get a towel?",
-      natural: "Could I have a towel, please?",
-      native: "Can I grab a towel?"
-    },
-    keywordsHint: ["towel", "get", "need"],
-    en: "Ask for a towel.",
-    zh: "索要毛巾。"
+    tasks: [
+      {
+        taskId: "gym_c2_t1",
+        desc: {
+          en: "Ask about personal training.",
+          zh: "询问私人教练服务。"
+        },
+        bot: "Personal training sessions start at $50 per hour.",
+        user: "Do you offer personal training?",
+        tips: {
+          simple: "Do you have personal trainers?",
+          natural: "Is personal training available?",
+          native: "You guys do personal training?"
+        },
+        pattern: "Do you offer ...?",
+        keywords: ["personal training", "trainer", "coach"]
+      },
+      {
+        taskId: "gym_c2_t2",
+        desc: {
+          en: "Ask about class schedules.",
+          zh: "询问课程时间表。"
+        },
+        bot: "You can find the class schedule on our app or the board over there.",
+        user: "Where can I see the class schedule?",
+        tips: {
+          simple: "Where is class schedule?",
+          natural: "How can I check the class schedule?",
+          native: "Where's the class schedule?"
+        },
+        pattern: "Where can I see ...?",
+        keywords: ["class", "schedule", "timetable"]
+      },
+      {
+        taskId: "gym_c2_t3",
+        desc: {
+          en: "Ask if there's a pool.",
+          zh: "询问是否有游泳池。"
+        },
+        bot: "Yes, we have a lap pool on the third floor.",
+        user: "Do you have a swimming pool?",
+        tips: {
+          simple: "Is there pool?",
+          natural: "Does the gym have a pool?",
+          native: "You got a pool here?"
+        },
+        pattern: "Do you have ...?",
+        keywords: ["pool", "swimming", "swim"]
+      }
+    ]
   }
 ];
 
-export default gymTasks;
+export default cards;

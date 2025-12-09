@@ -1,103 +1,124 @@
-// 面包坊关卡任务数据
+// 面包店关卡任务数据
 
-export interface TaskDialog {
-  taskId: string;
-  botQuestions: {
-    simple: string;
-    natural: string;
-    native: string;
-  };
-  userAnswers: {
-    simple: string;
-    natural: string;
-    native: string;
-  };
-  keywordsHint: string[];
-  en: string;
-  zh: string;
-}
-
-export const bakeryTasks: TaskDialog[] = [
+export const cards = [
   {
-    taskId: "bakery_task_1",
-    botQuestions: {
-      simple: "What would you like?",
-      natural: "What can I get for you today?",
-      native: "What'll it be?"
+    cardId: "bakery_c1",
+    botHello: "Welcome to our bakery!",
+    botBye: "Enjoy your treats!",
+    npc: { 
+      animal: 'Giraffe', 
+      role: 'Baker' 
     },
-    userAnswers: {
-      simple: "I'll buy a fresh baguette.",
-      natural: "I'd like a fresh baguette, please.",
-      native: "Gimme a fresh baguette."
-    },
-    keywordsHint: ["baguette", "fresh", "buy"],
-    en: "Buy a fresh baguette.",
-    zh: "买一根新鲜法棍。"
+    tasks: [
+      {
+        taskId: "bakery_c1_t1",
+        desc: {
+          en: "Order a fresh baguette.",
+          zh: "点一根新鲜法棍。"
+        },
+        bot: "One baguette, fresh from the oven!",
+        user: "I'll have a fresh baguette, please.",
+        tips: {
+          simple: "One baguette please.",
+          natural: "I'd like a fresh baguette.",
+          native: "Gimme a baguette."
+        },
+        pattern: "I'll have ...",
+        keywords: ["baguette", "bread", "fresh"]
+      },
+      {
+        taskId: "bakery_c1_t2",
+        desc: {
+          en: "Ask if croissants are made today.",
+          zh: "询问可颂是否是今天做的。"
+        },
+        bot: "Yes, we bake fresh croissants every morning.",
+        user: "Were these croissants made today?",
+        tips: {
+          simple: "Are croissants fresh?",
+          natural: "Are these croissants made today?",
+          native: "These croissants fresh today?"
+        },
+        pattern: "Were ... made today?",
+        keywords: ["croissants", "fresh", "today"]
+      },
+      {
+        taskId: "bakery_c1_t3",
+        desc: {
+          en: "Ask about gluten-free options.",
+          zh: "询问无麸质选择。"
+        },
+        bot: "We have gluten-free bread and muffins on that shelf.",
+        user: "Do you have gluten-free options?",
+        tips: {
+          simple: "Do you have gluten-free?",
+          natural: "Are there any gluten-free options?",
+          native: "Got anything gluten-free?"
+        },
+        pattern: "Do you have ...?",
+        keywords: ["gluten-free", "options", "bread"]
+      }
+    ]
   },
   {
-    taskId: "bakery_task_2",
-    botQuestions: {
-      simple: "Do you need a cake?",
-      natural: "Are you looking to order a cake?",
-      native: "Need a cake?"
+    cardId: "bakery_c2",
+    botHello: "Hi! Looking for something sweet?",
+    botBye: "Come back soon!",
+    npc: { 
+      animal: 'Beaver', 
+      role: 'Counter Staff' 
     },
-    userAnswers: {
-      simple: "I want to order a birthday cake.",
-      natural: "I'd like to order a birthday cake, please.",
-      native: "Can I order a birthday cake?"
-    },
-    keywordsHint: ["birthday", "cake", "order"],
-    en: "Order a birthday cake.",
-    zh: "订购生日蛋糕。"
-  },
-  {
-    taskId: "bakery_task_3",
-    botQuestions: {
-      simple: "Do you have questions about the pastries?",
-      natural: "Wondering what's in the filling?",
-      native: "Curious about the filling?"
-    },
-    userAnswers: {
-      simple: "What's in the filling?",
-      natural: "Could you tell me what's in this filling?",
-      native: "What's inside this?"
-    },
-    keywordsHint: ["filling", "inside", "what"],
-    en: "Ask what is in the filling.",
-    zh: "询问馅料是什么。"
-  },
-  {
-    taskId: "bakery_task_4",
-    botQuestions: {
-      simple: "How many do you need?",
-      natural: "How many donuts would you like?",
-      native: "How many?"
-    },
-    userAnswers: {
-      simple: "I'll buy a dozen donuts.",
-      natural: "I'd like a dozen donuts, please.",
-      native: "Gimme a dozen donuts."
-    },
-    keywordsHint: ["dozen", "donuts", "buy"],
-    en: "Buy a dozen donuts.",
-    zh: "买一打甜甜圈。"
-  },
-  {
-    taskId: "bakery_task_5",
-    botQuestions: {
-      simple: "Do you want it sliced?",
-      natural: "Would you like the bread sliced?",
-      native: "Want it sliced?"
-    },
-    userAnswers: {
-      simple: "Can you slice the bread?",
-      natural: "Could I have the bread sliced, please?",
-      native: "Can you slice this?"
-    },
-    keywordsHint: ["sliced", "bread", "cut"],
-    en: "Ask for sliced bread.",
-    zh: "要求切片面包。"
+    tasks: [
+      {
+        taskId: "bakery_c2_t1",
+        desc: {
+          en: "Order a birthday cake.",
+          zh: "订购生日蛋糕。"
+        },
+        bot: "Sure! What size and flavor would you like?",
+        user: "I'd like to order a birthday cake.",
+        tips: {
+          simple: "I want birthday cake.",
+          natural: "I'd like to order a birthday cake.",
+          native: "Need a birthday cake."
+        },
+        pattern: "I'd like to order ...",
+        keywords: ["birthday cake", "order", "cake"]
+      },
+      {
+        taskId: "bakery_c2_t2",
+        desc: {
+          en: "Ask about custom cake designs.",
+          zh: "询问定制蛋糕设计。"
+        },
+        bot: "Yes, we can do custom designs. What did you have in mind?",
+        user: "Do you do custom cake designs?",
+        tips: {
+          simple: "Can you make custom cake?",
+          natural: "Do you offer custom cake designs?",
+          native: "You guys do custom cakes?"
+        },
+        pattern: "Do you do ...?",
+        keywords: ["custom", "cake", "design"]
+      },
+      {
+        taskId: "bakery_c2_t3",
+        desc: {
+          en: "Ask when fresh bread comes out.",
+          zh: "询问新鲜面包什么时候出炉。"
+        },
+        bot: "We bake fresh bread every hour starting at 7 AM.",
+        user: "When does fresh bread come out?",
+        tips: {
+          simple: "When is bread fresh?",
+          natural: "What time does fresh bread come out?",
+          native: "When's the bread fresh?"
+        },
+        pattern: "When does ... come out?",
+        keywords: ["fresh bread", "when", "time"]
+      }
+    ]
   }
 ];
 
-export default bakeryTasks;
+export default cards;

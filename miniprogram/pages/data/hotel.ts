@@ -1,119 +1,124 @@
 // 酒店关卡任务数据
 
-export interface TaskDialog {
-  taskId: string;
-  botQuestions: {
-    simple: string;
-    natural: string;
-    native: string;
-  };
-  userAnswers: {
-    simple: string;
-    natural: string;
-    native: string;
-  };
-  keywordsHint: string[];
-  en: string;
-  zh: string;
-}
-
-export const hotelTasks: TaskDialog[] = [
+export const cards = [
   {
-    taskId: "hotel_task_1",
-    botQuestions: {
-      simple: "Do you have a reservation?",
-      natural: "Have you booked a room with us?",
-      native: "Got a reservation?"
+    cardId: "hotel_c1",
+    botHello: "Welcome! How may I assist you?",
+    botBye: "Enjoy your stay!",
+    npc: { 
+      animal: 'Cat', 
+      role: 'Receptionist' 
     },
-    userAnswers: {
-      simple: "Yes, I'd like to check in.",
-      natural: "Yes, I have a reservation. I'd like to check in.",
-      native: "Yep, checking in now."
-    },
-    keywordsHint: ["check in", "reservation", "room"],
-    en: "Check in to your room.",
-    zh: "办理入住手续。"
+    tasks: [
+      {
+        taskId: "hotel_c1_t1",
+        desc: {
+          en: "Check in to your room.",
+          zh: "办理入住手续。"
+        },
+        bot: "Yes, I have your reservation. Here's your room key.",
+        user: "I'd like to check in, please.",
+        tips: {
+          simple: "I want to check in.",
+          natural: "I have a reservation. I'd like to check in.",
+          native: "Checking in now."
+        },
+        pattern: "I'd like to ...",
+        keywords: ["check in", "reservation", "room"]
+      },
+      {
+        taskId: "hotel_c1_t2",
+        desc: {
+          en: "Ask for the Wi-Fi password.",
+          zh: "询问 Wi-Fi 密码。"
+        },
+        bot: "The Wi-Fi password is written on the card in your room.",
+        user: "What's the Wi-Fi password?",
+        tips: {
+          simple: "What's Wi-Fi password?",
+          natural: "Could you tell me the Wi-Fi password, please?",
+          native: "What's the Wi-Fi password?"
+        },
+        pattern: "What's ...?",
+        keywords: ["Wi-Fi", "password", "code"]
+      },
+      {
+        taskId: "hotel_c1_t3",
+        desc: {
+          en: "Request extra towels.",
+          zh: "要求额外的毛巾。"
+        },
+        bot: "Of course, I'll send some up to your room right away.",
+        user: "Can I get extra towels?",
+        tips: {
+          simple: "Can I get extra towels?",
+          natural: "Could I request some extra towels, please?",
+          native: "Can I get a few more towels?"
+        },
+        pattern: "Can I get ...?",
+        keywords: ["extra", "towels", "request"]
+      }
+    ]
   },
   {
-    taskId: "hotel_task_2",
-    botQuestions: {
-      simple: "Do you need the Wi-Fi password?",
-      natural: "Would you like the Wi-Fi password?",
-      native: "Need the Wi-Fi code?"
+    cardId: "hotel_c2",
+    botHello: "Good morning! Need any help?",
+    botBye: "Have a wonderful day!",
+    npc: { 
+      animal: 'Rabbit', 
+      role: 'Concierge' 
     },
-    userAnswers: {
-      simple: "What's the Wi-Fi password?",
-      natural: "Could you tell me the Wi-Fi password, please?",
-      native: "What's the Wi-Fi password?"
-    },
-    keywordsHint: ["Wi-Fi", "password", "code"],
-    en: "Ask for the Wi-Fi password.",
-    zh: "询问 Wi-Fi 密码。"
-  },
-  {
-    taskId: "hotel_task_3",
-    botQuestions: {
-      simple: "Do you need extra towels?",
-      natural: "Would you like some extra towels?",
-      native: "Need more towels?"
-    },
-    userAnswers: {
-      simple: "Can I get extra towels?",
-      natural: "Could I request some extra towels, please?",
-      native: "Can I get a few more towels?"
-    },
-    keywordsHint: ["extra", "towels", "request"],
-    en: "Request extra towels.",
-    zh: "要求额外的毛巾。"
-  },
-  {
-    taskId: "hotel_task_4",
-    botQuestions: {
-      simple: "Do you want to know about breakfast?",
-      natural: "Are you interested in our breakfast service?",
-      native: "Wondering about breakfast hours?"
-    },
-    userAnswers: {
-      simple: "When is breakfast served?",
-      natural: "Could you tell me when breakfast is served?",
-      native: "What time's breakfast?"
-    },
-    keywordsHint: ["breakfast", "time", "served"],
-    en: "Ask when breakfast is served.",
-    zh: "询问早餐时间。"
-  },
-  {
-    taskId: "hotel_task_5",
-    botQuestions: {
-      simple: "Do you need a wake-up call?",
-      natural: "Would you like to book a wake-up call?",
-      native: "Want a wake-up call?"
-    },
-    userAnswers: {
-      simple: "Can I book a wake-up call?",
-      natural: "I'd like to book a wake-up call for 7 AM, please.",
-      native: "Can you wake me up at 7?"
-    },
-    keywordsHint: ["wake-up call", "book", "time"],
-    en: "Book a wake-up call.",
-    zh: "预订叫醒服务。"
-  },
-  {
-    taskId: "hotel_task_6",
-    botQuestions: {
-      simple: "Do you need luggage storage?",
-      natural: "Would you like to store your luggage?",
-      native: "Need to stash your bags?"
-    },
-    userAnswers: {
-      simple: "Can I store my luggage?",
-      natural: "Could I store my luggage here, please?",
-      native: "Can I leave my bags here?"
-    },
-    keywordsHint: ["store", "luggage", "bags"],
-    en: "Ask to store your luggage.",
-    zh: "询问行李寄存服务。"
+    tasks: [
+      {
+        taskId: "hotel_c2_t1",
+        desc: {
+          en: "Ask when breakfast is served.",
+          zh: "询问早餐时间。"
+        },
+        bot: "Breakfast is served from 7 to 10 AM in the dining room.",
+        user: "When is breakfast served?",
+        tips: {
+          simple: "When is breakfast?",
+          natural: "Could you tell me when breakfast is served?",
+          native: "What time's breakfast?"
+        },
+        pattern: "When is ...?",
+        keywords: ["breakfast", "time", "served"]
+      },
+      {
+        taskId: "hotel_c2_t2",
+        desc: {
+          en: "Book a wake-up call.",
+          zh: "预订叫醒服务。"
+        },
+        bot: "Sure, what time would you like the wake-up call?",
+        user: "Can I book a wake-up call for 7 AM?",
+        tips: {
+          simple: "Can I book wake-up call?",
+          natural: "I'd like to book a wake-up call for 7 AM, please.",
+          native: "Can you wake me up at 7?"
+        },
+        pattern: "Can I book ...?",
+        keywords: ["wake-up call", "book", "time"]
+      },
+      {
+        taskId: "hotel_c2_t3",
+        desc: {
+          en: "Ask to store your luggage.",
+          zh: "询问行李寄存服务。"
+        },
+        bot: "Yes, we can keep your bags safe until you're ready.",
+        user: "Can I store my luggage?",
+        tips: {
+          simple: "Can I store luggage?",
+          natural: "Could I store my luggage here, please?",
+          native: "Can I leave my bags here?"
+        },
+        pattern: "Can I ...?",
+        keywords: ["store", "luggage", "bags"]
+      }
+    ]
   }
 ];
 
-export default hotelTasks;
+export default cards;
