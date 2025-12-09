@@ -3,6 +3,7 @@
 export const cards = [
   {
     cardId: "gym_c1",
+    title: { zh: "会员办理", en: "Membership" },
     botHello: "Welcome to City Gym!",
     botBye: "Have a great workout!",
     npc: { 
@@ -62,6 +63,7 @@ export const cards = [
   },
   {
     cardId: "gym_c2",
+    title: { zh: "健身服务", en: "Gym Services" },
     botHello: "Hi! Need any help today?",
     botBye: "See you next time!",
     npc: { 

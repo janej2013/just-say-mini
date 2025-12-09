@@ -3,6 +3,7 @@
 export const cards = [
   {
     cardId: "pool_c1",
+    title: { zh: "泳池入场", en: "Pool Access" },
     botHello: "Welcome to the pool!",
     botBye: "Enjoy your swim!",
     npc: { 
@@ -62,6 +63,7 @@ export const cards = [
   },
   {
     cardId: "pool_c2",
+    title: { zh: "泳池服务", en: "Pool Services" },
     botHello: "Hi! First time here?",
     botBye: "Have a great swim!",
     npc: { 

@@ -6,6 +6,7 @@ export const cards = [
   --------------------------------------------------------- */
   {
     cardId: "airport_c1",
+    title: { zh: "入境检查", en: "Immigration" },
     botHello: "Hi there, need any help?",
     botBye: "Alright, have a good one.",
     npc: { 
@@ -69,6 +70,7 @@ export const cards = [
   --------------------------------------------------------- */
   {
     cardId: "airport_c2",
+    title: { zh: "队伍确认", en: "Queue Check" },
     botHello: "Hi, do you need help with the line?",
     botBye: "You're all set. Enjoy your trip.",
     npc: { 
@@ -132,6 +134,7 @@ export const cards = [
   --------------------------------------------------------- */
   {
     cardId: "airport_c3",
+    title: { zh: "文件准备", en: "Document Prep" },
     botHello: "Hello, need help with your documents?",
     botBye: "Great, you’re good to go.",
     npc: { 
@@ -195,6 +198,7 @@ export const cards = [
   --------------------------------------------------------- */
   {
     cardId: "airport_c4",
+    title: { zh: "表格求助", en: "Form Help" },
     botHello: "Hi! Need help with your form?",
     botBye: "No worries, you’re all set.",
     npc: { 
@@ -258,6 +262,7 @@ export const cards = [
   --------------------------------------------------------- */
   {
     cardId: "airport_c5",
+    title: { zh: "快速通道", en: "Fast Track" },
     botHello: "Hello! Are you checking the queue?",
     botBye: "Alright, take care.",
     npc: { 
@@ -320,6 +325,7 @@ export const cards = [
   --------------------------------------------------------- */
   {
     cardId: "airport_c6",
+    title: { zh: "行李提取", en: "Baggage Claim" },
     botHello: "Hi there, looking for your baggage?",
     botBye: "Alright, hope your bags show up soon.",
     npc: {
@@ -383,6 +389,7 @@ export const cards = [
   --------------------------------------------------------- */
   {
     cardId: "airport_c7",
+    title: { zh: "海关申报", en: "Customs Declaration" },
     botHello: "Hello, need help with customs?",
     botBye: "Alright, safe travels.",
     npc: {
@@ -446,6 +453,7 @@ export const cards = [
   --------------------------------------------------------- */
   {
     cardId: "airport_c8",
+    title: { zh: "安检", en: "Security Check" },
     botHello: "Hi, do you have any questions about security?",
     botBye: "You're clear. Take care.",
     npc: {
@@ -509,6 +517,7 @@ export const cards = [
   --------------------------------------------------------- */
   {
     cardId: "airport_c9",
+    title: { zh: "购买SIM卡", en: "Buy SIM Card" },
     botHello: "Hi, looking for SIM cards or WiFi?",
     botBye: "Great, enjoy your stay.",
     npc: {
@@ -572,6 +581,7 @@ export const cards = [
   --------------------------------------------------------- */
   {
     cardId: "airport_c10",
+    title: { zh: "货币兑换", en: "Currency Exchange" },
     botHello: "Hi there, looking to exchange money?",
     botBye: "No problem, have a great day.",
     npc: {
@@ -635,6 +645,7 @@ export const cards = [
   --------------------------------------------------------- */
   {
     cardId: "airport_c11",
+    title: { zh: "寻找交通", en: "Find Transport" },
     botHello: "Hi, are you trying to find transportation?",
     botBye: "Sure, travel safe.",
     npc: {

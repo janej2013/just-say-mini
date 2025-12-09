@@ -3,6 +3,7 @@
 export const cards = [
   {
     cardId: "supermarket_c1",
+    title: { zh: "寻找商品", en: "Find Items" },
     botHello: "Hello! Need help finding anything?",
     botBye: "Thank you for shopping with us!",
     npc: { 
@@ -62,6 +63,7 @@ export const cards = [
   },
   {
     cardId: "supermarket_c2",
+    title: { zh: "结账", en: "Checkout" },
     botHello: "Hi there! Shopping today?",
     botBye: "Have a wonderful day!",
     npc: { 

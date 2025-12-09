@@ -24,16 +24,29 @@ interface PlayOptions {
 }
 
 // NPC 动物与音色的映射
+// 501009 - 外语女声 WeWinny (清晰、友好)
+// 501008 - 外语男声 WeJames (稳重、专业)
 const NPC_VOICE_MAP: Record<string, number> = {
   'Panda': 501009,     // 外语女声 WeWinny
+  'Fox': 501009,       // 外语女声 WeWinny
+  'Cat': 501009,       // 外语女声 WeWinny
+  'Rabbit': 501009,    // 外语女声 WeWinny
+  'Dog': 501008,       // 外语男声 WeJames
+  'Bear': 501008,      // 外语男声 WeJames
   'Owl': 501008,       // 外语男声 WeJames
+  'Hawk': 501008,      // 外语男声 WeJames
+  'Squirrel': 501009,  // 外语女声 WeWinny
   'Koala': 501009,     // 外语女声 WeWinny
-  'Elephant': 501008,  // 外语男声 WeJames
-  'Giraffe': 501009,   // 外语女声 WeWinny
+  'Horse': 501009,     // 外语女声 WeWinny
+  'Lion': 501008,      // 外语男声 WeJames
+  'Otter': 501009,     // 外语女声 WeWinny
+  'Penguin': 501008,   // 外语男声 WeJames
+  'Eagle': 501008,     // 外语男声 WeJames
   'Beaver': 501008,    // 外语男声 WeJames
+  'Giraffe': 501009,   // 外语女声 WeWinny
   'Hippo': 501008,     // 外语男声 WeJames
   'Parrot': 501009,    // 外语女声 WeWinny
-  'Squirrel': 501009   // 外语女声 WeWinny
+  'Elephant': 501008   // 外语男声 WeJames (保留以防使用)
 };
 
 class TTSManager {

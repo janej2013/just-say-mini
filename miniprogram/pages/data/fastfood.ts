@@ -3,6 +3,7 @@
 export const cards = [
   {
     cardId: "fastfood_c1",
+    title: { zh: "点餐", en: "Order Meal" },
     botHello: "Hi! What would you like to order?",
     botBye: "Enjoy your meal!",
     npc: { 
@@ -62,6 +63,7 @@ export const cards = [
   },
   {
     cardId: "fastfood_c2",
+    title: { zh: "定制订单", en: "Custom Order" },
     botHello: "Welcome! Ready to order?",
     botBye: "Have a great day!",
     npc: { 

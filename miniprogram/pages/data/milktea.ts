@@ -3,6 +3,7 @@
 export const cards = [
   {
     cardId: "milktea_c1",
+    title: { zh: "点单", en: "Order Drink" },
     botHello: "Welcome! What can I make for you?",
     botBye: "Enjoy your drink!",
     npc: { 
@@ -62,6 +63,7 @@ export const cards = [
   },
   {
     cardId: "milktea_c2",
+    title: { zh: "定制选项", en: "Custom Options" },
     botHello: "Hi! Ready to order?",
     botBye: "See you next time!",
     npc: { 

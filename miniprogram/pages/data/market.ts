@@ -3,6 +3,7 @@
 export const cards = [
   {
     cardId: "market_c1",
+    title: { zh: "新鲜农产", en: "Fresh Produce" },
     botHello: "Good morning! Fresh produce today!",
     botBye: "Thanks for stopping by!",
     npc: { 
@@ -62,6 +63,7 @@ export const cards = [
   },
   {
     cardId: "market_c2",
+    title: { zh: "优惠询问", en: "Vendor Deals" },
     botHello: "Welcome to the market!",
     botBye: "See you next week!",
     npc: { 

@@ -8,7 +8,7 @@ import ttsManager from '../../utils/tts-manager';
 
 // ==================== Mock 模式配置 ====================
 // 设置为 true 启用Mock模式，false 使用真实语音识别
-const MOCK_MODE_ENABLED = true;
+const MOCK_MODE_ENABLED = envConfig.MOCK_MODE_ENABLED;
 // Mock数据将在运行时根据当前任务动态生成
 const mockData = {
   mockEnabled: true,
@@ -200,6 +200,9 @@ Page({
     // 从tasks中获取cardId（所有tasks应该来自同一个card）
     const cardId = tasks[0]?.cardId || '';
     
+    // 从当前任务卡的pattern字段提取levelHints
+    const levelHints = this.getLevelHints(tasks);
+    
     this.setData({
       allTasks: tasks,
       currentTaskIdx: currentTaskIdx,
@@ -207,7 +210,7 @@ Page({
       levelNpc: levelData.npc || { animal: 'Panda', role: 'Staff' },
       tasksCompletionStatus: [false, false, false], // 初始化3个任务的完成状态
       allTasksCompleted: false, // 重置完成状态
-      levelHints: this.getLevelHints(levelData.levelId || ''),
+      levelHints: levelHints,
       botHello: levelData.botHello || 'Hi there, need any help?',
       botBye: levelData.botBye || 'Alright, have a good one.',
       currentCardId: cardId
@@ -234,11 +237,24 @@ Page({
     });
   },
 
-  getLevelHints(levelId) {
-    if (levelId && levelId.includes('airport')) return ["Where is the ...?", "How do I get to ...?", "Is there a ...?"];
-    if (levelId && levelId.includes('taxi')) return ["I'd like to go to ...", "Can you turn on ...?", "How much is ...?"];
-    if (levelId && levelId.includes('hotel')) return ["I'd like to ...", "What is the ...?", "When is ...?"];
-    return ["I'd like ...", "Can you help ...?", "Thank you!"];
+  /**
+   * 从任务列表中提取pattern作为levelHints
+   * @param tasks 任务列表（3个任务）
+   */
+  getLevelHints(tasks) {
+    if (!tasks || tasks.length === 0) {
+      return ["I'd like ...", "Can you help ...?", "Thank you!"];
+    }
+    
+    // 提取每个任务的pattern字段
+    const hints = tasks.map((task: any) => task.pattern || '').filter((p: string) => p);
+    
+    // 如果没有提取到pattern，使用默认值
+    if (hints.length === 0) {
+      return ["I'd like ...", "Can you help ...?", "Thank you!"];
+    }
+    
+    return hints;
   },
 
   /**

@@ -7,6 +7,7 @@ export const cards = [
   --------------------------------------------------------- */
   {
     cardId: "airport_transport_c1",
+    title: { zh: "出租车站", en: "Taxi Stand" },
     botHello: "Hi there, looking for a taxi?",
     botBye: "Alright, safe travels!",
     npc: { animal: "Lion", role: "Taxi Staff" },
@@ -67,6 +68,7 @@ export const cards = [
   --------------------------------------------------------- */
   {
     cardId: "airport_transport_c2",
+    title: { zh: "网约车", en: "Ride-share Pickup" },
     botHello: "Hello! Need help with ride-share pickup?",
     botBye: "Got it, enjoy your ride!",
     npc: { animal: "Otter", role: "Ride-share Helper" },
@@ -127,6 +129,7 @@ export const cards = [
   --------------------------------------------------------- */
   {
     cardId: "airport_transport_c3",
+    title: { zh: "机场大巴", en: "Airport Bus" },
     botHello: "Hi! Need help with the airport bus?",
     botBye: "Great, have a smooth ride!",
     npc: { animal: "Koala", role: "Bus Staff" },
@@ -187,6 +190,7 @@ export const cards = [
   --------------------------------------------------------- */
   {
     cardId: "airport_transport_c4",
+    title: { zh: "机场地铁", en: "Metro Station" },
     botHello: "Hello, need help with the metro?",
     botBye: "Alright, have a good trip!",
     npc: { animal: "Penguin", role: "Metro Guide" },
@@ -247,6 +251,7 @@ export const cards = [
   --------------------------------------------------------- */
   {
     cardId: "airport_transport_c5",
+    title: { zh: "机场快线", en: "Airport Express" },
     botHello: "Hi! Are you taking the airport express?",
     botBye: "Perfect, enjoy your ride!",
     npc: { animal: "Eagle", role: "Train Staff" },

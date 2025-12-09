@@ -3,6 +3,7 @@
 export const cards = [
   {
     cardId: "park_c1",
+    title: { zh: "公园信息", en: "Park Info" },
     botHello: "Welcome to Central Park!",
     botBye: "Enjoy your visit!",
     npc: { 
@@ -62,6 +63,7 @@ export const cards = [
   },
   {
     cardId: "park_c2",
+    title: { zh: "公园活动", en: "Park Activities" },
     botHello: "Hi! Need any information?",
     botBye: "Have a wonderful day!",
     npc: { 
