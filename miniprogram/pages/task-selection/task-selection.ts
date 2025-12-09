@@ -348,6 +348,10 @@ Page({
       // Randomly select one NPC
       const randomNpc = npcAnimals[Math.floor(Math.random() * npcAnimals.length)];
       
+      // Extract botHello and botBye from the first task (they should all be from same card)
+      const botHello = selectedCardTasks[0]?.botHello || 'Hi there, need any help?';
+      const botBye = selectedCardTasks[0]?.botBye || 'Alright, have a good one.';
+      
       // Prepare level data for dialog-practice page
       const levelData = {
           levelTitle: this.data.levelInfo.title,
@@ -356,7 +360,9 @@ Page({
           npc: {
               animal: randomNpc,
               role: 'Guide'
-          }
+          },
+          botHello: botHello,
+          botBye: botBye
       };
       
       console.log('➡️ Navigating to dialog-practice with data:', levelData);

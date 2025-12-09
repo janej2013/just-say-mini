@@ -126,7 +126,7 @@
         <!-- Giant Mic Button (Center) -->
         <view class="mic-container">
             <view class="mic-glow {{isRecording ? 'active' : ''}}"></view>
-            <button class="giant-mic-btn {{isRecording ? 'recording' : ''}} {{allTasksCompleted ? 'completed' : ''}}"
+            <button class="giant-mic-btn {{isRecording ? 'recording' : ''}}"
                     bindtouchstart="{{allTasksCompleted ? '' : 'onRecordStart'}}" 
                     bindtouchend="{{allTasksCompleted ? '' : 'onRecordEnd'}}" 
                     bindtouchcancel="{{allTasksCompleted ? '' : 'onRecordEnd'}}"

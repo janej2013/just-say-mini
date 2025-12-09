@@ -50,7 +50,9 @@ Page({
     showKeywords: false, // 是否显示关键词
     showTipsModal: false, // 是否显示提示弹窗
     showWinModal: false, // 是否显示胜利弹窗
-    levelHints: ["I'd like ...", "Can you help ...?", "Thank you!"] // 关卡提示句型
+    levelHints: ["I'd like ...", "Can you help ...?", "Thank you!"], // 关卡提示句型
+    botHello: '', // bot开场白
+    botBye: '' // bot结束语
   },
   
   // 音频上下文
@@ -116,12 +118,30 @@ Page({
         this.initWithLevelData(levelData);
       } catch (e) {
         console.error('解析关卡数据失败:', e);
-        this.loadDefaultData();
+        wx.showToast({
+          title: '数据解析失败',
+          icon: 'none',
+          duration: 2000,
+          complete: () => {
+            setTimeout(() => {
+              wx.navigateBack();
+            }, 2000);
+          }
+        });
       }
     } else {
-      // 如果没有传入参数，使用默认数据
-      console.warn('⚠️ 未接收到关卡数据，使用默认数据');
-      this.loadDefaultData();
+      // 如果没有传入参数，返回上一页
+      console.error('❌ 未接收到关卡数据');
+      wx.showToast({
+        title: '数据加载失败',
+        icon: 'none',
+        duration: 2000,
+        complete: () => {
+          setTimeout(() => {
+            wx.navigateBack();
+          }, 2000);
+        }
+      });
     }
   },
 
@@ -134,7 +154,10 @@ Page({
     
     if (tasks.length !== 3) {
       console.error(`关卡任务数量异常: ${tasks.length}, 期望为 3`);
-      this.loadDefaultData();
+      wx.showToast({
+        title: '任务数据异常',
+        icon: 'none'
+      });
       return;
     }
     
@@ -166,7 +189,7 @@ Page({
       console.log('🎭 动态生成的 mockAnswers:', mockData.mockAnswers);
     }
     
-    // 保存所有任务、当前索引和level的NPC信息
+    // 保存所有任务、当前索引和level的NPC信息，以及botHello和botBye
     this.setData({
       allTasks: tasks,
       currentTaskIdx: currentTaskIdx,
@@ -174,7 +197,9 @@ Page({
       levelNpc: levelData.npc || { animal: 'Panda', role: 'Staff' },
       tasksCompletionStatus: [false, false, false], // 初始化3个任务的完成状态
       allTasksCompleted: false, // 重置完成状态
-      levelHints: this.getLevelHints(levelData.levelId || '')
+      levelHints: this.getLevelHints(levelData.levelId || ''),
+      botHello: levelData.botHello || 'Hi there, need any help?',
+      botBye: levelData.botBye || 'Alright, have a good one.'
     });
     
     console.log('✅ Level数据已设置:', {
@@ -212,7 +237,9 @@ Page({
     console.log('🔄 初始化对话数据:', task, '追加模式:', isAppend);
     
     // 提取数据 - 仅使用新数据结构
-    const botQuestion = task.bot || 'Hello!';
+    // 如果是第一个任务且不是追加模式，使用botHello
+    const isFirstTask = this.data.currentTaskIdx === 0 && !isAppend;
+    const botQuestion = isFirstTask ? (this.data.botHello || 'Hi there, need any help?') : (task.bot || 'Hello!');
     const keywordsHint = task.keywords || [];
     // 从level层级获取NPC信息
     const levelNpc = this.data.levelNpc || task.npc || { animal: 'Panda', role: 'Staff' };
@@ -304,35 +331,7 @@ Page({
     }
   },
 
-  /**
-   * 加载默认数据
-   */
-  loadDefaultData() {
-    console.log('⚠️ 加载默认数据');
-    const defaultData = {
-      taskId: "default_task",
-      desc: {
-        en: "Ask where the baggage claim is.",
-        zh: "询问行李提取处在哪里。"
-      },
-      bot: "Hello! Do you need help finding the baggage claim?",
-      user: "Yes, where is the baggage claim?",
-      tips: {
-        simple: "Where is baggage claim?",
-        natural: "Yes, where is the baggage claim?",
-        native: "Where can I pick up my luggage?"
-      },
-      pattern: "Where is ...?",
-      keywords: ["baggage", "claim", "luggage", "where", "find"],
-      npc: {
-        animal: "Panda",
-        role: "Airport Information Desk Staff"
-      }
-    };
-    
-    console.log('📦 默认数据:', defaultData);
-    this.initDialogData(defaultData);
-  },
+
 
   /**
    * 点击关闭按钮
@@ -1305,17 +1304,37 @@ Page({
       const allCompleted = this.data.tasksCompletionStatus.every(status => status === true);
       
       if (allCompleted) {
-        // 所有任务都已完成，设置完成状态，按钮变为对号
+        // 所有任务都已完成，先添加botBye对话
+        const botByeDialogId = this.data.dialogIdCounter + 1;
+        const currentDialogList = [...this.data.dialogList];
+        const levelNpc = this.data.levelNpc || { animal: 'Panda', role: 'Staff' };
+        
+        currentDialogList.push({
+          id: botByeDialogId,
+          type: 'npc',
+          content: this.data.botBye || 'Alright, have a good one.',
+          showText: false
+        });
+        
         this.setData({
+          dialogList: currentDialogList,
+          dialogIdCounter: botByeDialogId,
           allTasksCompleted: true
         });
+        
+        // 播放botBye语音（如果不是Mock模式）
+        if (!MOCK_MODE_ENABLED) {
+          setTimeout(() => {
+            this.playNpcAudioByDialogId(botByeDialogId);
+          }, 100);
+        }
         
         // 延迟显示胜利弹窗
         setTimeout(() => {
             this.setData({
                 showWinModal: true
             });
-        }, 1000);
+        }, 2000);
       } else {
         console.log('⚠️ 还有任务未完成，请完成所有任务');
         wx.showToast({
