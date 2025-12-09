@@ -1,6 +1,6 @@
 // 机场交通 — 出租车、网约车、机场大巴、地铁、机场快线
 
-export const taxiCards = [
+export const cards = [
 
   /* ---------------------------------------------------------
     Card 1 — Taxi（出租车区域）
@@ -303,3 +303,5 @@ export const taxiCards = [
   }
 
 ];
+
+export default cards;
