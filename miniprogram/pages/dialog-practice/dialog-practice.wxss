@@ -1022,12 +1022,13 @@ page {
 }
 
 .retry-btn {
-  background: #F3F4F6; /* gray-100 */
-  color: rgba(93, 64, 55, 0.6);
-}
-
-.continue-btn {
   background: #00C688;
   color: #FFFFFF;
   box-shadow: 0 8rpx 24rpx rgba(0, 198, 136, 0.2);
+
+}
+
+.continue-btn {
+  background: #F3F4F6; /* gray-100 */
+  color: rgba(93, 64, 55, 0.6);
 }

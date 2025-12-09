@@ -931,6 +931,15 @@ Page({
         const finalText = res.result.voice_text_str;
         console.log('句子识别完成:', finalText);
         this.updateUserResponse(finalText);
+        // 保存识别文本
+        this.setData({
+          userRecognizedText: finalText
+        });
+        
+        // 识别完成后进行评分
+        setTimeout(() => {
+          this.evaluateUserAnswer(finalText);
+        }, 500);
       }
     };
 
@@ -947,28 +956,28 @@ Page({
         });
       }
 
-      if (res && res.result && res.result.voice_text_str) {
-        const recognizedText = res.result.voice_text_str;
-        console.log('✓ 识别到最终文本:', recognizedText);
-        // 更新为最终结果（可能与实时结果略有差异）
-        this.updateUserResponse(recognizedText);
+      // if (res && res.result && res.result.voice_text_str) {
+      //   const recognizedText = res.result.voice_text_str;
+      //   console.log('✓ 识别到最终文本:', recognizedText);
+      //   // 更新为最终结果（可能与实时结果略有差异）
+      //   this.updateUserResponse(recognizedText);
         
-        // 保存识别文本
-        this.setData({
-          userRecognizedText: recognizedText
-        });
+      //   // 保存识别文本
+      //   this.setData({
+      //     userRecognizedText: recognizedText
+      //   });
         
-        // 识别完成后进行评分
-        setTimeout(() => {
-          this.evaluateUserAnswer(recognizedText);
-        }, 500);
-      } else {
-        console.log('⚠️ 未识别到内容');
+      //   // 识别完成后进行评分
+      //   setTimeout(() => {
+      //     this.evaluateUserAnswer(recognizedText);
+      //   }, 500);
+      // } else {
+      //   console.log('⚠️ 未识别到内容');
         
-        // 不显示"未识别到内容"提示，静默处理
-      }
+      //   // 不显示"未识别到内容"提示，静默处理
+      // }
       
-      console.log('========== 识别完成回调结束 ==========');
+      // console.log('========== 识别完成回调结束 ==========');
     };
 
     this.recognizer.OnError = (err) => {
