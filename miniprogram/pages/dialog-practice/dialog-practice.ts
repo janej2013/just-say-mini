@@ -31,7 +31,6 @@ Page({
     totalPages: 0,
     paginationList: [], // 用于分页指示器
     isRecording: false,    // 是否正在录音
-    npcDialogContent: '', // NPC对话内容
     currentTaskData: null, // 当前任务完整数据
     userRecognizedText: '', // 用户识别的文本
     feedbackResult: null, // 反馈结果 {type: 'perfect'|'tips', score: number, details: object}
@@ -52,7 +51,6 @@ Page({
     showWinModal: false, // 是否显示胜利弹窗
     levelHints: ["I'd like ...", "Can you help ...?", "Thank you!"], // 关卡提示句型
     botHello: '', // bot开场白
-    botBye: '', // bot结束语
     currentCardId: '' // 当前卡片ID
   },
   
@@ -212,7 +210,6 @@ Page({
       allTasksCompleted: false, // 重置完成状态
       levelHints: levelHints,
       botHello: levelData.botHello || 'Hi there, need any help?',
-      botBye: levelData.botBye || 'Alright, have a good one.',
       currentCardId: cardId
     });
     
@@ -228,7 +225,7 @@ Page({
     // 初始化第一个任务
     const firstTask = tasks[currentTaskIdx];
     console.log('🎬 开始初始化第一个任务:', firstTask);
-    this.initDialogData(firstTask, false);
+    this.initDialogData();
     
     // 设置初始进度（3个任务：33%, 67%, 100%）
     const progress = Math.round(((currentTaskIdx + 1) / 3) * 100);
@@ -262,16 +259,16 @@ Page({
    * @param task 任务数据
    * @param isAppend 是否追加模式（默认false，即替换模式）
    */
-  initDialogData(task, isAppend = false) {
-    console.log('🔄 初始化对话数据:', task, '追加模式:', isAppend);
+  initDialogData() {
+    const task = this.data.allTasks[this.data.currentTaskIdx];  
+    console.log('🔄 初始化对话数据:', task);
     
     // 提取数据 - 仅使用新数据结构
     // 如果是第一个任务且不是追加模式，使用botHello
-    const isFirstTask = this.data.currentTaskIdx === 0 && !isAppend;
-    const botQuestion = isFirstTask ? (this.data.botHello || 'Hi there, need any help?') : (task.bot || 'Hello!');
+    const botQuestion = this.data.botHello || 'Hi there, need any help?';
     const keywordsHint = task.keywords || [];
     // 从level层级获取NPC信息
-    const levelNpc = this.data.levelNpc || task.npc || { animal: 'Panda', role: 'Staff' };
+    const levelNpc = this.data.levelNpc || { animal: 'Panda', role: 'Staff' };
     const npcAnimal = levelNpc.animal || 'Panda';
     
     console.log('📝 提取的数据:', {
@@ -281,83 +278,54 @@ Page({
       taskDesc: task.desc
     });
     
+
+    // 替换模式：初始化时使用
+    // 创建对话列表 - 只包含当前任务的对话
+    const dialogList = [
+      {
+        id: 1,
+        type: 'npc',
+        content: botQuestion,
+        showText: false // 默认不显示文本
+      }
+    ];
+    
+    // 设置页面数据
+    const total = dialogList.length;
+    const paginationList = Array.from({ length: total }, (_, i) => i);
+    
+    this.setData({
+      dialogList: dialogList,
+      keywordsHint: keywordsHint,
+      taskTitle: `${task.taskId || 'Practice Task'}`,
+      npcRole: npcAnimal.charAt(0), // 使用动物名字的首字母
+      totalTasks: total,
+      currentPage: 0, // 当前页从0开始
+      totalPages: total,
+      paginationList: paginationList,
+      progress: 60, // 设置初始进度
+      dialogIdCounter: 1,
+      currentPlayingDialogId: 1
+    });
+    
+    console.log('✅ 数据已设置到页面:', {
+      dialogListLength: dialogList.length,
+      firstDialog: dialogList[0],
+      keywordsHintLength: keywordsHint.length,
+      currentTaskData: this.data.currentTaskData
+    });
+    
+    // NPC对话默认语音播放（使用TTS）
+    if (!MOCK_MODE_ENABLED) {
+      setTimeout(() => {
+        this.playNpcAudioByDialogId(1);
+      }, 100);
+    }
+    
     // 保存完整任务数据供后续评分使用
     this.setData({
       currentTaskData: task
     });
-    
-    if (isAppend) {
-      // 追加模式：在现有对话列表中追加新的bot问题
-      const currentDialogList = [...this.data.dialogList];
-      const newDialogId = this.data.dialogIdCounter + 1;
-      
-      currentDialogList.push({
-        id: newDialogId,
-        type: 'npc',
-        content: botQuestion,
-        showText: false // 默认不显示文本
-      });
-      
-      this.setData({
-        dialogList: currentDialogList,
-        keywordsHint: keywordsHint,
-        npcRole: npcAnimal.charAt(0),
-        npcDialogContent: botQuestion,
-        dialogIdCounter: newDialogId,
-        currentPlayingDialogId: newDialogId
-      });
-      
-      // 自动播放新的NPC对话（使用TTS）
-      if (!MOCK_MODE_ENABLED) {
-        setTimeout(() => {
-          this.playNpcAudioByDialogId(newDialogId);
-        }, 100);
-      }
-    } else {
-      // 替换模式：初始化时使用
-      // 创建对话列表 - 只包含当前任务的对话
-      const dialogList = [
-        {
-          id: 1,
-          type: 'npc',
-          content: botQuestion,
-          showText: false // 默认不显示文本
-        }
-      ];
-      
-      // 设置页面数据
-      const total = dialogList.length;
-      const paginationList = Array.from({ length: total }, (_, i) => i);
-      
-      this.setData({
-        dialogList: dialogList,
-        keywordsHint: keywordsHint,
-        taskTitle: `${task.taskId || 'Practice Task'}`,
-        npcRole: npcAnimal.charAt(0), // 使用动物名字的首字母
-        totalTasks: total,
-        currentPage: 0, // 当前页从0开始
-        totalPages: total,
-        paginationList: paginationList,
-        progress: 60, // 设置初始进度
-        npcDialogContent: botQuestion, // 设置NPC对话内容
-        dialogIdCounter: 1,
-        currentPlayingDialogId: 1
-      });
-      
-      console.log('✅ 数据已设置到页面:', {
-        dialogListLength: dialogList.length,
-        firstDialog: dialogList[0],
-        keywordsHintLength: keywordsHint.length,
-        currentTaskData: this.data.currentTaskData
-      });
-      
-      // NPC对话默认语音播放（使用TTS）
-      if (!MOCK_MODE_ENABLED) {
-        setTimeout(() => {
-          this.playNpcAudioByDialogId(1);
-        }, 100);
-      }
-    }
   },
 
 
@@ -610,30 +578,6 @@ Page({
       console.log('TTS功能提示：在实际部署时，请实现后端TTS服务');
       resolve(null);
     });
-  },
-
-  /**
-   * 完成所有任务后的按钮点击
-   */
-  onCompleteClick() {
-    console.log('✅ 点击完成按钮，返回上一页');
-    wx.navigateBack();
-  },
-
-  /**
-   * 完成所有任务后的按钮点击
-   */
-  onCompleteClick() {
-    console.log('✅ 点击完成按钮，返回上一页');
-    wx.navigateBack();
-  },
-
-  /**
-   * 完成所有任务后的按钮点击
-   */
-  onCompleteClick() {
-    console.log('✅ 点击完成按钮，返回上一页');
-    wx.navigateBack();
   },
 
   /**
@@ -956,28 +900,6 @@ Page({
         });
       }
 
-      // if (res && res.result && res.result.voice_text_str) {
-      //   const recognizedText = res.result.voice_text_str;
-      //   console.log('✓ 识别到最终文本:', recognizedText);
-      //   // 更新为最终结果（可能与实时结果略有差异）
-      //   this.updateUserResponse(recognizedText);
-        
-      //   // 保存识别文本
-      //   this.setData({
-      //     userRecognizedText: recognizedText
-      //   });
-        
-      //   // 识别完成后进行评分
-      //   setTimeout(() => {
-      //     this.evaluateUserAnswer(recognizedText);
-      //   }, 500);
-      // } else {
-      //   console.log('⚠️ 未识别到内容');
-        
-      //   // 不显示"未识别到内容"提示，静默处理
-      // }
-      
-      // console.log('========== 识别完成回调结束 ==========');
     };
 
     this.recognizer.OnError = (err) => {
@@ -1319,7 +1241,8 @@ Page({
           feedbackResult: {
             type: feedbackType,
             score: totalScore,
-            details: details
+            details: details,
+            tips: task.tips  // Store task.tips reference for later use in feedback modal
           }
         };
       }
@@ -1461,9 +1384,32 @@ Page({
     if (currentIdx >= 0 && currentIdx < 3) {
       const newStatus = [...this.data.tasksCompletionStatus];
       newStatus[currentIdx] = true;
-      this.setData({
-        tasksCompletionStatus: newStatus
+
+      // 在现有对话列表中追加bot回答
+      const currentDialogList = [...this.data.dialogList];
+      const newDialogId = this.data.dialogIdCounter + 1;
+      
+      currentDialogList.push({
+        id: newDialogId,
+        type: 'npc',
+        content: this.data.currentTaskData.bot || 'Hello!',
+        showText: false // 默认不显示文本
       });
+
+      this.setData({
+        tasksCompletionStatus: newStatus,
+        dialogList: currentDialogList,
+        dialogIdCounter: newDialogId,
+        currentPlayingDialogId: newDialogId
+      });
+
+      // 自动播放新的NPC对话（使用TTS）
+      if (!MOCK_MODE_ENABLED) {
+        setTimeout(() => {
+          this.playNpcAudioByDialogId(newDialogId);
+        }, 100);
+      }
+
       console.log(`✅ 任务 ${currentIdx + 1} 已标记为完成，完成状态:`, newStatus);
     }
   },
@@ -1474,7 +1420,6 @@ Page({
    */
   continueDialog() {
     console.log('继续对话，当前任务索引:', this.data.currentTaskIdx);
-    console.log('🐾 继续对话...');
     
     // 获取下一个任务
     const nextTaskIdx = this.data.currentTaskIdx + 1;
@@ -1494,33 +1439,12 @@ Page({
       const allCompleted = this.data.tasksCompletionStatus.every(status => status === true);
       
       if (allCompleted) {
-        // 所有任务都已完成，保存cardId到本地存储
+        // 所有任务都已完成，保存cardId到本地存储并标记完成状态
         this.saveCompletedCard();
         
-        // 先添加botBye对话
-        const botByeDialogId = this.data.dialogIdCounter + 1;
-        const currentDialogList = [...this.data.dialogList];
-        const levelNpc = this.data.levelNpc || { animal: 'Panda', role: 'Staff' };
-        
-        currentDialogList.push({
-          id: botByeDialogId,
-          type: 'npc',
-          content: this.data.botBye || 'Alright, have a good one.',
-          showText: false
-        });
-        
         this.setData({
-          dialogList: currentDialogList,
-          dialogIdCounter: botByeDialogId,
           allTasksCompleted: true
         });
-        
-        // 播放botBye语音（如果不是Mock模式）
-        if (!MOCK_MODE_ENABLED) {
-          setTimeout(() => {
-            this.playNpcAudioByDialogId(botByeDialogId);
-          }, 100);
-        }
         
         // 不自动显示胜利弹窗，等待用户点击麦克风按钮
         console.log('🎯 所有任务已完成，点击麦克风按钮显示胜利弹窗');
@@ -1543,12 +1467,10 @@ Page({
     // 更新当前任务索引
     this.setData({
       currentTaskIdx: nextTaskIdx,
+      currentTaskData: nextTask,
       feedbackResult: null, // 清除上一次的反馈结果
       userRecognizedText: '' // 清除上一次的识别文本
     });
-    
-    // 以追加模式初始化新任务
-    this.initDialogData(nextTask, true);
     
     // 更新进度（3个任务：33%, 67%, 100%）
     const progress = Math.round(((nextTaskIdx + 1) / 3) * 100);
@@ -1605,23 +1527,6 @@ Page({
     });
   },
 
-  /**
-   * 显示反馈
-   */
-  showFeedback() {
-    // 模拟一个反馈
-    wx.showModal({
-      title: '练习完成',
-      content: '您的回答很棒！',
-      showCancel: false,
-      success: (res) => {
-        if (res.confirm) {
-          // 可以在这里添加下一题的逻辑
-          console.log('用户确认');
-        }
-      }
-    });
-  },
 
   /**
    * 处理Mock录音（模拟用户回答）
