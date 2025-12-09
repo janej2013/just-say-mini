@@ -143,8 +143,14 @@ Page({
       mockData.mockAnswers = {};
       tasks.forEach((task, index) => {
         const taskId = task.taskId;
-        // 支持新旧两种结构
-        let mockAnswer = task.user || task.userAnswers?.simple || task.tips?.simple || '';
+        // 仅使用新结构
+        let mockAnswer = task.user || task.tips?.simple || '';
+        
+        console.log(`🎯 任务 ${index + 1} (${taskId}):`, {
+          user: task.user,
+          tipsSimple: task.tips?.simple,
+          mockAnswer
+        });
         
         // 对第三个任务（index === 2）截断答案，只取前半部分
         if (index === 2 && mockAnswer) {
@@ -171,8 +177,16 @@ Page({
       levelHints: this.getLevelHints(levelData.levelId || '')
     });
     
+    console.log('✅ Level数据已设置:', {
+      allTasksLength: this.data.allTasks.length,
+      firstTask: this.data.allTasks[0],
+      currentTaskIdx: this.data.currentTaskIdx,
+      levelNpc: this.data.levelNpc
+    });
+    
     // 初始化第一个任务
     const firstTask = tasks[currentTaskIdx];
+    console.log('🎬 开始初始化第一个任务:', firstTask);
     this.initDialogData(firstTask, false);
     
     // 设置初始进度（3个任务：33%, 67%, 100%）
@@ -195,23 +209,21 @@ Page({
    * @param isAppend 是否追加模式（默认false，即替换模式）
    */
   initDialogData(task, isAppend = false) {
-    console.log('初始化对话数据:', task, '追加模式:', isAppend);
+    console.log('🔄 初始化对话数据:', task, '追加模式:', isAppend);
     
-    // 提取数据 - 支持新旧两种数据结构
-    // 新结构: task.bot, task.user, task.tips, task.keywords
-    // 旧结构: task.botQuestions, task.userAnswers, task.keywordsHint
-    const botQuestion = task.bot || 
-                       (task.botQuestions && task.botQuestions.simple) || 
-                       (task.botQuestions && task.botQuestions.natural) || 
-                       'Hello!';
-    const userAnswer = task.user || 
-                      (task.userAnswers && task.userAnswers.simple) || 
-                      (task.userAnswers && task.userAnswers.natural) || 
-                      'Hi there!';
-    const keywordsHint = task.keywords || task.keywordsHint || [];
+    // 提取数据 - 仅使用新数据结构
+    const botQuestion = task.bot || 'Hello!';
+    const keywordsHint = task.keywords || [];
     // 从level层级获取NPC信息
     const levelNpc = this.data.levelNpc || task.npc || { animal: 'Panda', role: 'Staff' };
     const npcAnimal = levelNpc.animal || 'Panda';
+    
+    console.log('📝 提取的数据:', {
+      botQuestion,
+      keywordsHint,
+      npcAnimal,
+      taskDesc: task.desc
+    });
     
     // 保存完整任务数据供后续评分使用
     this.setData({
@@ -276,6 +288,13 @@ Page({
         currentPlayingDialogId: 1
       });
       
+      console.log('✅ 数据已设置到页面:', {
+        dialogListLength: dialogList.length,
+        firstDialog: dialogList[0],
+        keywordsHintLength: keywordsHint.length,
+        currentTaskData: this.data.currentTaskData
+      });
+      
       // NPC对话默认语音播放（使用TTS）
       if (!MOCK_MODE_ENABLED) {
         setTimeout(() => {
@@ -289,6 +308,7 @@ Page({
    * 加载默认数据
    */
   loadDefaultData() {
+    console.log('⚠️ 加载默认数据');
     const defaultData = {
       taskId: "default_task",
       desc: {
@@ -310,6 +330,7 @@ Page({
       }
     };
     
+    console.log('📦 默认数据:', defaultData);
     this.initDialogData(defaultData);
   },
 
@@ -1057,17 +1078,13 @@ Page({
     details.totalKeywords = keywords.length;
 
     // 2. 句式相似度评分（40分）
-    // 支持新旧两种结构
-    const userAnswers = task.userAnswers || {};
+    // 仅使用新结构
     const tips = task.tips || {};
     const templates = [
       task.user,
       tips.simple,
       tips.natural,
-      tips.native,
-      userAnswers.simple,
-      userAnswers.natural,
-      userAnswers.native
+      tips.native
     ].filter(Boolean);
     
     let maxSimilarity = 0;
@@ -1203,7 +1220,7 @@ Page({
    */
   showExamplesModal(withOptions: boolean, feedbackResult: any) {
     const task = this.data.currentTaskData;
-    if (!task || (!task.userAnswers && !task.tips && !task.user)) {
+    if (!task || !task.tips) {
       wx.showToast({
         title: '暂无示例答案',
         icon: 'none'

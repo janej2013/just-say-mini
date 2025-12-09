@@ -25,13 +25,13 @@
                     <view class="task-check {{tasksCompletionStatus[index] ? 'completed' : ''}}">
                         <text wx:if="{{tasksCompletionStatus[index]}}" class="check-mark-small">✓</text>
                     </view>
-                    <text class="task-text {{tasksCompletionStatus[index] ? 'completed-text' : ''}}">{{language === 'zh' ? item.zh : item.en}}</text>
+                    <text class="task-text {{tasksCompletionStatus[index] ? 'completed-text' : ''}}">{{language === 'zh' ? item.desc.zh : item.desc.en}}</text>
                 </view>
             </block>
         </view>
         <view class="task-board-summary" wx:else>
             <view class="status-dot"></view>
-            <text class="summary-text">{{allTasksCompleted ? 'All Missions Complete!' : (language === 'zh' ? currentTaskData.zh : currentTaskData.en)}}</text>
+            <text class="summary-text">{{allTasksCompleted ? 'All Missions Complete!' : (language === 'zh' ? currentTaskData.desc.zh : currentTaskData.desc.en)}}</text>
             <text class="chevron-down">▼</text>
         </view>
     </view>
@@ -175,7 +175,7 @@
             <text class="card-icon">☂️</text>
             <text class="card-label">{{language === 'zh' ? '简洁' : 'CONCISE'}}</text>
           </view>
-          <text class="card-text">{{currentTaskData.tips.simple || currentTaskData.userAnswers.simple}}</text>
+          <text class="card-text">{{currentTaskData.tips.simple}}</text>
         </view>
 
         <!-- Natural -->
@@ -185,7 +185,7 @@
             <text class="card-icon">🌱</text>
             <text class="card-label">{{language === 'zh' ? '自然' : 'NATURAL'}}</text>
           </view>
-          <text class="card-text">{{currentTaskData.tips.natural || currentTaskData.userAnswers.natural}}</text>
+          <text class="card-text">{{currentTaskData.tips.natural}}</text>
         </view>
 
         <!-- Slang/Native -->
@@ -194,7 +194,7 @@
             <text class="card-icon">🔥</text>
             <text class="card-label">{{language === 'zh' ? '地道' : 'SLANG'}}</text>
           </view>
-          <text class="card-text">{{currentTaskData.tips.native || currentTaskData.userAnswers.native}}</text>
+          <text class="card-text">{{currentTaskData.tips.native}}</text>
         </view>
       </view>
 
