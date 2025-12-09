@@ -1471,6 +1471,8 @@ Page({
     this.setData({
       currentTaskIdx: nextTaskIdx,
       currentTaskData: nextTask,
+      keywordsHint: nextTask.keywords,
+      keywordsHintLength: nextTask.keywords.length,
       feedbackResult: null, // 清除上一次的反馈结果
       userRecognizedText: '' // 清除上一次的识别文本
     });
