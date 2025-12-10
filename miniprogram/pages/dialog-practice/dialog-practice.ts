@@ -1036,7 +1036,7 @@ Page({
     const tmpSecretKey = envConfig.TMP_SECRET_KEY || '';
     const token = envConfig.TMP_TOKEN || '';
     
-    if (!tmpSecretId || !tmpSecretKey || !token) {
+    if (!tmpSecretId || !tmpSecretKey) {
       console.warn('⚠️ 未配置临时凭证');
       console.warn('请在 miniprogram/config/env.js 中配置以下变量：');
       console.warn('- TMP_SECRET_ID');
