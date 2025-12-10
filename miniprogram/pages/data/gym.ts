@@ -2,122 +2,233 @@
 
 export const cards = [
   {
-    cardId: "gym_c1",
-    title: { zh: "会员办理", en: "Membership" },
-    botHello: "Welcome to City Gym!",
-    botBye: "Have a great workout!",
-    npc: { 
-      animal: 'Squirrel', 
-      role: 'Trainer' 
-    },
+    cardId: "gym_equipment_c1",
+    title: { zh: "器材位置", en: "Finding Equipment" },
+    botHello: "Hey! Need help finding something?",
+    botBye: "Alright, enjoy your workout!",
+    npc: { animal: "Tiger", role: "Gym Staff" },
     tasks: [
       {
-        taskId: "gym_c1_t1",
+        taskId: "gym_equipment_c1_t1",
         desc: {
-          en: "Ask about membership options.",
-          zh: "询问会员选项。"
+          en: "Ask where the dumbbells are.",
+          zh: "询问哑铃在哪里。"
         },
-        bot: "We have monthly, quarterly, and annual memberships.",
-        user: "What membership options do you have?",
+        bot: "The dumbbells are in the free-weight area over there.",
         tips: {
-          simple: "What memberships do you have?",
-          natural: "Could you tell me about membership options?",
-          native: "What kind of memberships you got?"
+          simple: "Where are the dumbbells?",
+          natural: "Could you tell me where the dumbbells are?",
+          native: "Hey, where can I find the dumbbells?"
         },
-        pattern: "What ... do you have?",
-        keywords: ["membership", "options", "join"]
+        user: "Hi, could you tell me where the dumbbells are?",
+        pattern: "Where can I find ...?",
+        keywords: ["dumbbells", "where"]
       },
       {
-        taskId: "gym_c1_t2",
+        taskId: "gym_equipment_c1_t2",
+        desc: {
+          en: "Ask whether a treadmill is available.",
+          zh: "询问跑步机是否有空位。"
+        },
+        bot: "Yes! The two treadmills on the left are available.",
+        tips: {
+          simple: "Is a treadmill free?",
+          natural: "Is there a treadmill available right now?",
+          native: "Any treadmills open at the moment?"
+        },
+        user: "Hi, is there a treadmill available right now?",
+        pattern: "Is there ... available?",
+        keywords: ["treadmill", "available"]
+      },
+      {
+        taskId: "gym_equipment_c1_t3",
         desc: {
           en: "Ask where the locker room is.",
           zh: "询问更衣室在哪里。"
         },
-        bot: "The locker rooms are down the hall to your right.",
-        user: "Where is the locker room?",
+        bot: "The locker rooms are downstairs on the right.",
         tips: {
           simple: "Where is locker room?",
-          natural: "Could you tell me where the locker room is?",
-          native: "Where's the locker room at?"
+          natural: "Where is the locker room?",
+          native: "Where can I find the locker room?"
         },
-        pattern: "Where is ...?",
-        keywords: ["locker room", "changing", "location"]
-      },
-      {
-        taskId: "gym_c1_t3",
-        desc: {
-          en: "Request a towel.",
-          zh: "要求毛巾。"
-        },
-        bot: "Here you go, enjoy your workout!",
-        user: "Can I get a towel?",
-        tips: {
-          simple: "Can I have towel?",
-          natural: "Could I get a towel, please?",
-          native: "Need a towel."
-        },
-        pattern: "Can I get ...?",
-        keywords: ["towel", "get", "need"]
+        user: "Hi, where can I find the locker room?",
+        pattern: "Where can I find ...?",
+        keywords: ["locker room", "where"]
       }
     ]
   },
+
   {
-    cardId: "gym_c2",
-    title: { zh: "健身服务", en: "Gym Services" },
-    botHello: "Hi! Need any help today?",
-    botBye: "See you next time!",
-    npc: { 
-      animal: 'Panda', 
-      role: 'Front Desk' 
-    },
+    cardId: "gym_class_c2",
+    title: { zh: "课程咨询", en: "Class Inquiry" },
+    botHello: "Hi! Interested in joining a class?",
+    botBye: "Sure, let me know if you need anything else.",
+    npc: { animal: "Panda", role: "Instructor" },
     tasks: [
       {
-        taskId: "gym_c2_t1",
+        taskId: "gym_class_c2_t1",
         desc: {
-          en: "Ask about personal training.",
-          zh: "询问私人教练服务。"
+          en: "Ask when the next yoga class starts.",
+          zh: "询问下一节瑜伽课什么时候开始。"
         },
-        bot: "Personal training sessions start at $50 per hour.",
-        user: "Do you offer personal training?",
+        bot: "The next yoga class starts at 6 PM in Studio B.",
         tips: {
-          simple: "Do you have personal trainers?",
-          natural: "Is personal training available?",
-          native: "You guys do personal training?"
+          simple: "When is next yoga?",
+          natural: "When does the next yoga class start?",
+          native: "When’s the next yoga session?"
         },
-        pattern: "Do you offer ...?",
-        keywords: ["personal training", "trainer", "coach"]
+        user: "Hi, when does the next yoga class start?",
+        pattern: "When does ... start?",
+        keywords: ["yoga", "when"]
       },
       {
-        taskId: "gym_c2_t2",
+        taskId: "gym_class_c2_t2",
         desc: {
-          en: "Ask about class schedules.",
-          zh: "询问课程时间表。"
+          en: "Ask whether you need to book a class.",
+          zh: "询问课程是否需要预订。"
         },
-        bot: "You can find the class schedule on our app or the board over there.",
-        user: "Where can I see the class schedule?",
+        bot: "Yes, you need to book it through our app.",
         tips: {
-          simple: "Where is class schedule?",
-          natural: "How can I check the class schedule?",
-          native: "Where's the class schedule?"
+          simple: "Need booking?",
+          natural: "Do I need to book this class?",
+          native: "Do I need to reserve a spot?"
         },
-        pattern: "Where can I see ...?",
-        keywords: ["class", "schedule", "timetable"]
+        user: "Do I need to book this class?",
+        pattern: "Do I need to ...?",
+        keywords: ["book", "class"]
       },
       {
-        taskId: "gym_c2_t3",
+        taskId: "gym_class_c2_t3",
         desc: {
-          en: "Ask if there's a pool.",
-          zh: "询问是否有游泳池。"
+          en: "Ask how long the class lasts.",
+          zh: "询问课程时长。"
         },
-        bot: "Yes, we have a lap pool on the third floor.",
-        user: "Do you have a swimming pool?",
+        bot: "This class lasts 45 minutes.",
         tips: {
-          simple: "Is there pool?",
-          natural: "Does the gym have a pool?",
-          native: "You got a pool here?"
+          simple: "How long is class?",
+          natural: "How long does the class last?",
+          native: "How long is the class?"
         },
-        pattern: "Do you have ...?",
-        keywords: ["pool", "swimming", "swim"]
+        user: "How long does the class last?",
+        pattern: "How long does ... last?",
+        keywords: ["class duration", "how long"]
+      }
+    ]
+  },
+
+  {
+    cardId: "gym_help_c3",
+    title: { zh: "器材使用求助", en: "Equipment Assistance" },
+    botHello: "Hello! Need help with the equipment?",
+    botBye: "Great! Let me know if you have more questions.",
+    npc: { animal: "Bear", role: "Trainer" },
+    tasks: [
+      {
+        taskId: "gym_help_c3_t1",
+        desc: {
+          en: "Ask how to use the rowing machine.",
+          zh: "询问如何使用划船机。"
+        },
+        bot: "I can show you! Make sure to keep your back straight while pulling.",
+        tips: {
+          simple: "How use rowing machine?",
+          natural: "Could you show me how to use the rowing machine?",
+          native: "Can you walk me through the rowing machine?"
+        },
+        user: "Hi, could you show me how to use the rowing machine?",
+        pattern: "Could you show me how to ...?",
+        keywords: ["rowing machine", "how to use"]
+      },
+      {
+        taskId: "gym_help_c3_t2",
+        desc: {
+          en: "Ask if your posture on the machine is correct.",
+          zh: "询问自己使用器械的姿势是否正确。"
+        },
+        bot: "Your posture is good, but try to relax your shoulders more.",
+        tips: {
+          simple: "Is my posture OK?",
+          natural: "Is my posture correct?",
+          native: "How’s my form?"
+        },
+        user: "Hi, is my posture correct?",
+        pattern: "Is my ... correct?",
+        keywords: ["posture", "form"]
+      },
+      {
+        taskId: "gym_help_c3_t3",
+        desc: {
+          en: "Ask how to adjust the machine settings.",
+          zh: "询问如何调整器械设置。"
+        },
+        bot: "Just turn this knob to increase or decrease the resistance.",
+        tips: {
+          simple: "How adjust this?",
+          natural: "How do I adjust the settings on this machine?",
+          native: "How do I change the settings on this?"
+        },
+        user: "Hi, how do I adjust the settings on this machine?",
+        pattern: "How do I ...?",
+        keywords: ["adjust", "settings"]
+      }
+    ]
+  },
+
+  {
+    cardId: "gym_membership_c4",
+    title: { zh: "会员咨询", en: "Membership Inquiry" },
+    botHello: "Hi there! Need help with your membership?",
+    botBye: "Alright, let me know anytime!",
+    npc: { animal: "Fox", role: "Front Desk Staff" },
+    tasks: [
+      {
+        taskId: "gym_membership_c4_t1",
+        desc: {
+          en: "Ask how to freeze your membership.",
+          zh: "询问如何暂停会员。"
+        },
+        bot: "You can freeze it for up to two months. Just fill out this form.",
+        tips: {
+          simple: "How freeze membership?",
+          natural: "How can I freeze my membership?",
+          native: "What’s the process to freeze my membership?"
+        },
+        user: "Hi, how can I freeze my membership?",
+        pattern: "How can I ...?",
+        keywords: ["freeze", "membership"]
+      },
+      {
+        taskId: "gym_membership_c4_t2",
+        desc: {
+          en: "Ask how much it costs to upgrade.",
+          zh: "询问升级会员的费用。"
+        },
+        bot: "Upgrading to premium costs an additional $20 a month.",
+        tips: {
+          simple: "How much upgrade?",
+          natural: "How much does it cost to upgrade my membership?",
+          native: "What’s the price to upgrade?"
+        },
+        user: "Hi, how much does it cost to upgrade my membership?",
+        pattern: "How much does it cost to ...?",
+        keywords: ["upgrade", "price"]
+      },
+      {
+        taskId: "gym_membership_c4_t3",
+        desc: {
+          en: "Ask when your membership expires.",
+          zh: "询问会员什么时候到期。"
+        },
+        bot: "Your membership expires on August 15th.",
+        tips: {
+          simple: "When expire?",
+          natural: "When does my membership expire?",
+          native: "When’s my membership up?"
+        },
+        user: "Hi, when does my membership expire?",
+        pattern: "When does ... expire?",
+        keywords: ["expire", "membership"]
       }
     ]
   }

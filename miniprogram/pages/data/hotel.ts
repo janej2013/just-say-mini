@@ -4,8 +4,8 @@ export const cards = [
     cardId: "hotel_c1",
     title: { zh: "办理入住", en: "Check-in" },
     npc: { animal: "Panda", role: "Hotel Receptionist" },
-    opening: "Welcome to our hotel. How can I help you today?",
-    ending: "Enjoy your stay.",
+    botHello: "Welcome to our hotel. How can I help you today?",
+    botBye: "Enjoy your stay.",
     tasks: [
       {
         taskId: "hotel_c1_t1",
@@ -63,8 +63,8 @@ export const cards = [
     cardId: "hotel_c2",
     title: { zh: "酒店信息", en: "Hotel Info" },
     npc: { animal: "Penguin", role: "Hotel Receptionist" },
-    opening: "Hi there, what can I help you with?",
-    ending: "Let me know if you need anything else.",
+    botHello: "Hi there, what can I help you with?",
+    botBye: "Let me know if you need anything else.",
     tasks: [
       {
         taskId: "hotel_c2_t1",
@@ -122,8 +122,8 @@ export const cards = [
     cardId: "hotel_c3",
     title: { zh: "更换房间", en: "Room Change" },
     npc: { animal: "Koala", role: "Hotel Staff" },
-    opening: "Hello, what seems to be the problem?",
-    ending: "I'll take care of it for you.",
+    botHello: "Hello, what seems to be the problem?",
+    botBye: "I'll take care of it for you.",
     tasks: [
       {
         taskId: "hotel_c3_t1",
@@ -181,8 +181,8 @@ export const cards = [
     cardId: "hotel_c4",
     title: { zh: "额外用品", en: "Room Service" },
     npc: { animal: "Cat", role: "Hotel Service Staff" },
-    opening: "Hi, how can I assist you?",
-    ending: "We’ll send it right away.",
+    botHello: "Hi, how can I assist you?",
+    botBye: "We’ll send it right away.",
     tasks: [
       {
         taskId: "hotel_c4_t1",
@@ -240,8 +240,8 @@ export const cards = [
     cardId: "hotel_c5",
     title: { zh: "退房结账", en: "Check-out" },
     npc: { animal: "Fox", role: "Hotel Receptionist" },
-    opening: "Hi, do you need help with checkout or billing?",
-    ending: "Safe travels!",
+    botHello: "Hi, do you need help with checkout or billing?",
+    botBye: "Safe travels!",
     tasks: [
       {
         taskId: "hotel_c5_t1",

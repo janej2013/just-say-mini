@@ -14,8 +14,8 @@ export const cards = [
       animal: "Cat",
       role: "Neighbor"
     },
-    botOpening: "Hey there, everything okay?",
-    botClosing: "Thanks for letting me know. Have a peaceful evening.",
+    botHello: "Hey there, everything okay?",
+    botBye: "Thanks for letting me know. Have a peaceful evening.",
     tasks: [
       {
         taskId: "apt_neighbor_c1_t1",
@@ -81,8 +81,8 @@ export const cards = [
       animal: "Rabbit",
       role: "Neighbor"
     },
-    botOpening: "Hi! Everything alright?",
-    botClosing: "No problem at all. Come by anytime!",
+    botHello: "Hi! Everything alright?",
+    botBye: "No problem at all. Come by anytime!",
     tasks: [
       {
         taskId: "apt_neighbor_c2_t1",
@@ -148,8 +148,8 @@ export const cards = [
       animal: "Dog",
       role: "Neighbor"
     },
-    botOpening: "Hey, everything okay?",
-    botClosing: "Hope you find your package!",
+    botHello: "Hey, everything okay?",
+    botBye: "Hope you find your package!",
     tasks: [
       {
         taskId: "apt_neighbor_c3_t1",
@@ -215,8 +215,8 @@ export const cards = [
       animal: "Squirrel",
       role: "Neighbor"
     },
-    botOpening: "Hey there, what’s up?",
-    botClosing: "Got it, I’ll keep that in mind.",
+    botHello: "Hey there, what’s up?",
+    botBye: "Got it, I’ll keep that in mind.",
     tasks: [
       {
         taskId: "apt_neighbor_c4_t1",
@@ -282,8 +282,8 @@ export const cards = [
       animal: "Fox",
       role: "Neighbor"
     },
-    botOpening: "Hey! You new here?",
-    botClosing: "Hope to see you around!",
+    botHello: "Hey! You new here?",
+    botBye: "Hope to see you around!",
     tasks: [
       {
         taskId: "apt_neighbor_c5_t1",
@@ -349,8 +349,8 @@ export const cards = [
       animal: "Bear",
       role: "Neighbor"
     },
-    botOpening: "Hey, you look worried. What's going on?",
-    botClosing: "Hope it gets sorted out soon.",
+    botHello: "Hey, you look worried. What's going on?",
+    botBye: "Hope it gets sorted out soon.",
     tasks: [
       {
         taskId: "apt_neighbor_c6_t1",

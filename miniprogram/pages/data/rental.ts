@@ -6,8 +6,8 @@ export const cards = [
     cardId: "re_c1",
     title: { zh: "说明租房需求", en: "Stating Rental Requirements" },
     npc: { animal: "Dog", role: "Real Estate Agent" },
-    opening: "Hi there! What kind of place are you looking for?",
-    ending: "Great, I’ll shortlist some options for you.",
+    botHello: "Hi there! What kind of place are you looking for?",
+    botBye: "Great, I’ll shortlist some options for you.",
     tasks: [
       {
         taskId: "re_c1_t1",
@@ -65,8 +65,8 @@ export const cards = [
     cardId: "re_c2",
     title: { zh: "询问房源细节", en: "Asking About Apartment Details" },
     npc: { animal: "Rabbit", role: "Real Estate Agent" },
-    opening: "Feel free to ask me anything about the listings.",
-    ending: "No problem, I’ll send more details shortly.",
+    botHello: "Feel free to ask me anything about the listings.",
+    botBye: "No problem, I’ll send more details shortly.",
     tasks: [
       {
         taskId: "re_c2_t1",
@@ -124,8 +124,8 @@ export const cards = [
     cardId: "re_c3",
     title: { zh: "看房时提问", en: "Questions During Apartment Viewing" },
     npc: { animal: "Cat", role: "Real Estate Agent" },
-    opening: "Take your time looking around. Let me know what you'd like to know.",
-    ending: "Alright, let’s check out the next place.",
+    botHello: "Take your time looking around. Let me know what you'd like to know.",
+    botBye: "Alright, let’s check out the next place.",
     tasks: [
       {
         taskId: "re_c3_t1",
@@ -183,8 +183,8 @@ export const cards = [
     cardId: "re_c4",
     title: { zh: "费用与合同", en: "Fees and Lease Terms" },
     npc: { animal: "Fox", role: "Real Estate Agent" },
-    opening: "Let’s go over the fees and lease terms.",
-    ending: "Great, I’ll prepare the lease details.",
+    botHello: "Let’s go over the fees and lease terms.",
+    botBye: "Great, I’ll prepare the lease details.",
     tasks: [
       {
         taskId: "re_c4_t1",
@@ -242,8 +242,8 @@ export const cards = [
     cardId: "re_c5",
     title: { zh: "提交申请", en: "Submitting an Application" },
     npc: { animal: "Owl", role: "Real Estate Agent" },
-    opening: "If you're ready, I can guide you through the application.",
-    ending: "Awesome, I’ll submit your application today.",
+    botHello: "If you're ready, I can guide you through the application.",
+    botBye: "Awesome, I’ll submit your application today.",
     tasks: [
       {
         taskId: "re_c5_t1",

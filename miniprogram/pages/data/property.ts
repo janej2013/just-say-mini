@@ -8,8 +8,8 @@ export const cards = [
     cardId: "pm_c1",
     title: { zh: "办理入住手续", en: "Move-in Setup" },
     npc: { animal: "Bear", role: "Property Manager" },
-    opening: "Welcome! What do you need help with today?",
-    ending: "Great, let me know if you need anything else.",
+    botHello: "Welcome! What do you need help with today?",
+    botBye: "Great, let me know if you need anything else.",
     tasks: [
       {
         taskId: "pm_c1_t1",
@@ -69,8 +69,8 @@ export const cards = [
     cardId: "pm_c2",
     title: { zh: "使用公共设施", en: "Using Facilities" },
     npc: { animal: "Squirrel", role: "Property Front Desk" },
-    opening: "Hi! Need help with any building facilities?",
-    ending: "Alright, enjoy the facilities!",
+    botHello: "Hi! Need help with any building facilities?",
+    botBye: "Alright, enjoy the facilities!",
     tasks: [
       {
         taskId: "pm_c2_t1",
@@ -130,8 +130,8 @@ export const cards = [
     cardId: "pm_c3",
     title: { zh: "报修与问题反馈", en: "Maintenance Requests" },
     npc: { animal: "Beaver", role: "Maintenance Staff" },
-    opening: "Hello, any maintenance issues I can help with?",
-    ending: "Got it, we’ll send someone to fix it soon.",
+    botHello: "Hello, any maintenance issues I can help with?",
+    botBye: "Got it, we’ll send someone to fix it soon.",
     tasks: [
       {
         taskId: "pm_c3_t1",
@@ -191,8 +191,8 @@ export const cards = [
     cardId: "pm_c4",
     title: { zh: "邮件与包裹", en: "Mail & Packages" },
     npc: { animal: "Koala", role: "Front Desk" },
-    opening: "Hi! Are you here to pick up a package?",
-    ending: "No problem, come anytime during office hours.",
+    botHello: "Hi! Are you here to pick up a package?",
+    botBye: "No problem, come anytime during office hours.",
     tasks: [
       {
         taskId: "pm_c4_t1",
@@ -252,8 +252,8 @@ export const cards = [
     cardId: "pm_c5",
     title: { zh: "停车与门禁", en: "Parking & Access" },
     npc: { animal: "Panda", role: "Security" },
-    opening: "Hi, can I help you with parking or access?",
-    ending: "You’re all set. Drive safely!",
+    botHello: "Hi, can I help you with parking or access?",
+    botBye: "You’re all set. Drive safely!",
     tasks: [
       {
         taskId: "pm_c5_t1",
